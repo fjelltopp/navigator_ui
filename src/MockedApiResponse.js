@@ -31,8 +31,8 @@ export default function getMockedApiResponse() {
 }
 
 export const getMockedProjects = () => {
-    const numberOfProjects = chance.integer({ min: 1, max: 4 });
-    return Array.from(Array(numberOfProjects)).map((x, index) => ({
+    const projects = Array.from(Array(chance.integer({ min: 10, max: 20 })));
+    return projects.map((project, index) => ({
         id: index,
         name: [
             chance.country({ full: true }),
