@@ -31,7 +31,7 @@ export default function getMockedApiResponse() {
 }
 
 export const getMockedProjects = () => {
-    const projects = Array.from(Array(chance.integer({ min: 10, max: 20 })));
+    const projects = Array.from(Array(chance.integer({ min: 1, max: 4 })));
     return projects.map((project, index) => ({
         id: index,
         name: [
@@ -40,11 +40,11 @@ export const getMockedProjects = () => {
             chance.integer({ min: 2000, max: 2022 })
         ].join(' '),
         milestones: [
-            { name: 'User Profile & Survey', progress: 100 },
-            { name: 'Data Prep', progress: 100 },
-            { name: 'Spectrum', progress: chance.integer({ min: 2, max: 98 }) },
-            { name: 'Shiny90', progress: 0 },
-            { name: 'Naomi', progress: 0 }
+            { name: 'Task 1.0 - User Profile Survey', progress: 100 },
+            { name: 'Task 1.1 - Data Prep', progress: 100 },
+            { name: 'Task 1.2 - Data Prep', progress: chance.integer({ min: 2, max: 98 }) },
+            { name: 'Task 2.0 - Workshop', progress: 0 },
+            { name: 'Task 2.1 - Workshop', progress: 0 }
         ]
     }))
 }

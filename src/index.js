@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import ReactDOM from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -6,6 +6,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 
 import App from './App';
 import Sidebar from './Sidebar';
+import LoginPage from './LoginPage';
 import './index.css';
 
 const user = {
@@ -18,20 +19,34 @@ const user = {
   ],
 };
 
+function AuthedPage() {
+  const [authed, setAuthed] = useState(false);
+  return (
+    <>
+      {
+        authed
+          ? (
+            <Row>
+              <Col md={2} className="d-flex flex-column sidebar collapse p-3">
+                <Sidebar user={user} />
+              </Col>
+              <Col md={10} className="ms-md-auto">
+                <main className="p-3">
+                  <App user={user} />
+                </main>
+              </Col>
+            </Row >
+          )
+          : <LoginPage {...{ setAuthed }} />
+      }
+    </>
+  )
+}
+
 ReactDOM.render(
   <>
     <Container fluid>
-      <Row>
-        <Col md={2} className="d-md-block sidebar collapse p-3">
-          <Sidebar user={user} />
-        </Col>
-        <Col md={10} className="ms-md-auto">
-          <Container>
-            <br />
-            <App user={user} />
-          </Container>
-        </Col>
-      </Row>
+      <AuthedPage />
     </Container>
   </>, document.getElementById('root')
 );
