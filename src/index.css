@@ -13,15 +13,6 @@ main {
     border: 1px solid #dee2e6;
 }
 
-th {
-    font-weight: normal;
-}
-
-hr {
-    background-color: rgba(0, 0, 0, .125);
-    opacity: 1;
-}
-
 .sidebar {
     position: fixed;
     top: 0;
@@ -33,41 +24,20 @@ hr {
     background-color: white;
 }
 
-.sidebar .projects {
-    overflow-y: auto;
-    margin-top: -15px;
-    padding-bottom: 60px;
+.offcanvas-top {
+    height: fit-content;
 }
 
-.sidebar .accordion-button {
-    padding: 1rem 2.25rem 1rem 1rem;
+hr {
+    background-color: rgba(0, 0, 0, .125);
+    opacity: 1;
 }
 
-.sidebar .accordion-body {
-    padding: 0;
+select {
+    width: auto !important;
 }
 
-.sidebar .accordion-body .list-group {
-    border-radius: 0;
-}
-
-.accordion-button:not(.collapsed) {
-    background-color: transparent;
-    color: #212529;
-}
-
-.sidebar .list-group-item {
-    border: none;
-    border-radius: 3px;
-}
-
-.accordion-button:after {
-    background: none !important;
-}
-
-.user-dropdown {
-    margin-bottom: -20px;
-    width: 100%;
-    text-align: center;
-    border-top: 1px solid #dee2e6;
+.badge {
+    margin-top: 10px;
+    margin-right: 10px;
 }

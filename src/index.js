@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import ReactDOM from 'react-dom';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -9,7 +9,7 @@ import Sidebar from './Sidebar';
 import LoginPage from './LoginPage';
 import './index.css';
 
-const user = {
+let user = {
   firstName: 'Manoj',
   lastName: 'Nathwani',
   datasets: [
@@ -17,6 +17,7 @@ const user = {
     { id: 2, name: 'Malawi Inputs UNAIDS Estimates 2021' },
     { id: 3, name: 'Antarctica Inputs UNAIDS Estimates 2021' }
   ],
+  currentDatasetId: 1
 };
 
 function AuthedPage() {

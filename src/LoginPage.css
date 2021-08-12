@@ -1,0 +1,9 @@
+#LoginPage main {
+    margin-top: 50px;
+    max-width: 500px;
+}
+
+#LoginPage form {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}

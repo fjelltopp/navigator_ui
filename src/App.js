@@ -1,16 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import {
-    ButtonToolbar, ButtonGroup, Button,
-    Offcanvas, Breadcrumb, ProgressBar
+    ButtonToolbar, ButtonGroup, Button, OverlayTrigger,
+    Tooltip, Offcanvas, ProgressBar, Badge
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleDoubleRight, faCheckCircle, faCircleNotch, faQuestionCircle, faRoute } from '@fortawesome/free-solid-svg-icons';
+import {
+    faAngleDoubleRight, faCheckCircle,
+    faCircleNotch, faQuestionCircle, faRoute
+} from '@fortawesome/free-solid-svg-icons';
 import getMockedApiResponse from './MockedApiResponse';
+import DatasetSelector from './DatasetSelector';
 
 export default function App({ user }) {
     const [isLoading, setLoading] = useState(true);
     const [mockedApiResponse, setMockedApiResponse] = useState();
-    const progressStyles = {};
 
     useEffect(() => {
         if (isLoading) {
@@ -24,53 +27,77 @@ export default function App({ user }) {
         }
     }, [isLoading]);
 
-    const handleClick = () => setLoading(true);
+    const handleNextButton = () => setLoading(true);
+    const progressBars = [
+        { variant: 'danger', now: mockedApiResponse && mockedApiResponse.percentage },
+        { variant: 'secondary', now: mockedApiResponse && mockedApiResponse.grey }
+    ];
+
+    function SkipButton() {
+        const skipButton = (
+            <Button
+                variant='danger'
+                onClick={handleNextButton}
+                disabled={!mockedApiResponse.skippable}
+            >
+                <FontAwesomeIcon icon={faAngleDoubleRight} />
+                <span> Skip</span>
+            </Button>
+        )
+        return mockedApiResponse.skippable
+            ? skipButton
+            : (
+                <OverlayTrigger
+                    placement={'bottom'}
+                    overlay={<Tooltip>This task cannot be skipped</Tooltip>}
+                >
+                    <span style={{ marginRight: -2 }}>{skipButton}</span>
+                </OverlayTrigger>
+            )
+    }
+
+    function MainPageContent({ mockedApiResponse: data }) {
+        return (
+            <>
+                <ProgressBar>
+                    {progressBars.map(({ variant, now }, index) =>
+                        <ProgressBar key={index} variant={variant} now={now} />
+                    )}
+                </ProgressBar>
+                <Badge bg="danger">Task {data.taskNumber}</Badge>
+                <Badge bg="danger">{data.milestone}</Badge>
+                <hr />
+                <div>{data.displayHtml}</div>
+                <hr />
+                <ButtonToolbar className="justify-content-between">
+                    <ButtonGroup aria-label="First group">
+                        <Button variant="outline-danger" href={data.letsGoUrl} target="_blank">
+                            <FontAwesomeIcon icon={faRoute} />
+                            <span> Let's go</span>
+                        </Button>
+                        <Button variant="outline-danger">
+                            <FontAwesomeIcon icon={faQuestionCircle} />
+                            <span> Help</span>
+                        </Button>
+                    </ButtonGroup>
+                    <ButtonGroup>
+                        <SkipButton />
+                        <Button variant='danger' onClick={handleNextButton}>
+                            <FontAwesomeIcon icon={faCheckCircle} />
+                            <span> Task Complete</span>
+                        </Button>
+                    </ButtonGroup>
+                </ButtonToolbar>
+            </>
+        )
+    }
+
     return (
         <>
-            {/* <Breadcrumb>
-                <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
-                <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
-                    Library
-                </Breadcrumb.Item>
-                <Breadcrumb.Item active>Data</Breadcrumb.Item>
-            </Breadcrumb> */}
-            <h1>Task 1.2 - Data Prep</h1>
-            <ProgressBar variant='danger' style={progressStyles} now={17} />
-            <hr />
-            {mockedApiResponse &&
-                <>
-                    <div>{mockedApiResponse.display_html}</div>
-                    <hr />
-                    <ButtonToolbar className="justify-content-between">
-                        <ButtonGroup aria-label="First group">
-                            <Button variant="outline-danger" href="https://google.com" target="_blank">
-                                <FontAwesomeIcon icon={faRoute} />
-                                <span> Let's go</span>
-                            </Button>
-                            <Button variant="outline-danger">
-                                <FontAwesomeIcon icon={faQuestionCircle} />
-                                <span> Help</span>
-                            </Button>
-                        </ButtonGroup>
-                        <ButtonGroup>
-                            <Button variant='danger' onClick={handleClick} disabled={!mockedApiResponse.skippable}>
-                                <FontAwesomeIcon icon={faAngleDoubleRight} />
-                                <span> Skip</span>
-                            </Button>
-                            <Button variant='danger' onClick={handleClick}>
-                                <FontAwesomeIcon icon={faCheckCircle} />
-                                <span> Step Complete</span>
-                            </Button>
-                        </ButtonGroup>
-                    </ButtonToolbar>
-                </>
-            }
-            <Offcanvas
-                show={isLoading}
-                placement='top'
-                keyboard={false}
-                style={{ height: 'fit-content' }}
-            >
+            <DatasetSelector {...{ user, handleNextButton }} />
+            <br />
+            {mockedApiResponse && <MainPageContent {...{ mockedApiResponse }} />}
+            <Offcanvas show={isLoading} placement='top' keyboard={false}>
                 <Offcanvas.Body className="text-center">
                     <h2 className="text-danger">
                         <FontAwesomeIcon icon={faCircleNotch} spin />
@@ -79,6 +106,6 @@ export default function App({ user }) {
                 </Offcanvas.Body>
             </Offcanvas>
         </>
-    );
+    )
 
 }
