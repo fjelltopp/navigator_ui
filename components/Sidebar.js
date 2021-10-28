@@ -1,4 +1,3 @@
-import { signOut } from "next-auth/client"
 import Link from 'next/link'
 import { ListGroup } from 'react-bootstrap';
 
@@ -10,7 +9,7 @@ export default function Sidebar() {
         { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
         { label: 'Training Resources', href: 'https://hivtools.unaids.org' },
         { label: 'Help', href: 'https://hivtools.unaids.org' },
-        { label: 'Logout', onClick: () => signOut() }
+        { label: 'Logout', href: 'https://example.com/' } // TODO: configure
     ];
 
     const listItem = (link, key) => {

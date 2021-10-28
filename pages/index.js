@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { getSession } from "next-auth/client";
 import {
   ButtonToolbar, ButtonGroup, Button, OverlayTrigger,
   Tooltip, Offcanvas, ProgressBar, Badge
@@ -11,55 +10,72 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
-import getMockedApiResponse from './api/MockedApiResponse';
+import getMockedApiResponse from '../lib/MockedApiResponse';
 
 
-export default function Index({ user }) {
-  const [isLoading, setLoading] = useState(true);
-  const [mockedApiResponse, setMockedApiResponse] = useState();
+export default function Index(props) {
+  // const [isLoading, setLoading] = useState(true);
+  // const [mockedApiResponse, setMockedApiResponse] = useState();
 
+  // useEffect(() => {
+  //   if (isLoading) {
+  //     function simulateNetworkRequest() {
+  //       return new Promise((resolve) => setTimeout(resolve, 2000));
+  //     }
+  //     simulateNetworkRequest().then(() => {
+  //       setLoading(false);
+  //       setMockedApiResponse(getMockedApiResponse());
+  //       props.fetchDatasetState({
+  //         params: { dataset_id: props.currentDatasetId }
+  //       })
+  //     });
+  //   }
+  // }, [isLoading]);
   useEffect(() => {
-    if (isLoading) {
-      function simulateNetworkRequest() {
-        return new Promise((resolve) => setTimeout(resolve, 2000));
-      }
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-        setMockedApiResponse(getMockedApiResponse());
-      });
-    }
-  }, [isLoading]);
+    props.fetchDatasetState({
+      params: { dataset_id: props.currentDatasetId }
+    })
+  }, [props.currentDatasetId]);
 
-  const handleNextButton = () => setLoading(true);
+  const handleNextButton = () => props.fetchDatasetState({
+    method: 'post',
+    data: {
+      dataset_id: props.currentDatasetId,
+      action: 'next_step',
+      last_updated: props.datasetState.last_updated
+    },
+  }).then(() => props.fetchDatasetState({
+    params: { dataset_id: props.currentDatasetId }
+  }))
   const progressBars = [
-    { variant: 'danger', now: mockedApiResponse && mockedApiResponse.percentage },
-    { variant: 'secondary', now: mockedApiResponse && mockedApiResponse.grey }
+    { variant: 'danger', now: props.datasetState && props.datasetState.percentage },
+    { variant: 'secondary', now: props.datasetState && props.datasetState.grey }
   ];
 
-  function SkipButton() {
-    const skipButton = (
-      <Button
-        variant='danger'
-        onClick={handleNextButton}
-        disabled={!mockedApiResponse.skippable}
-      >
-        <FontAwesomeIcon icon={faAngleDoubleRight} />
-        <span> Skip</span>
-      </Button>
-    )
-    return mockedApiResponse.skippable
-      ? skipButton
-      : (
-        <OverlayTrigger
-          placement={'bottom'}
-          overlay={<Tooltip>This task cannot be skipped</Tooltip>}
-        >
-          <span style={{ marginRight: -2 }}>{skipButton}</span>
-        </OverlayTrigger>
-      )
-  }
+  // function SkipButton() {
+  //   const skipButton = (
+  //     <Button
+  //       variant='danger'
+  //       onClick={handleNextButton}
+  //       disabled={!mockedApiResponse.skippable}
+  //     >
+  //       <FontAwesomeIcon icon={faAngleDoubleRight} />
+  //       <span> Skip</span>
+  //     </Button>
+  //   )
+  //   return mockedApiResponse.skippable
+  //     ? skipButton
+  //     : (
+  //       <OverlayTrigger
+  //         placement={'bottom'}
+  //         overlay={<Tooltip>This task cannot be skipped</Tooltip>}
+  //       >
+  //         <span style={{ marginRight: -2 }}>{skipButton}</span>
+  //       </OverlayTrigger>
+  //     )
+  // }
 
-  function MainPageContent({ mockedApiResponse: data }) {
+  function MainPageContent({ data }) {
     return (
       <>
         <ProgressBar>
@@ -67,14 +83,14 @@ export default function Index({ user }) {
             <ProgressBar key={index} variant={variant} now={now} />
           )}
         </ProgressBar>
-        <Badge bg="danger">Task {data.taskNumber}</Badge>
+        <Badge bg="danger">Task {data.task_number}</Badge>
         <Badge bg="danger">{data.milestone}</Badge>
         <hr />
-        <div>{data.displayHtml}</div>
+        <div dangerouslySetInnerHTML={{ __html: data.display_html }}></div>
         <hr />
         <ButtonToolbar className="justify-content-between">
           <ButtonGroup aria-label="First group">
-            <Button variant="outline-danger" href={data.letsGoUrl} target="_blank">
+            <Button variant="outline-danger" href={data.lets_go_url} target="_blank">
               <FontAwesomeIcon icon={faRoute} />
               <span> Let's go</span>
             </Button>
@@ -84,7 +100,7 @@ export default function Index({ user }) {
             </Button>
           </ButtonGroup>
           <ButtonGroup>
-            <SkipButton />
+            {/* <SkipButton /> */}
             <Button variant='danger' onClick={handleNextButton}>
               <FontAwesomeIcon icon={faCheckCircle} />
               <span> Task Complete</span>
@@ -97,29 +113,18 @@ export default function Index({ user }) {
 
   return (
     <Layout>
-      <DatasetSelector {...{ user, handleNextButton }} />
+      <DatasetSelector {...{ ...props, handleNextButton }} />
       <br />
-      {mockedApiResponse && <MainPageContent {...{ mockedApiResponse }} />}
-      <Offcanvas show={isLoading} placement='top' keyboard={false}>
+      {props.datasetState && <MainPageContent {...{ data: props.datasetState }} />}
+      {/* <Offcanvas show={props.datasetStateLoading} placement='top' keyboard={false}>
         <Offcanvas.Body className="text-center">
           <h2 className="text-danger">
             <FontAwesomeIcon icon={faCircleNotch} spin />
-            <span> Loading</span>
+            <span> Please wait...</span>
           </h2>
         </Offcanvas.Body>
-      </Offcanvas>
+      </Offcanvas> */}
     </Layout>
   )
-}
-
-export async function getServerSideProps(context) {
-  const { req, res } = context;
-  const session = await getSession({ req });
-  const userIsAuthed = (session && session.user);
-
-  if (!userIsAuthed) {
-    res.writeHead(302, { Location: '/signin' }).end();
-  }
-  return { props: { user: session.user.image } };
 
 }
