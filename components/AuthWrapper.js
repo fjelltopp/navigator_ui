@@ -1,20 +1,13 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router'
-import axios from 'axios'
+import { useRouter } from 'next/router';
 import { makeUseAxios } from 'axios-hooks'
+import {
+    baseAxiosConfig,
+    getUserDetails, getDatasets,
+    getWorkflow
+} from '../lib/api';
 
-const useAxios = makeUseAxios({
-    axios: axios.create({
-        // TODO: get working within minikube
-        baseURL: 'http://127.0.0.1:5000',
-        // withCredentials: true
-        proxy: {
-            protocol: 'http',
-            host: '127.0.0.1',
-            port: 5000
-        },
-    })
-})
+const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function AuthWrapper({ Component, pageProps }) {
     const router = useRouter()
@@ -24,12 +17,12 @@ export default function AuthWrapper({ Component, pageProps }) {
         data: userDetails,
         loading: userDetailsLoading,
         error: userDetailsError
-    }] = useAxios('/user_details');
+    }] = useAxios(getUserDetails);
     const [{
         data: datasets,
         loading: datasetsLoading,
         error: datasetsError
-    }] = useAxios('/datasets');
+    }] = useAxios(getDatasets);
     const [
         {
             data: datasetState,
@@ -37,7 +30,7 @@ export default function AuthWrapper({ Component, pageProps }) {
             error: datasetStateError
         },
         fetchDatasetState
-    ] = useAxios('/dataset_state', { manual: true });
+    ] = useAxios(getWorkflow, {manual: true});
 
     if (userDetailsLoading || datasetsLoading) {
         return <p>Loading...</p>
