@@ -16,8 +16,8 @@ const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function Login({ }) {
     const router = useRouter()
-    const [username, setUsername] = useState('manoj-nathwani');
-    const [password, setPassword] = useState('Ad#jeWhPtHMw2V@6PJ!uyePes');
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
 
     const [
         {
