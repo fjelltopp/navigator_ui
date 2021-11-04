@@ -14,8 +14,7 @@ export default function DatasetSelector(props) {
             name: '+ Add New Dataset'
         };
         const handleChange = e => {
-            const newValue = parseInt(e.target.value);
-            if (newValue === addNewDatasetOption.id) {
+            if (e.target.value === addNewDatasetOption.id) {
                 setShowModal(true);
             } else {
                 props.setCurrentDatasetId(e.target.value);

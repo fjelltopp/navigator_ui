@@ -5,8 +5,8 @@ import {
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faAngleDoubleRight, faCheckCircle,
-  faCircleNotch, faLink
+  faAngleDoubleLeft, faAngleDoubleRight,
+  faCheckCircle, faCircleNotch, faLink
 } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
@@ -22,6 +22,7 @@ export default function Index(props) {
   }
 
   async function updateDatasetState() {
+    await twentyMilisecondDelay();
     await props.fetchDatasetState(
       getDatasetState(props.currentDatasetId),
       { manual: true }
@@ -32,16 +33,21 @@ export default function Index(props) {
     updateDatasetState();
   }, [props.currentDatasetId]);
 
-  const progressBars = [
-    { variant: "danger", now: props.datasetState && props.datasetState.percentage },
-    { variant: "secondary", now: props.datasetState && props.datasetState.grey }
-  ];
+  function MainPageContent({ id: workflowId, milestones, taskBreadcrumps, currentTask }) {
 
-  function MainPageContent({ id: workflowId, current_task: currentTask }) {
+    const currentMilestone = milestones.filter(
+      milestone => milestone.id === currentTask.details.milestoneId
+    )[0];
+    const progressBars = [
+      { variant: "danger", now: currentMilestone.progress },
+      // TODO: figure out if we've gone back steps and add
+      // the grey part of the progress bar back:
+      // { variant: "secondary", now: 10 }
+    ];
 
     const handleNextButton = async apiRequest => {
-      await props.fetchDatasetState(apiRequest(workflowId, currentTask.id));
-      await twentyMilisecondDelay();
+      const apiRequestConfig = apiRequest(workflowId, currentTask.id);
+      await props.fetchDatasetState(apiRequestConfig);
       await updateDatasetState();
     }
 
@@ -52,13 +58,13 @@ export default function Index(props) {
         <Button
           variant="danger"
           onClick={handleClick}
-          disabled={!currentTask.skippable}
+          disabled={!currentTask.details.skippable}
         >
           <FontAwesomeIcon icon={faAngleDoubleRight} />
           <span> Skip</span>
         </Button>
       )
-      if (currentTask.skippable) {
+      if (currentTask.details.skippable) {
         return button;
       } else {
         return (
@@ -70,6 +76,22 @@ export default function Index(props) {
           </OverlayTrigger>
         )
       }
+    }
+
+    function GoBackOneStepWorkflowTaskButton() {
+      // TODO: build back button functionality
+      const handleClick = () =>
+        alert('This feature is not built yet');
+      return (
+        <Button
+          variant="danger"
+          onClick={handleClick}
+          disabled={!taskBreadcrumps.lenth}
+        >
+          <FontAwesomeIcon icon={faAngleDoubleLeft} />
+          <span> Back</span>
+        </Button>
+      )
     }
 
     function CompleteWorkflowTaskButton() {
@@ -86,22 +108,21 @@ export default function Index(props) {
       )
     }
 
-    function ActionableLinks({ actionableLinks }) {
+    function HelpUrlsComponent({ helpUrls }) {
       return (
-        <Row>
+        <Row id="HelpUrlsComponent">
           <Col md={6}>
             <ListGroup variant="flush">
-              {actionableLinks.map((action, index) =>
+              {helpUrls.map((action, index) =>
                 <ListGroup.Item
                   key={index}
-                  action
-                  as="a"
+                  action as="a"
                   className="link-danger"
-                  href={action.link}
+                  href={action.url}
                   target="_blank"
                 >
                   <FontAwesomeIcon icon={faLink} />
-                  <span> {action.label}</span>
+                  <span>{action.label}</span>
                 </ListGroup.Item>
               )}
             </ListGroup>
@@ -117,23 +138,34 @@ export default function Index(props) {
             <ProgressBar key={index} variant={variant} now={now} />
           )}
         </ProgressBar>
-        <Badge bg="danger">Task {currentTask.id}</Badge>
-        <Badge bg="danger">{currentTask.milestone}</Badge>
+        <Badge bg="danger">{currentMilestone.title}</Badge>
         <hr />
-        <div dangerouslySetInnerHTML={{ __html: currentTask.content.display_html }}></div>
-        {currentTask.content.actionable_links &&
+        <h3>{currentTask.details.title}</h3>
+        <div dangerouslySetInnerHTML={{ __html: currentTask.details.displayHtml }}></div>
+        {currentTask.details.helpUrls &&
           <>
             <br />
-            <ActionableLinks actionableLinks={currentTask.content.actionable_links} />
+            <HelpUrlsComponent helpUrls={currentTask.details.helpUrls} />
           </>
         }
         <hr />
-        <ButtonToolbar className="justify-content-end">
-          <ButtonGroup>
-            <SkipWorkflowTaskButton />
-            <CompleteWorkflowTaskButton />
-          </ButtonGroup>
-        </ButtonToolbar>
+        <Row>
+          <Col>
+            <small className="text-muted">Milestone #{currentTask.details.milestoneId}</small>
+            <br />
+            <small className="text-muted">Task #{currentTask.id}</small>
+          </Col>
+          <Col>
+            <ButtonToolbar className="justify-content-end">
+              <ButtonGroup>
+                <GoBackOneStepWorkflowTaskButton />
+                <SkipWorkflowTaskButton />
+                <CompleteWorkflowTaskButton />
+              </ButtonGroup>
+            </ButtonToolbar>
+          </Col>
+        </Row>
+
       </>
     )
 
