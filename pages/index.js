@@ -151,9 +151,9 @@ export default function Index(props) {
         <hr />
         <Row>
           <Col>
-            <small className="text-muted">Milestone #{currentTask.details.milestoneId}</small>
+            <small className="text-muted">Workflow {workflowId}</small>
             <br />
-            <small className="text-muted">Task #{currentTask.id}</small>
+            <small className="text-muted">Task {currentTask.id}</small>
           </Col>
           <Col>
             <ButtonToolbar className="justify-content-end">
