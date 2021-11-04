@@ -13,14 +13,21 @@ export default function Sidebar() {
     ];
 
     const listItem = (link, key) => {
-        if (link.href) {
+        if (link.href.includes('http')) {
+            return (
+                <ListGroup.Item
+                    action
+                    key={key}
+                    onClick={() => window.open(link.href, '_blank')}>
+                    <span>{link.label}</span>
+                </ListGroup.Item>
+            )
+        } else {
             return (
                 <Link href={link.href} key={key}>
                     <ListGroup.Item action>{link.label}</ListGroup.Item>
                 </Link>
             )
-        } else if (link.onClick) {
-            return <ListGroup.Item action key={key} onClick={link.onClick}>{link.label}</ListGroup.Item>
         }
     }
 
