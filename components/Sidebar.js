@@ -1,4 +1,3 @@
-import { signOut } from "next-auth/client"
 import Link from 'next/link'
 import { ListGroup } from 'react-bootstrap';
 
@@ -10,18 +9,25 @@ export default function Sidebar() {
         { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
         { label: 'Training Resources', href: 'https://hivtools.unaids.org' },
         { label: 'Help', href: 'https://hivtools.unaids.org' },
-        { label: 'Logout', onClick: () => signOut() }
+        { label: 'Logout', href: 'https://example.com/' } // TODO: configure
     ];
 
     const listItem = (link, key) => {
-        if (link.href) {
+        if (link.href.includes('http')) {
+            return (
+                <ListGroup.Item
+                    action
+                    key={key}
+                    onClick={() => window.open(link.href, '_blank')}>
+                    <span>{link.label}</span>
+                </ListGroup.Item>
+            )
+        } else {
             return (
                 <Link href={link.href} key={key}>
                     <ListGroup.Item action>{link.label}</ListGroup.Item>
                 </Link>
             )
-        } else if (link.onClick) {
-            return <ListGroup.Item action key={key} onClick={link.onClick}>{link.label}</ListGroup.Item>
         }
     }
 

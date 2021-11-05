@@ -1,65 +1,136 @@
 import React, { useState, useEffect } from 'react';
-import { getSession } from "next-auth/client";
 import {
-  ButtonToolbar, ButtonGroup, Button, OverlayTrigger,
-  Tooltip, Offcanvas, ProgressBar, Badge
+  Row, Col, ButtonToolbar, ButtonGroup, Button, OverlayTrigger,
+  Tooltip, Offcanvas, ProgressBar, Badge, ListGroup
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faAngleDoubleRight, faCheckCircle,
-  faCircleNotch, faQuestionCircle, faRoute
+  faAngleDoubleLeft, faAngleDoubleRight,
+  faCheckCircle, faCircleNotch, faLink
 } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
-import getMockedApiResponse from './api/MockedApiResponse';
+import { getDatasetState, completeWorkflowTask, skipWorkflowTask } from '../lib/api';
 
+export default function Index(props) {
+  const [isLoading, setLoading] = useState(false);
 
-export default function Index({ user }) {
-  const [isLoading, setLoading] = useState(true);
-  const [mockedApiResponse, setMockedApiResponse] = useState();
-
-  useEffect(() => {
-    if (isLoading) {
-      function simulateNetworkRequest() {
-        return new Promise((resolve) => setTimeout(resolve, 2000));
-      }
-      simulateNetworkRequest().then(() => {
-        setLoading(false);
-        setMockedApiResponse(getMockedApiResponse());
-      });
-    }
-  }, [isLoading]);
-
-  const handleNextButton = () => setLoading(true);
-  const progressBars = [
-    { variant: 'danger', now: mockedApiResponse && mockedApiResponse.percentage },
-    { variant: 'secondary', now: mockedApiResponse && mockedApiResponse.grey }
-  ];
-
-  function SkipButton() {
-    const skipButton = (
-      <Button
-        variant='danger'
-        onClick={handleNextButton}
-        disabled={!mockedApiResponse.skippable}
-      >
-        <FontAwesomeIcon icon={faAngleDoubleRight} />
-        <span> Skip</span>
-      </Button>
-    )
-    return mockedApiResponse.skippable
-      ? skipButton
-      : (
-        <OverlayTrigger
-          placement={'bottom'}
-          overlay={<Tooltip>This task cannot be skipped</Tooltip>}
-        >
-          <span style={{ marginRight: -2 }}>{skipButton}</span>
-        </OverlayTrigger>
-      )
+  async function twentyMilisecondDelay() {
+    setLoading(true);
+    await new Promise((resolve) => setTimeout(resolve, 2000));
+    return setLoading(false);
   }
 
-  function MainPageContent({ mockedApiResponse: data }) {
+  async function updateDatasetState() {
+    await twentyMilisecondDelay();
+    await props.fetchDatasetState(
+      getDatasetState(props.currentDatasetId),
+      { manual: true }
+    );
+  }
+
+  useEffect(() => {
+    updateDatasetState();
+  }, [props.currentDatasetId]);
+
+  function MainPageContent({ id: workflowId, milestones, taskBreadcrumps, currentTask }) {
+
+    const currentMilestone = milestones.filter(
+      milestone => milestone.id === currentTask.details.milestoneId
+    )[0];
+    const progressBars = [
+      { variant: "danger", now: currentMilestone.progress },
+      // TODO: figure out if we've gone back steps and add
+      // the grey part of the progress bar back:
+      // { variant: "secondary", now: 10 }
+    ];
+
+    const handleNextButton = async apiRequest => {
+      const apiRequestConfig = apiRequest(workflowId, currentTask.id);
+      await props.fetchDatasetState(apiRequestConfig);
+      await updateDatasetState();
+    }
+
+    function SkipWorkflowTaskButton() {
+      const handleClick = () =>
+        handleNextButton(skipWorkflowTask);
+      const button = (
+        <Button
+          variant="danger"
+          onClick={handleClick}
+          disabled={!currentTask.details.skippable}
+        >
+          <FontAwesomeIcon icon={faAngleDoubleRight} />
+          <span> Skip</span>
+        </Button>
+      )
+      if (currentTask.details.skippable) {
+        return button;
+      } else {
+        return (
+          <OverlayTrigger
+            placement="bottom"
+            overlay={<Tooltip>This task cannot be skipped</Tooltip>}
+          >
+            <span style={{ marginRight: -2 }}>{button}</span>
+          </OverlayTrigger>
+        )
+      }
+    }
+
+    function GoBackOneStepWorkflowTaskButton() {
+      // TODO: build back button functionality
+      const handleClick = () =>
+        alert('This feature is not built yet');
+      return (
+        <Button
+          variant="danger"
+          onClick={handleClick}
+          disabled={!taskBreadcrumps.lenth}
+        >
+          <FontAwesomeIcon icon={faAngleDoubleLeft} />
+          <span> Back</span>
+        </Button>
+      )
+    }
+
+    function CompleteWorkflowTaskButton() {
+      const handleClick = () =>
+        handleNextButton(completeWorkflowTask);
+      return (
+        <Button
+          variant="danger"
+          onClick={handleClick}
+        >
+          <FontAwesomeIcon icon={faCheckCircle} />
+          <span> Mark as complete</span>
+        </Button>
+      )
+    }
+
+    function HelpUrlsComponent({ helpUrls }) {
+      return (
+        <Row id="HelpUrlsComponent">
+          <Col md={6}>
+            <ListGroup variant="flush">
+              {helpUrls.map((action, index) =>
+                <ListGroup.Item
+                  key={index}
+                  action as="a"
+                  className="link-danger"
+                  href={action.url}
+                  target="_blank"
+                >
+                  <FontAwesomeIcon icon={faLink} />
+                  <span>{action.label}</span>
+                </ListGroup.Item>
+              )}
+            </ListGroup>
+          </Col>
+        </Row>
+      )
+    }
+
     return (
       <>
         <ProgressBar>
@@ -67,59 +138,55 @@ export default function Index({ user }) {
             <ProgressBar key={index} variant={variant} now={now} />
           )}
         </ProgressBar>
-        <Badge bg="danger">Task {data.taskNumber}</Badge>
-        <Badge bg="danger">{data.milestone}</Badge>
+        <Badge bg="danger">{currentMilestone.title}</Badge>
         <hr />
-        <div>{data.displayHtml}</div>
+        <h3>{currentTask.details.title}</h3>
+        <div dangerouslySetInnerHTML={{ __html: currentTask.details.displayHtml }}></div>
+        {currentTask.details.helpUrls &&
+          <>
+            <br />
+            <HelpUrlsComponent helpUrls={currentTask.details.helpUrls} />
+          </>
+        }
         <hr />
-        <ButtonToolbar className="justify-content-between">
-          <ButtonGroup aria-label="First group">
-            <Button variant="outline-danger" href={data.letsGoUrl} target="_blank">
-              <FontAwesomeIcon icon={faRoute} />
-              <span> Let's go</span>
-            </Button>
-            <Button variant="outline-danger">
-              <FontAwesomeIcon icon={faQuestionCircle} />
-              <span> Help</span>
-            </Button>
-          </ButtonGroup>
-          <ButtonGroup>
-            <SkipButton />
-            <Button variant='danger' onClick={handleNextButton}>
-              <FontAwesomeIcon icon={faCheckCircle} />
-              <span> Task Complete</span>
-            </Button>
-          </ButtonGroup>
-        </ButtonToolbar>
+        <Row>
+          <Col>
+            <small className="text-muted">Workflow {workflowId}</small>
+            <br />
+            <small className="text-muted">Task {currentTask.id}</small>
+          </Col>
+          <Col>
+            <ButtonToolbar className="justify-content-end">
+              <ButtonGroup>
+                <GoBackOneStepWorkflowTaskButton />
+                <SkipWorkflowTaskButton />
+                <CompleteWorkflowTaskButton />
+              </ButtonGroup>
+            </ButtonToolbar>
+          </Col>
+        </Row>
+
       </>
     )
+
   }
 
   return (
     <Layout>
-      <DatasetSelector {...{ user, handleNextButton }} />
+      <DatasetSelector {...props} />
       <br />
-      {mockedApiResponse && <MainPageContent {...{ mockedApiResponse }} />}
-      <Offcanvas show={isLoading} placement='top' keyboard={false}>
+      {props.datasetState && props.datasetState.id &&
+        <MainPageContent {...props.datasetState} />
+      }
+      <Offcanvas show={isLoading} placement="top" keyboard={false}>
         <Offcanvas.Body className="text-center">
           <h2 className="text-danger">
             <FontAwesomeIcon icon={faCircleNotch} spin />
-            <span> Loading</span>
+            <span> Please wait...</span>
           </h2>
         </Offcanvas.Body>
       </Offcanvas>
     </Layout>
   )
-}
-
-export async function getServerSideProps(context) {
-  const { req, res } = context;
-  const session = await getSession({ req });
-  const userIsAuthed = (session && session.user);
-
-  if (!userIsAuthed) {
-    res.writeHead(302, { Location: '/signin' }).end();
-  }
-  return { props: { user: session.user.image } };
 
 }

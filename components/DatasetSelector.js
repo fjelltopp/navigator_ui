@@ -5,7 +5,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder } from '@fortawesome/free-solid-svg-icons';
 
-export default function DatasetSelector({ user, handleNextButton }) {
+export default function DatasetSelector(props) {
     const [showModal, setShowModal] = useState(false);
 
     function SelectDatasetInput() {
@@ -14,15 +14,13 @@ export default function DatasetSelector({ user, handleNextButton }) {
             name: '+ Add New Dataset'
         };
         const handleChange = e => {
-            const newValue = parseInt(e.target.value);
-            if (newValue === addNewDatasetOption.id) {
+            if (e.target.value === addNewDatasetOption.id) {
                 setShowModal(true);
             } else {
-                user.currentDatasetId = e.target.value;
-                handleNextButton();
+                props.setCurrentDatasetId(e.target.value);
             }
         }
-        const selectOptions = [...user.datasets, addNewDatasetOption]
+        const selectOptions = [...props.user.datasets, addNewDatasetOption]
             .map(dataset =>
                 <option key={dataset.id} value={dataset.id}>
                     {dataset.name}
@@ -31,7 +29,7 @@ export default function DatasetSelector({ user, handleNextButton }) {
         return (
             <FloatingLabel label="Dataset">
                 <Form.Select size="lg"
-                    value={user.currentDatasetId}
+                    value={props.currentDatasetId}
                     onChange={handleChange}
                 >
                     {selectOptions}
@@ -57,7 +55,7 @@ export default function DatasetSelector({ user, handleNextButton }) {
                                 </Col>
                             </Row>
                         </ListGroup.Item>
-                        {user.datasets.map(dataset =>
+                        {props.user.datasets.map(dataset =>
                             <ListGroup.Item key={dataset.id} action>
                                 <FontAwesomeIcon icon={faFolder} />
                                 <span> {dataset.name}</span>
