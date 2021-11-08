@@ -10,6 +10,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
+import PopupModal from '../components/PopupModal';
 import { getDatasetState, completeWorkflowTask, skipWorkflowTask } from '../lib/api';
 
 export default function Index(props) {
@@ -203,6 +204,7 @@ export default function Index(props) {
           </h2>
         </Offcanvas.Body>
       </Offcanvas>
+      <PopupModal />
     </Layout>
   )
 
