@@ -52,10 +52,6 @@ select {
   margin-bottom: 30px;
 }
 
-#HelpUrlsComponent .fa-link{
-  margin-right: 10px;
-}
-
 #MilestoneStatus.list-group-flush{
   border-radius: 3px;
 }

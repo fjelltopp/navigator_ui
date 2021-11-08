@@ -57,8 +57,8 @@ export default function DatasetSelector(props) {
                         </ListGroup.Item>
                         {props.user.datasets.map(dataset =>
                             <ListGroup.Item key={dataset.id} action>
-                                <FontAwesomeIcon icon={faFolder} />
-                                <span> {dataset.name}</span>
+                                <FontAwesomeIcon icon={faFolder} className="me-2" />
+                                <span>{dataset.name}</span>
                             </ListGroup.Item>
                         )}
                     </ListGroup>

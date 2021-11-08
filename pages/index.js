@@ -60,8 +60,8 @@ export default function Index(props) {
           onClick={handleClick}
           disabled={!currentTask.details.skippable}
         >
-          <FontAwesomeIcon icon={faAngleDoubleRight} />
-          <span> Skip</span>
+          <FontAwesomeIcon icon={faAngleDoubleRight} className="me-2" />
+          <span>Next Task</span>
         </Button>
       )
       if (currentTask.details.skippable) {
@@ -88,8 +88,8 @@ export default function Index(props) {
           onClick={handleClick}
           disabled={!taskBreadcrumps.lenth}
         >
-          <FontAwesomeIcon icon={faAngleDoubleLeft} />
-          <span> Back</span>
+          <FontAwesomeIcon icon={faAngleDoubleLeft} className="me-2" />
+          <span>Prior Task</span>
         </Button>
       )
     }
@@ -102,8 +102,8 @@ export default function Index(props) {
           variant="danger"
           onClick={handleClick}
         >
-          <FontAwesomeIcon icon={faCheckCircle} />
-          <span> Mark as complete</span>
+          <FontAwesomeIcon icon={faCheckCircle} className="me-2" />
+          <span>I'm Done</span>
         </Button>
       )
     }
@@ -121,7 +121,7 @@ export default function Index(props) {
                   href={action.url}
                   target="_blank"
                 >
-                  <FontAwesomeIcon icon={faLink} />
+                  <FontAwesomeIcon icon={faLink} className="me-2" />
                   <span>{action.label}</span>
                 </ListGroup.Item>
               )}
@@ -148,7 +148,7 @@ export default function Index(props) {
                   variant={currentMilestone.id === milestone.id ? 'dark' : ''}
                 >
                   <FontAwesomeIcon
-                    className={`me-1 ${milestone.completed ? 'text-success' : 'text-muted'}`}
+                    className={`me-2 ${milestone.completed ? 'text-success' : 'text-muted'}`}
                     icon={milestone.completed ? faCheckCircle : faCircle}
                   />
                   <span>{milestone.title}</span>
@@ -198,8 +198,8 @@ export default function Index(props) {
       <Offcanvas show={isLoading} placement="top" keyboard={false}>
         <Offcanvas.Body className="text-center">
           <h2 className="text-danger">
-            <FontAwesomeIcon icon={faCircleNotch} spin />
-            <span> Please wait...</span>
+            <FontAwesomeIcon icon={faCircleNotch} spin className="me-2" />
+            <span>Please wait...</span>
           </h2>
         </Offcanvas.Body>
       </Offcanvas>
