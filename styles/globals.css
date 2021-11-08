@@ -4,7 +4,7 @@ body {
 }
 
 main {
-  max-width: 1000px;
+  max-width: 1100px;
   margin: auto;
   margin-top: 20px;
   margin-bottom: 20px;
@@ -54,4 +54,12 @@ select {
 
 #HelpUrlsComponent .fa-link{
   margin-right: 10px;
+}
+
+#MilestoneStatus.list-group-flush{
+  border-radius: 3px;
+}
+
+#MilestoneStatus .list-group-item-dark{
+  background-color: #e9ecef;
 }

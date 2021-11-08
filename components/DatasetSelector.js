@@ -28,7 +28,7 @@ export default function DatasetSelector(props) {
             )
         return (
             <FloatingLabel label="Dataset">
-                <Form.Select size="lg"
+                <Form.Select
                     value={props.currentDatasetId}
                     onChange={handleChange}
                 >

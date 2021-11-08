@@ -5,8 +5,8 @@ import {
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faAngleDoubleLeft, faAngleDoubleRight,
-  faCheckCircle, faCircleNotch, faLink
+  faAngleDoubleLeft, faAngleDoubleRight, faCircle,
+  faCheckCircle, faCircleNotch, faLink,
 } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
@@ -133,39 +133,57 @@ export default function Index(props) {
 
     return (
       <>
-        <ProgressBar>
+        <ProgressBar className="mt-2">
           {progressBars.map(({ variant, now }, index) =>
             <ProgressBar key={index} variant={variant} now={now} />
           )}
         </ProgressBar>
-        <Badge bg="danger">{currentMilestone.title}</Badge>
-        <hr />
-        <h3>{currentTask.details.title}</h3>
-        <div dangerouslySetInnerHTML={{ __html: currentTask.details.displayHtml }}></div>
-        {currentTask.details.helpUrls &&
-          <>
-            <br />
-            <HelpUrlsComponent helpUrls={currentTask.details.helpUrls} />
-          </>
-        }
-        <hr />
+        <br />
         <Row>
-          <Col>
-            <small className="text-muted">Workflow {workflowId}</small>
-            <br />
-            <small className="text-muted">Task {currentTask.id}</small>
+          <Col md={3}>
+            <ListGroup id="MilestoneStatus" variant="flush">
+              {milestones.map(milestone =>
+                <ListGroup.Item
+                  key={milestone.id}
+                  variant={currentMilestone.id === milestone.id ? 'dark' : ''}
+                >
+                  <FontAwesomeIcon
+                    className={`me-1 ${milestone.completed ? 'text-success' : 'text-muted'}`}
+                    icon={milestone.completed ? faCheckCircle : faCircle}
+                  />
+                  <span>{milestone.title}</span>
+                </ListGroup.Item>
+              )}
+            </ListGroup>
           </Col>
-          <Col>
-            <ButtonToolbar className="justify-content-end">
-              <ButtonGroup>
-                <GoBackOneStepWorkflowTaskButton />
-                <SkipWorkflowTaskButton />
-                <CompleteWorkflowTaskButton />
-              </ButtonGroup>
-            </ButtonToolbar>
+          <Col className="border-start">
+            <h3>{currentTask.details.title}</h3>
+            <div dangerouslySetInnerHTML={{ __html: currentTask.details.displayHtml }}></div>
+            {currentTask.details.helpUrls &&
+              <>
+                <br />
+                <HelpUrlsComponent helpUrls={currentTask.details.helpUrls} />
+              </>
+            }
+            <hr />
+            <Row>
+              <Col>
+                <small className="text-muted">Workflow {workflowId}</small>
+                <br />
+                <small className="text-muted">Task {currentTask.id}</small>
+              </Col>
+              <Col>
+                <ButtonToolbar className="justify-content-end">
+                  <ButtonGroup>
+                    <GoBackOneStepWorkflowTaskButton />
+                    <SkipWorkflowTaskButton />
+                    <CompleteWorkflowTaskButton />
+                  </ButtonGroup>
+                </ButtonToolbar>
+              </Col>
+            </Row>
           </Col>
         </Row>
-
       </>
     )
 
@@ -174,7 +192,6 @@ export default function Index(props) {
   return (
     <Layout>
       <DatasetSelector {...props} />
-      <br />
       {props.datasetState && props.datasetState.id &&
         <MainPageContent {...props.datasetState} />
       }
