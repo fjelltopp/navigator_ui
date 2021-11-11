@@ -73,7 +73,7 @@ export default function Index(props) {
       } else {
         return (
           <Button
-            variant="outline-success"
+            variant="outline-danger"
             onClick={() => setTaskComplete(!taskComplete)}
           >
             <span>Task Incomplete</span>
