@@ -44,12 +44,15 @@ select {
 
 #LoginPage main {
   margin-top: 50px;
-  max-width: 500px;
+  max-width: 700px;
 }
 
-#LoginPage form {
-  margin-top: 30px;
-  margin-bottom: 30px;
+#LoginPage #LoiginForm {
+  max-width: 350px;
+}
+
+#LoginPage img{
+  max-height: 55px;
 }
 
 #MilestoneStatus.list-group-flush{
