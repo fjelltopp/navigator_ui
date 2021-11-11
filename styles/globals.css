@@ -58,10 +58,15 @@ select {
   max-height: 55px;
 }
 
-#MilestoneStatus.list-group-flush{
+#MilestonesSidebar.list-group-flush{
   border-radius: 3px;
 }
 
-#MilestoneStatus .list-group-item-dark{
+#MilestonesSidebar .list-group-item-dark{
   background-color: #e9ecef;
+}
+
+#MilestonesSidebar .progress{
+  height: 6px;
+  background-color: white;
 }

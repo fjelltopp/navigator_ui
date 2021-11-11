@@ -11,6 +11,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
+import MilestonesSidebar from '../components/MilestonesSidebar';
 import { getDatasetState, completeWorkflowTask, skipWorkflowTask } from '../lib/api';
 
 export default function Index(props) {
@@ -172,25 +173,10 @@ export default function Index(props) {
         <br />
         <Row>
           <Col md={3}>
-            <ListGroup id="MilestoneStatus" variant="flush">
-              {milestones.map(milestone =>
-                <ListGroup.Item
-                  key={milestone.id}
-                  variant={currentMilestone.id === milestone.id ? 'dark' : ''}
-                >
-                  <FontAwesomeIcon
-                    className={`me-2 ${milestone.completed ? 'text-success' : 'text-muted'}`}
-                    icon={milestone.completed ? faCheckCircle : faCircle}
-                  />
-                  <span>{milestone.title}</span>
-                </ListGroup.Item>
-              )}
-              {displayAdditionalMilestonesLabel &&
-                <ListGroup.Item className="text-muted text-center">
-                  <small>More milestones may be added</small>
-                </ListGroup.Item>
-              }
-            </ListGroup>
+            <MilestonesSidebar
+              milestones={milestones}
+              currentMilestoneId={currentMilestone.id}
+            />
           </Col>
           <Col className="border-start">
             <h4>{currentTask.details.title}</h4>
