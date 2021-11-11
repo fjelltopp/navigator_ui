@@ -1,20 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import {
   Row, Col, ButtonToolbar, ButtonGroup, Button, OverlayTrigger,
-  Tooltip, Offcanvas, ProgressBar, Badge, ListGroup
+  Tooltip, Offcanvas, ProgressBar, ListGroup
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
-  faAngleDoubleLeft, faAngleDoubleRight, faCircle,
-  faCheckCircle, faCircleNotch, faLink,
+  faAngleLeft, faAngleDoubleRight, faCircle,
+  faCheckCircle, faCircleNotch, faLink, faAngleRight,
+  faCheckSquare, faSquare
 } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
-import PopupModal from '../components/PopupModal';
 import { getDatasetState, completeWorkflowTask, skipWorkflowTask } from '../lib/api';
 
 export default function Index(props) {
   const [isLoading, setLoading] = useState(false);
+
+  // TODO: stop faking these
+  const [taskComplete, setTaskComplete] = useState(true);
+  const displayAdditionalMilestonesLabel = true;
 
   async function twentyMilisecondDelay() {
     setLoading(true);
@@ -52,6 +56,32 @@ export default function Index(props) {
       await updateDatasetState();
     }
 
+    function TaskCompleteButton() {
+      // TODO: implement
+      // TODO: better fa integration because faSquare sucks
+      if (taskComplete) {
+        return (
+          <Button
+            variant="outline-success"
+            onClick={() => setTaskComplete(!taskComplete)}
+          >
+            <span>Task Complete</span>
+            <FontAwesomeIcon icon={faCheckSquare} className="ms-2" />
+          </Button>
+        )
+      } else {
+        return (
+          <Button
+            variant="outline-success"
+            onClick={() => setTaskComplete(!taskComplete)}
+          >
+            <span>Task Incomplete</span>
+            <FontAwesomeIcon icon={faSquare} className="ms-2" />
+          </Button>
+        )
+      }
+    }
+
     function SkipWorkflowTaskButton() {
       const handleClick = () =>
         handleNextButton(skipWorkflowTask);
@@ -61,7 +91,7 @@ export default function Index(props) {
           onClick={handleClick}
           disabled={!currentTask.details.skippable}
         >
-          <FontAwesomeIcon icon={faAngleDoubleRight} className="me-2" />
+          <FontAwesomeIcon icon={faAngleRight} className="me-2" />
           <span>Next Task</span>
         </Button>
       )
@@ -89,7 +119,7 @@ export default function Index(props) {
           onClick={handleClick}
           disabled={!taskBreadcrumps.lenth}
         >
-          <FontAwesomeIcon icon={faAngleDoubleLeft} className="me-2" />
+          <FontAwesomeIcon icon={faAngleLeft} className="me-2" />
           <span>Prior Task</span>
         </Button>
       )
@@ -103,8 +133,8 @@ export default function Index(props) {
           variant="danger"
           onClick={handleClick}
         >
-          <FontAwesomeIcon icon={faCheckCircle} className="me-2" />
-          <span>I'm Done</span>
+          <FontAwesomeIcon icon={faAngleDoubleRight} className="me-2" />
+          <span>What's Next?</span>
         </Button>
       )
     }
@@ -155,23 +185,42 @@ export default function Index(props) {
                   <span>{milestone.title}</span>
                 </ListGroup.Item>
               )}
+              {displayAdditionalMilestonesLabel &&
+                <ListGroup.Item className="text-muted text-center">
+                  <small>More milestones may be added</small>
+                </ListGroup.Item>
+              }
             </ListGroup>
           </Col>
           <Col className="border-start">
-            <h3>{currentTask.details.title}</h3>
+            <h4>{currentTask.details.title}</h4>
+            <br />
             <div dangerouslySetInnerHTML={{ __html: currentTask.details.displayHtml }}></div>
-            {currentTask.details.helpUrls &&
-              <>
-                <br />
-                <HelpUrlsComponent helpUrls={currentTask.details.helpUrls} />
-              </>
-            }
+            <Row>
+              <Col xs={9}>
+                {currentTask.details.helpUrls &&
+                  <>
+                    <br />
+                    <HelpUrlsComponent helpUrls={currentTask.details.helpUrls} />
+                  </>
+                }
+              </Col>
+              <Col xs={3} className="d-flex align-items-end flex-column">
+                <div className="mt-auto">
+                  <TaskCompleteButton />
+                </div>
+              </Col>
+            </Row>
             <hr />
             <Row>
               <Col>
-                <small className="text-muted">Workflow {workflowId}</small>
-                <br />
-                <small className="text-muted">Task {currentTask.id}</small>
+                <div id="WorkflowAndTaskIds" className="text-muted">
+                  <span>Debug info:</span>
+                  <br />
+                  <span>Workflow {workflowId}</span>
+                  <br />
+                  <span>Task {currentTask.id}</span>
+                </div>
               </Col>
               <Col>
                 <ButtonToolbar className="justify-content-end">
@@ -204,7 +253,6 @@ export default function Index(props) {
           </h2>
         </Offcanvas.Body>
       </Offcanvas>
-      <PopupModal />
     </Layout>
   )
 

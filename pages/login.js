@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router'
 import { makeUseAxios } from 'axios-hooks'
-import { Row, Col, Image, Form, Button, Alert } from 'react-bootstrap';
+import { Row, Col, Image, Form, ButtonGroup, Button, Alert } from 'react-bootstrap';
 import { LogInLayout } from '../components/Layout';
 import Logo from '../components/Logo';
 import { baseAxiosConfig, attemptLogin } from '../lib/api';
@@ -46,16 +46,16 @@ export default function Login({ }) {
             <p>Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!</p>
             <p>The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done.</p>
             <hr />
-            <p>
-                <span>Please login using your </span>
-                <a
-                    href="https://adr.unaids.org"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="link-danger">adr.unaids.org</a>
-                <span> login details:</span>
-            </p>
             <div id="LoiginForm">
+                <p>
+                    <span>Please login using your </span>
+                    <a
+                        href="https://adr.unaids.org"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="link-danger">adr.unaids.org</a>
+                    <span> login details:</span>
+                </p>
                 <Form.Group className="mb-3">
                     <Form.Control
                         name="username"
@@ -79,6 +79,13 @@ export default function Login({ }) {
                     onClick={handleLogin}
                     disabled={loginStateLoading}
                 >{loginStateLoading ? 'Logging in...' : 'Login'}</Button>
+                <Button
+                    as={'a'}
+                    variant="link"
+                    href="https://adr.unaids.org/user/register"
+                    target="_blank"
+                    className="text-secondary"
+                >Register</Button>
             </div>
             <hr />
             <Row className="text-center">

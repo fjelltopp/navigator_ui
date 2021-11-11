@@ -4,12 +4,12 @@ import { ListGroup } from 'react-bootstrap';
 export default function Sidebar() {
 
     const sidebarLinks = [
-        { label: 'Home', href: '/' },
-        { label: 'My Profile', href: '/profile' },
+        { label: "What's Next?", href: '/' },
+        { label: 'Task List', href: '/tasks' },
+        // { label: 'My Profile', href: '/profile' },
         { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
-        { label: 'Training Resources', href: 'https://hivtools.unaids.org' },
-        { label: 'Help', href: 'https://hivtools.unaids.org' },
-        { label: 'Logout', href: '/logout' }
+        { label: 'Contact Us', href: 'TODO' },
+        { label: 'Log Out', href: '/logout' }
     ];
 
     const listItem = (link, key) => {

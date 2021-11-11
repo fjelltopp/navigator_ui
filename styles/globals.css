@@ -37,9 +37,9 @@ select {
   width: auto !important;
 }
 
-.badge {
-  margin-top: 10px;
-  margin-right: 10px;
+#WorkflowAndTaskIds {
+  font-size: 0.6em;
+  opacity: 0.5;
 }
 
 #LoginPage main {
@@ -48,7 +48,10 @@ select {
 }
 
 #LoginPage #LoiginForm {
-  max-width: 350px;
+  max-width: 380px;
+  margin: auto;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 
 #LoginPage img{
