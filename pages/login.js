@@ -34,7 +34,6 @@ export default function Login({ }) {
     }
     const handleLogin = () => {
         loginRequest({ data: { username, password } })
-            .then(success => console.log(success))
             .catch(error => console.error(error))
     }
 

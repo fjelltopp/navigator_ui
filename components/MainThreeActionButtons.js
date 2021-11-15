@@ -11,9 +11,9 @@ import {
     whatsNextButton
 } from '../lib/actionButtons';
 
-export function TaskCompleteCheckbox(workflowState) {
+export function TaskCompleteCheckbox({ workflow, handleClick }) {
     const buttonAppearance = (
-        workflowState.currentTask.complete
+        workflow.currentTask.complete
             ? {
                 label: 'Task Complete',
                 variant: 'outline-success',
@@ -27,18 +27,12 @@ export function TaskCompleteCheckbox(workflowState) {
     )
     const button = {
         ...buttonAppearance,
-        ...taskCompleteCheckbox(workflowState)
-    }
-    console.log(button);
-    const handleClick = () => {
-        // workflowState.currentTask.details.complete =
-        //     !workflowState.currentTask.details.complete;
-        alert(button.onClickActions);
+        ...taskCompleteCheckbox(workflow)
     }
     return (
         <Button
             variant={button.variant}
-            onClick={handleClick}
+            onClick={() => handleClick(button.onClickActions)}
             disabled={!button.enabled}
         >
             <span>{button.label}</span>
@@ -47,40 +41,37 @@ export function TaskCompleteCheckbox(workflowState) {
     )
 }
 
-export function MainThreeActionButtons(workflowState) {
+export function MainThreeActionButtons({ workflow, handleClick }) {
     const buttons = [
         {
             label: "Prior Task",
             icon: faAngleLeft,
-            ...priorTaskButton(workflowState),
+            ...priorTaskButton(workflow),
         },
         {
             label: "Next Task",
             icon: faAngleRight,
-            ...nextTaskButton(workflowState),
+            ...nextTaskButton(workflow),
         },
         {
             label: "What's Next?",
             icon: faAngleDoubleRight,
-            ...whatsNextButton(workflowState),
+            ...whatsNextButton(workflow),
         },
     ];
     return (
         <ButtonGroup>
-            {buttons.map(button => {
-                const handleClick = () =>
-                    alert(button.onClickActions);
-                return (
-                    <Button
-                        variant="danger"
-                        onClick={handleClick}
-                        disabled={!button.enabled}
-                    >
-                        <FontAwesomeIcon icon={button.icon} className="me-2" />
-                        <span>{button.label}</span>
-                    </Button>
-                )
-            })}
+            {buttons.map(button => (
+                <Button
+                    variant="danger"
+                    onClick={() => handleClick(button.onClickActions)}
+                    disabled={!button.enabled}
+                >
+                    <FontAwesomeIcon icon={button.icon} className="me-2" />
+                    <span>{button.label}</span>
+                </Button>
+            )
+            )}
         </ButtonGroup>
     )
 }

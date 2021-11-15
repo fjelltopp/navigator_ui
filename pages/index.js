@@ -12,32 +12,106 @@ import {
   TaskCompleteCheckbox,
   MainThreeActionButtons
 } from '../components/MainThreeActionButtons';
-import { getWorkflow } from '../lib/api';
+import { makeUseAxios } from 'axios-hooks'
+import {
+  baseAxiosConfig, getWorkflow, getWorkflowTask,
+  taskSkipRequest
+} from '../lib/api';
+import { actions } from '../lib/actionButtons';
+
+const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function Index(props) {
   const [isLoading, setLoading] = useState(false);
+  const [workflow, setWorkflow] = useState();
 
-  // TODO: stop faking these
-  const [taskComplete, setTaskComplete] = useState(true);
-  const displayAdditionalMilestonesLabel = true;
-
-  async function twentyMilisecondDelay() {
+  async function runWithFakeLoading(asyncFunction) {
     setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    return setLoading(false);
+    await new Promise((resolve) =>
+      setTimeout(resolve, 2000));
+    await asyncFunction;
+    setLoading(false);
   }
 
-  async function updateworkflow() {
-    await twentyMilisecondDelay();
-    await props.fetchWorkflow(
-      getWorkflow(props.currentDatasetId),
-      { manual: true }
-    );
+  const [{ }, makeApiRequest] = useAxios(
+    null, { manual: true }
+  );
+  async function fetchWorkflow() {
+    runWithFakeLoading(
+      makeApiRequest(
+        getWorkflow(props.currentDatasetId)
+      ).then(res => setWorkflow(res.data))
+    )
   }
 
   useEffect(() => {
-    updateworkflow();
+    fetchWorkflow();
   }, [props.currentDatasetId]);
+
+  function carryOutActions(actionsToCarryOut) {
+    if (!actionsToCarryOut) {
+      alert('No action set');
+      return;
+    }
+    const updateWorkflowComplete = complete => {
+      const apiRequest = complete
+        ? taskCompleteRequest
+        : taskCompleteDeleteRequest
+      makeApiRequest(
+        apiRequest(
+          props.currentDatasetId,
+          workflow.currentTask.id
+        )
+      ).then(() => {
+        let updatedWorkflow = { ...workflow };
+        updatedWorkflow.currentTask.details.complete = complete;
+        setWorkflow(updatedWorkflow)
+      })
+    }
+    actionsToCarryOut.map(async action => {
+      if (action === actions.markTaskAsComplete) {
+        updateWorkflowComplete(true);
+      } else if (action === actions.markTaskAsIncomplete) {
+        updateWorkflowComplete(false);
+      } else if ([
+        actions.getPreviousTask,
+        actions.getNextTask
+      ].includes(action)) {
+        const taskBreadcrumbs = workflow.taskBreadcrumbs;
+        const indexOfCurrentTask = taskBreadcrumbs.indexOf(workflow.currentTask.id);
+        const newTaskId = action === actions.getPreviousTask
+          ? taskBreadcrumbs[indexOfCurrentTask - 1]
+          : taskBreadcrumbs[indexOfCurrentTask + 1]
+        makeApiRequest(
+          getWorkflowTask(
+            props.currentDatasetId,
+            newTaskId
+          )
+        ).then(({ data }) => {
+          let updatedWorkflow = { ...workflow };
+          updatedWorkflow.currentTask = {
+            ...updatedWorkflow.currentTask,
+            ...data
+          }
+          setWorkflow(updatedWorkflow);
+        })
+      } else if (action === actions.skipTask) {
+        // TODO: finish implementing and test
+        // why this request is cancelled and the next request
+        // is immediatly kicked off without waiting for this one to complete
+        await makeApiRequest(
+          taskSkipRequest(
+            props.currentDatasetId,
+            workflow.currentTask.id
+          )
+        )
+      } else if (action === actions.fetchLatestWorkflowState) {
+        await fetchWorkflow();
+      } else {
+        throw new Error([`Unknown action: ${action}`])
+      }
+    });
+  }
 
   function MainPageContent({ id: workflowId, milestones, currentTask, taskBreadcrumbs, progress }) {
 
@@ -93,7 +167,10 @@ export default function Index(props) {
               </Col>
               <Col xs={3} className="d-flex align-items-end flex-column">
                 <div className="mt-auto">
-                  <TaskCompleteCheckbox {...{ currentTask, taskBreadcrumbs }} />
+                  <TaskCompleteCheckbox
+                    workflow={{ currentTask, taskBreadcrumbs }}
+                    handleClick={carryOutActions}
+                  />
                 </div>
               </Col>
             </Row>
@@ -108,7 +185,10 @@ export default function Index(props) {
               </Col>
               <Col>
                 <ButtonToolbar className="justify-content-end">
-                  <MainThreeActionButtons {...{ currentTask, taskBreadcrumbs }} />
+                  <MainThreeActionButtons
+                    workflow={{ currentTask, taskBreadcrumbs }}
+                    handleClick={carryOutActions}
+                  />
                 </ButtonToolbar>
               </Col>
             </Row>
@@ -121,9 +201,13 @@ export default function Index(props) {
 
   return (
     <Layout>
-      <DatasetSelector {...props} />
-      {props.workflow && props.workflow.id &&
-        <MainPageContent {...props.workflow} />
+      <DatasetSelector
+        currentDatasetId={props.currentDatasetId}
+        setCurrentDatasetId={props.setCurrentDatasetId}
+        user={props.user}
+      />
+      {workflow && workflow.id &&
+        <MainPageContent {...workflow} />
       }
       <Offcanvas show={isLoading} placement="top" keyboard={false}>
         <Offcanvas.Body className="text-center">

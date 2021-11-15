@@ -9,7 +9,7 @@ import { baseAxiosConfig, getDatasets } from '../lib/api';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 
-export default function DatasetSelector(props) {
+export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId, user }) {
     const [showModal, setShowModal] = useState(false);
 
     const [
@@ -30,10 +30,10 @@ export default function DatasetSelector(props) {
                 fetchDatasets();
                 setShowModal(true);
             } else {
-                props.setCurrentDatasetId(e.target.value);
+                setCurrentDatasetId(e.target.value);
             }
         }
-        const selectOptions = [...props.user.datasets.datasets, addNewDatasetOption]
+        const selectOptions = [...user.datasets.datasets, addNewDatasetOption]
             .map(dataset =>
                 <option key={dataset.id} value={dataset.id}>
                     {dataset.name}
@@ -42,7 +42,7 @@ export default function DatasetSelector(props) {
         return (
             <FloatingLabel label="Dataset">
                 <Form.Select
-                    value={props.currentDatasetId}
+                    value={currentDatasetId}
                     onChange={handleChange}
                 >
                     {selectOptions}
