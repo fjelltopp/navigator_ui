@@ -33,7 +33,7 @@ export default function DatasetSelector(props) {
                 props.setCurrentDatasetId(e.target.value);
             }
         }
-        const selectOptions = [...props.user.datasets, addNewDatasetOption]
+        const selectOptions = [...props.user.datasets.datasets, addNewDatasetOption]
             .map(dataset =>
                 <option key={dataset.id} value={dataset.id}>
                     {dataset.name}

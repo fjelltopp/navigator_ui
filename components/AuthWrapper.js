@@ -23,14 +23,15 @@ export default function AuthWrapper({ Component, pageProps }) {
         loading: datasetsLoading,
         error: datasetsError
     }] = useAxios(getDatasets);
-    const [
-        {
-            data: datasetState,
-            loading: datasetStateLoading,
-            error: datasetStateError
-        },
-        fetchDatasetState
-    ] = useAxios(getWorkflow, {manual: true});
+    // const [
+    //     {
+    //         data: workflow,
+    //         loading: workflowLoading,
+    //         error: workflowError
+    //     },
+    //     fetchWorkflow
+    // ] = useAxios(getWorkflow, {manual: true});
+    
 
     if (userDetailsLoading || datasetsLoading) {
         return <p>Loading...</p>
@@ -44,7 +45,7 @@ export default function AuthWrapper({ Component, pageProps }) {
         }
     } else {
         if (!currentDatasetId) {
-            setCurrentDatasetId(datasets[0].id);
+            setCurrentDatasetId(datasets.datasets[0].id);
         }
         return <Component {...{
             ...pageProps,
@@ -53,10 +54,10 @@ export default function AuthWrapper({ Component, pageProps }) {
                 datasets
             },
             currentDatasetId, setCurrentDatasetId,
-            datasetState,
-            datasetStateLoading,
-            datasetStateError,
-            fetchDatasetState,
+            workflow,
+            workflowLoading,
+            workflowError,
+            fetchWorkflow,
         }} />
     }
 

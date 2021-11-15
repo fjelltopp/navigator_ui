@@ -4,7 +4,7 @@ import { makeUseAxios } from 'axios-hooks'
 import { Row, Col, Image, Form, ButtonGroup, Button, Alert } from 'react-bootstrap';
 import { LogInLayout } from '../components/Layout';
 import Logo from '../components/Logo';
-import { baseAxiosConfig, attemptLogin } from '../lib/api';
+import { baseAxiosConfig, loginApiRequest } from '../lib/api';
 
 const logos = [
     '/images/unaids.png',
@@ -27,7 +27,7 @@ export default function Login({ }) {
             error: loginStateError
         },
         loginRequest
-    ] = useAxios(attemptLogin, { manual: true });
+    ] = useAxios(loginApiRequest, { manual: true });
 
     if (loginState) {
         router.push('/');
