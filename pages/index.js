@@ -27,8 +27,8 @@ export default function Index(props) {
 
   async function runWithFakeLoading(asyncFunction) {
     setLoading(true);
-    await new Promise((resolve) =>
-      setTimeout(resolve, 2000));
+    // await new Promise((resolve) =>
+    //   setTimeout(resolve, 2000));
     await asyncFunction;
     setLoading(false);
   }
