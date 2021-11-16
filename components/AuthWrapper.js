@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import { makeUseAxios } from 'axios-hooks'
 import {
     baseAxiosConfig, getUserDetails, getDatasets,
-} from '../lib/api.js';
+} from '../lib/api';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 

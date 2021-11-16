@@ -9,7 +9,7 @@ import {
     priorTaskButton,
     nextTaskButton,
     whatsNextButton
-} from '../lib/actionButtons.js';
+} from '../lib/actionButtons';
 
 export function TaskCompleteCheckbox({ workflow, handleClick }) {
     const buttonAppearance = (
