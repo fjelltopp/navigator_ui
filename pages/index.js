@@ -11,7 +11,7 @@ import MilestonesSidebar from '../components/MilestonesSidebar';
 import {
   TaskCompleteCheckbox,
   MainThreeActionButtons
-} from '../components/MainThreeactionButtons';
+} from '../components/ActionButtons';
 import { makeUseAxios } from 'axios-hooks'
 import {
   baseAxiosConfig, getWorkflow, getWorkflowTask,
