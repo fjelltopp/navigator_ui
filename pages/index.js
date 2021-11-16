@@ -89,10 +89,7 @@ export default function Index(props) {
           )
         ).then(({ data }) => {
           let updatedWorkflow = { ...workflow };
-          updatedWorkflow.currentTask = {
-            ...updatedWorkflow.currentTask,
-            ...data
-          }
+          updatedWorkflow.currentTask = { ...data };
           setWorkflow(updatedWorkflow);
         })
       } else if (action === actions.skipTask) {
