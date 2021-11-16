@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { makeUseAxios } from 'axios-hooks'
-import { baseAxiosConfig, logoutApiRequest } from '../lib/api';
+import { baseAxiosConfig, logoutApiRequest } from '../lib/api.js';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 

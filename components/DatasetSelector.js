@@ -5,7 +5,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFolder } from '@fortawesome/free-solid-svg-icons';
 import { makeUseAxios } from 'axios-hooks'
-import { baseAxiosConfig, getDatasets } from '../lib/api';
+import { baseAxiosConfig, getDatasets } from '../lib/api.js';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 

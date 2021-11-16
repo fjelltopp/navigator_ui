@@ -11,13 +11,13 @@ import MilestonesSidebar from '../components/MilestonesSidebar';
 import {
   TaskCompleteCheckbox,
   MainThreeActionButtons
-} from '../components/MainThreeActionButtons';
+} from '../components/MainThreeactionButtons.js';
 import { makeUseAxios } from 'axios-hooks'
 import {
   baseAxiosConfig, getWorkflow, getWorkflowTask,
   taskSkipRequest
-} from '../lib/api';
-import { actions } from '../lib/actionButtons';
+} from '../lib/api.js';
+import { actions } from '../lib/actionButtons.js';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 
