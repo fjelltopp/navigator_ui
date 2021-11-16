@@ -15,7 +15,7 @@ import {
 import { makeUseAxios } from 'axios-hooks'
 import {
   baseAxiosConfig, getWorkflow, getWorkflowTask,
-  taskSkipRequest
+  taskSkipRequest, taskCompleteRequest, taskCompleteDeleteRequest
 } from '../lib/api';
 import { actions } from '../lib/actionButtons';
 
@@ -214,6 +214,7 @@ export default function Index(props) {
           </h2>
         </Offcanvas.Body>
       </Offcanvas>
+      <pre>{JSON.stringify(workflow, null, 3)}</pre>
     </Layout>
   )
 
