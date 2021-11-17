@@ -4,7 +4,7 @@ import {
   ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch, faLink } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faLink, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
 import MilestonesSidebar from '../components/MilestonesSidebar';
@@ -25,7 +25,7 @@ export default function Index(props) {
   const [displayState, setDisplayState] = useState(false);
   const [workflow, setWorkflow] = useState();
 
-  const [{ loading }, makeApiRequest] = useAxios(
+  const [{ loading, error }, makeApiRequest] = useAxios(
     null, { manual: true }
   );
   async function fetchWorkflow() {
@@ -212,6 +212,14 @@ export default function Index(props) {
             <FontAwesomeIcon icon={faCircleNotch} spin className="me-2" />
             <span>Please wait...</span>
           </h2>
+        </Offcanvas.Body>
+      </Offcanvas>
+      <Offcanvas show={error} placement="top" keyboard={false}>
+        <Offcanvas.Body className="text-center">
+          <h4 className="text-danger">
+            <FontAwesomeIcon icon={faExclamationCircle} className="me-2" />
+            <span>Something went wrong, please refresh this page</span>
+          </h4>
         </Offcanvas.Body>
       </Offcanvas>
       {displayState && (
