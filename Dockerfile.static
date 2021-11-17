@@ -1,0 +1,13 @@
+# Install dependencies only when needed
+FROM node:lts-buster-slim as builder
+WORKDIR /app
+ENV NEXT_TELEMETRY_DISABLED 1
+ARG REACT_APP_BASE_URL=https://navigator.fjelltopp.org  
+COPY . .
+RUN yarn install --frozen-lockfile && \
+    yarn run build
+
+FROM nginx:stable as runner
+COPY --from=builder /app/build /usr/share/nginx/html
+
+
