@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
-import { ListGroup, ProgressBar } from 'react-bootstrap';
+import { Row, Col, ListGroup, ProgressBar } from 'react-bootstrap';
 
 export default function MilestonesSidebar(props) {
 
@@ -11,8 +11,10 @@ export default function MilestonesSidebar(props) {
         const iconIcon = milestone.completed ? faCheckCircle : faCircle;
         return (
             <ListGroup.Item key={milestone.id} variant={variant}>
-                <FontAwesomeIcon className={`me-2 ${iconColor}`} icon={iconIcon} />
-                <span>{milestone.title}</span>
+                <Row>
+                    <Col xs={1}><FontAwesomeIcon className={`me-2 ${iconColor}`} icon={iconIcon} /></Col>
+                    <Col>{milestone.title}</Col>
+                </Row>
                 {active && (
                     <ProgressBar className="mb-1 mt-1">
                         <ProgressBar variant="danger" now={milestone.progress} />
