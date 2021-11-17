@@ -11,7 +11,20 @@ import {
     whatsNextButton
 } from '../lib/actionButtons';
 
-export function TaskCompleteCheckbox({ workflow, handleClick }) {
+const displayStatsData = (displayState, onClickActions) => (
+    <>
+        {displayState &&
+            (
+                <div>
+                    <hr />
+                    <pre>{onClickActions || ['null'].map(action => <p>{action}</p>)}</pre>
+                </div>
+            )
+        }
+    </>
+)
+
+export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
     const buttonAppearance = (
         workflow.currentTask.complete
             ? {
@@ -37,11 +50,12 @@ export function TaskCompleteCheckbox({ workflow, handleClick }) {
         >
             <span>{button.label}</span>
             <FontAwesomeIcon icon={button.icon} className="ms-2" />
+            {displayStatsData(displayState, button.onClickActions)}
         </Button>
     )
 }
 
-export function MainThreeActionButtons({ workflow, handleClick }) {
+export function MainThreeActionButtons({ workflow, handleClick, displayState }) {
     const buttons = [
         {
             label: "Prior Task",
@@ -62,14 +76,18 @@ export function MainThreeActionButtons({ workflow, handleClick }) {
     return (
         <ButtonGroup>
             {buttons.map(button => (
-                <Button
-                    variant="danger"
-                    onClick={() => handleClick(button.onClickActions)}
-                    disabled={!button.enabled}
-                >
-                    <FontAwesomeIcon icon={button.icon} className="me-2" />
-                    <span>{button.label}</span>
-                </Button>
+                <>
+                    <Button
+                        key={button.label}
+                        variant="danger"
+                        onClick={() => handleClick(button.onClickActions)}
+                        disabled={!button.enabled}
+                    >
+                        <FontAwesomeIcon icon={button.icon} className="me-2" />
+                        <span>{button.label}</span>
+                        {displayStatsData(displayState, button.onClickActions)}
+                    </Button>
+                </>
             )
             )}
         </ButtonGroup>

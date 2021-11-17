@@ -22,26 +22,16 @@ import { actions } from '../lib/actionButtons';
 const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function Index(props) {
-  const [isLoading, setLoading] = useState(false);
+  const [displayState, setDisplayState] = useState(false);
   const [workflow, setWorkflow] = useState();
 
-  async function runWithFakeLoading(asyncFunction) {
-    setLoading(true);
-    // await new Promise((resolve) =>
-    //   setTimeout(resolve, 2000));
-    await asyncFunction;
-    setLoading(false);
-  }
-
-  const [{ }, makeApiRequest] = useAxios(
+  const [{ loading }, makeApiRequest] = useAxios(
     null, { manual: true }
   );
   async function fetchWorkflow() {
-    runWithFakeLoading(
-      makeApiRequest(
-        getWorkflow(props.currentDatasetId)
-      ).then(res => setWorkflow(res.data))
-    )
+    makeApiRequest(
+      getWorkflow(props.currentDatasetId)
+    ).then(res => setWorkflow(res.data))
   }
 
   useEffect(() => {
@@ -49,65 +39,68 @@ export default function Index(props) {
   }, [props.currentDatasetId]);
 
   function carryOutActions(actionsToCarryOut) {
-    if (!actionsToCarryOut) {
-      alert('No action set');
-      return;
-    }
-    const updateWorkflowComplete = complete => {
-      const apiRequest = complete
-        ? taskCompleteRequest
-        : taskCompleteDeleteRequest
-      makeApiRequest(
-        apiRequest(
-          props.currentDatasetId,
-          workflow.currentTask.id
-        )
-      ).then(() => {
+    const updateWorkflowComplete = (complete, postToApi) => {
+      function updateLocalState() {
         let updatedWorkflow = { ...workflow };
         updatedWorkflow.currentTask.details.complete = complete;
         setWorkflow(updatedWorkflow)
-      })
-    }
-    actionsToCarryOut.map(async action => {
-      if (action === actions.markTaskAsComplete) {
-        updateWorkflowComplete(true);
-      } else if (action === actions.markTaskAsIncomplete) {
-        updateWorkflowComplete(false);
-      } else if ([
-        actions.getPreviousTask,
-        actions.getNextTask
-      ].includes(action)) {
-        const taskBreadcrumbs = workflow.taskBreadcrumbs;
-        const indexOfCurrentTask = taskBreadcrumbs.indexOf(workflow.currentTask.id);
-        const newTaskId = action === actions.getPreviousTask
-          ? taskBreadcrumbs[indexOfCurrentTask - 1]
-          : taskBreadcrumbs[indexOfCurrentTask + 1]
+      }
+      if (postToApi) {
+        const apiRequest = complete
+          ? taskCompleteRequest
+          : taskCompleteDeleteRequest
         makeApiRequest(
-          getWorkflowTask(
-            props.currentDatasetId,
-            newTaskId
-          )
-        ).then(({ data }) => {
-          let updatedWorkflow = { ...workflow };
-          updatedWorkflow.currentTask = { ...data };
-          setWorkflow(updatedWorkflow);
-        })
-      } else if (action === actions.skipTask) {
-        // TODO: finish implementing and test
-        // why this request is cancelled and the next request
-        // is immediatly kicked off without waiting for this one to complete
-        await makeApiRequest(
-          taskSkipRequest(
+          apiRequest(
             props.currentDatasetId,
             workflow.currentTask.id
           )
-        )
-      } else if (action === actions.fetchLatestWorkflowState) {
-        await fetchWorkflow();
+        ).then(() => updateLocalState())
       } else {
-        throw new Error([`Unknown action: ${action}`])
+        updateLocalState();
       }
-    });
+    }
+
+    // TODO: globally rename actionToCarryOut
+    // to singular actionsToCarryOut
+    const action = actionsToCarryOut[0];
+
+    if (action === actions.markTaskAsComplete) {
+      updateWorkflowComplete(true, true);
+    } else if (action === actions.markTaskAsIncomplete) {
+      updateWorkflowComplete(false, true);
+    } else if ([
+      actions.getPreviousTask,
+      actions.getNextTask
+    ].includes(action)) {
+      const taskBreadcrumbs = workflow.taskBreadcrumbs;
+      const indexOfCurrentTask = taskBreadcrumbs.indexOf(workflow.currentTask.id);
+      const newTaskId = action === actions.getPreviousTask
+        ? taskBreadcrumbs[indexOfCurrentTask - 1]
+        : taskBreadcrumbs[indexOfCurrentTask + 1]
+      makeApiRequest(
+        getWorkflowTask(
+          props.currentDatasetId,
+          newTaskId
+        )
+      ).then(({ data }) => {
+        let updatedWorkflow = { ...workflow };
+        updatedWorkflow.currentTask = { ...data };
+        setWorkflow(updatedWorkflow);
+      })
+    } else if (action === actions.skipTask) {
+      makeApiRequest(
+        taskSkipRequest(
+          props.currentDatasetId,
+          workflow.currentTask.id
+        )
+      ).then(() => fetchWorkflow());
+    } else if (action === actions.fetchLatestWorkflowState) {
+      fetchWorkflow();
+    } else if (action === actions.toggleCompleteStateLocally) {
+      updateWorkflowComplete(!workflow.currentTask.details.complete, false);
+    } else {
+      throw new Error([`Unknown action: ${action}`])
+    }
   }
 
   function MainPageContent({ id: workflowId, milestones, currentTask, taskBreadcrumbs, progress }) {
@@ -167,6 +160,7 @@ export default function Index(props) {
                   <TaskCompleteCheckbox
                     workflow={{ currentTask, taskBreadcrumbs }}
                     handleClick={carryOutActions}
+                    displayState={displayState}
                   />
                 </div>
               </Col>
@@ -175,9 +169,11 @@ export default function Index(props) {
             <Row>
               <Col>
                 <div id="WorkflowAndTaskIds">
-                  <span>Workflow {workflowId}</span>
-                  <br />
-                  <span>Task {currentTask.id}</span>
+                  <div>Workflow {workflowId}</div>
+                  <div>Task {currentTask.id}</div>
+                  <div>
+                    <a onClick={() => setDisplayState(!displayState)}>Debug Mode</a>
+                  </div>
                 </div>
               </Col>
               <Col>
@@ -185,6 +181,7 @@ export default function Index(props) {
                   <MainThreeActionButtons
                     workflow={{ currentTask, taskBreadcrumbs }}
                     handleClick={carryOutActions}
+                    displayState={displayState}
                   />
                 </ButtonToolbar>
               </Col>
@@ -206,7 +203,7 @@ export default function Index(props) {
       {workflow && workflow.id &&
         <MainPageContent {...workflow} />
       }
-      <Offcanvas show={isLoading} placement="top" keyboard={false}>
+      <Offcanvas show={loading} placement="top" keyboard={false}>
         <Offcanvas.Body className="text-center">
           <h2 className="text-danger">
             <FontAwesomeIcon icon={faCircleNotch} spin className="me-2" />
@@ -214,7 +211,12 @@ export default function Index(props) {
           </h2>
         </Offcanvas.Body>
       </Offcanvas>
-      <pre>{JSON.stringify(workflow, null, 3)}</pre>
+      {displayState && (
+        <>
+          <hr />
+          <pre style={{ fontSize: 10 }}>{JSON.stringify(workflow, null, 3)}</pre>
+        </>
+      )}
     </Layout>
   )
 
