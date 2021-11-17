@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   Row, Col, ButtonToolbar, ListGroup, Offcanvas,
-  ProgressBar
+  ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCircleNotch, faLink } from '@fortawesome/free-solid-svg-icons';
@@ -103,7 +103,7 @@ export default function Index(props) {
     }
   }
 
-  function MainPageContent({ id: workflowId, milestones, currentTask, taskBreadcrumbs, progress }) {
+  function MainPageContent({ id: workflowId, milestones, message, currentTask, taskBreadcrumbs, progress }) {
 
     function HelpUrlsComponent({ helpUrls }) {
       return (
@@ -143,6 +143,9 @@ export default function Index(props) {
             />
           </Col>
           <Col className="border-start">
+            {message && (
+              <Alert variant={message.level}>{message.text}</Alert>
+            )}
             <h4>{currentTask.details.title}</h4>
             <br />
             <div dangerouslySetInnerHTML={{ __html: currentTask.details.displayHTML }}></div>
