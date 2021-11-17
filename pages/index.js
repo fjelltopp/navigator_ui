@@ -103,7 +103,7 @@ export default function Index(props) {
     }
   }
 
-  function MainPageContent({ id: workflowId, milestones, message, currentTask, taskBreadcrumbs, progress }) {
+  function MainPageContent({ id: workflowId, milestones, message, currentTask, taskBreadcrumbs, progress, milestoneListFullyResolved }) {
 
     function HelpUrlsComponent({ helpUrls }) {
       return (
@@ -139,7 +139,7 @@ export default function Index(props) {
             <MilestonesSidebar
               milestones={milestones}
               currentMilestoneId={currentTask.milestoneID}
-              milestoneListFullyResolved={currentTask.milestoneListFullyResolved}
+              milestoneListFullyResolved={milestoneListFullyResolved}
             />
           </Col>
           <Col className="border-start">
