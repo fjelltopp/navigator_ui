@@ -26,7 +26,7 @@ const displayStatsData = (displayState, onClickActions) => (
 
 export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
     const buttonAppearance = (
-        workflow.currentTask.complete
+        workflow.currentTask.details.complete
             ? {
                 label: 'Task Complete',
                 variant: 'outline-success',
