@@ -38,7 +38,7 @@ export default function Index(props) {
     fetchWorkflow();
   }, [props.currentDatasetId]);
 
-  function carryOutActions(actionsToCarryOut) {
+  function carryOutActions(actionToCarryOut) {
     const updateWorkflowComplete = (complete, postToApi) => {
       function updateLocalState() {
         let updatedWorkflow = { ...workflow };
@@ -59,22 +59,17 @@ export default function Index(props) {
         updateLocalState();
       }
     }
-
-    // TODO: globally rename actionToCarryOut
-    // to singular actionsToCarryOut
-    const action = actionsToCarryOut[0];
-
-    if (action === actions.markTaskAsComplete) {
+    if (actionToCarryOut === actions.markTaskAsComplete) {
       updateWorkflowComplete(true, true);
-    } else if (action === actions.markTaskAsIncomplete) {
+    } else if (actionToCarryOut === actions.markTaskAsIncomplete) {
       updateWorkflowComplete(false, true);
     } else if ([
       actions.getPreviousTask,
       actions.getNextTask
-    ].includes(action)) {
+    ].includes(actionToCarryOut)) {
       const taskBreadcrumbs = workflow.taskBreadcrumbs;
       const indexOfCurrentTask = taskBreadcrumbs.indexOf(workflow.currentTask.id);
-      const newTaskId = action === actions.getPreviousTask
+      const newTaskId = actionToCarryOut === actions.getPreviousTask
         ? taskBreadcrumbs[indexOfCurrentTask - 1]
         : taskBreadcrumbs[indexOfCurrentTask + 1]
       makeApiRequest(
@@ -87,19 +82,19 @@ export default function Index(props) {
         updatedWorkflow.currentTask = { ...data };
         setWorkflow(updatedWorkflow);
       })
-    } else if (action === actions.skipTask) {
+    } else if (actionToCarryOut === actions.skipTask) {
       makeApiRequest(
         taskSkipRequest(
           props.currentDatasetId,
           workflow.currentTask.id
         )
       ).then(() => fetchWorkflow());
-    } else if (action === actions.fetchLatestWorkflowState) {
+    } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
       fetchWorkflow();
-    } else if (action === actions.toggleCompleteStateLocally) {
+    } else if (actionToCarryOut === actions.toggleCompleteStateLocally) {
       updateWorkflowComplete(!workflow.currentTask.details.complete, false);
     } else {
-      throw new Error([`Unknown action: ${action}`])
+      throw new Error([`Unknown action: ${actionToCarryOut}`])
     }
   }
 

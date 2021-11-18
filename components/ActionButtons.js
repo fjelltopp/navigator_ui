@@ -11,17 +11,11 @@ import {
     whatsNextButton
 } from '../lib/actionButtons';
 
-const displayStatsData = (displayState, onClickActions) => (
-    <>
-        {displayState &&
-            (
-                <div>
-                    <hr />
-                    <pre>{onClickActions || ['null'].map(action => <p>{action}</p>)}</pre>
-                </div>
-            )
-        }
-    </>
+const displayStatsData = (onClickAction) => (
+    <div>
+        <hr />
+        <p>{onClickAction}</p>
+    </div>
 )
 
 export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
@@ -45,12 +39,12 @@ export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
     return (
         <Button
             variant={button.variant}
-            onClick={() => handleClick(button.onClickActions)}
+            onClick={() => handleClick(button.onClickAction)}
             disabled={!button.enabled}
         >
             <span>{button.label}</span>
             <FontAwesomeIcon icon={button.icon} className="ms-2" />
-            {displayStatsData(displayState, button.onClickActions)}
+            {button.onClickAction && displayStatsData(button.onClickAction)}
         </Button>
     )
 }
@@ -80,12 +74,12 @@ export function MainThreeActionButtons({ workflow, handleClick, displayState }) 
                     <Button
                         key={button.label}
                         variant="danger"
-                        onClick={() => handleClick(button.onClickActions)}
+                        onClick={() => handleClick(button.onClickAction)}
                         disabled={!button.enabled}
                     >
                         <FontAwesomeIcon icon={button.icon} className="me-2" />
                         <span>{button.label}</span>
-                        {displayStatsData(displayState, button.onClickActions)}
+                        {button.onClickAction && displayStatsData(button.onClickAction)}
                     </Button>
                 </>
             )
