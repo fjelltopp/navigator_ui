@@ -1,83 +1,62 @@
 import React, { useState } from 'react';
-import {
-    Row, Col, Form, Modal, Image, ListGroup, FloatingLabel
-} from 'react-bootstrap';
+import { Row, Col, ListGroup, Button, Collapse } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFolder } from '@fortawesome/free-solid-svg-icons';
+import { faCaretDown, faFile } from '@fortawesome/free-solid-svg-icons';
 import { makeUseAxios } from 'axios-hooks'
 import { baseAxiosConfig, getDatasets } from '../lib/api';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 
-export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId, user }) {
-    const [showModal, setShowModal] = useState(false);
+export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId, datasets }) {
+    const [open, setOpen] = useState(false);
 
-    const [
-        {
-            data: datasets,
-            loading: datasetsLoading,
-        },
-        fetchDatasets
-    ] = useAxios(getDatasets, { manual: true });
+    const CurrentDatasetName = datasets
+        .filter(x => x.id === currentDatasetId)[0].name;
 
-    function SelectDatasetInput() {
-        const addNewDatasetOption = {
-            id: "0",
-            name: '+ Add New Dataset'
-        };
-        const handleChange = e => {
-            if (e.target.value === addNewDatasetOption.id) {
-                fetchDatasets();
-                setShowModal(true);
-            } else {
-                setCurrentDatasetId(e.target.value);
-            }
-        }
-        const selectOptions = [...user.datasets.datasets, addNewDatasetOption]
-            .map(dataset =>
-                <option key={dataset.id} value={dataset.id}>
-                    {dataset.name}
-                </option>
-            )
+    function DatasetsListView() {
         return (
-            <FloatingLabel label="Dataset">
-                <Form.Select
-                    value={currentDatasetId}
-                    onChange={handleChange}
-                >
-                    {selectOptions}
-                </Form.Select>
-            </FloatingLabel>
+            <ListGroup variant="flush" className="shadow bg-body m-3 mt-">
+                {datasets.map(dataset =>
+                    <ListGroup.Item
+                        key={dataset.id}
+                        action
+                        onClick={() => setCurrentDatasetId(dataset.id)}
+                    >
+                        <Row>
+                            <Col xs={1} className="text-center">
+                                <FontAwesomeIcon icon={faFile} className="mt-3" />
+                            </Col>
+                            <Col>
+                                <div><b>{dataset.name}</b></div>
+                                <div>{dataset.organizationName}</div>
+                            </Col>
+                        </Row>
+                    </ListGroup.Item>
+                )}
+            </ListGroup>
         )
     }
 
-    const listView = () => (
-        <ListGroup variant="flush">
-            {datasets && datasets.map(dataset =>
-                <ListGroup.Item
-                    key={dataset.id}
-                    action
-                    onClick={() => alert(dataset.id)}
-                >
-                    <FontAwesomeIcon icon={faFolder} className="me-2" />
-                    <span>{dataset.name}</span>
-                </ListGroup.Item>
-            )}
-        </ListGroup>
+    return (
+        <>
+            <Button
+                variant="outline-secondary"
+                onClick={() => setOpen(!open)}
+                aria-controls="DatasetListView"
+                aria-expanded={open}
+            >
+                {CurrentDatasetName}
+                <FontAwesomeIcon icon={faCaretDown} className="ms-2" />
+            </Button>
+            <Collapse in={open}>
+                <Row>
+                    <Col xs={6}>
+                        <div id="DatasetListView">
+                            <DatasetsListView />
+                        </div>
+                    </Col>
+                </Row>
+            </Collapse>
+        </>
     )
-
-    function AddNewDatasetModal() {
-        return (
-            <Modal show={showModal} onHide={() => setShowModal(false)}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Add New Dataset</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    {datasetsLoading ? 'Loading...' : listView()}
-                </Modal.Body>
-            </Modal>
-        )
-    }
-
-    return (<><SelectDatasetInput /><AddNewDatasetModal /></>)
 }

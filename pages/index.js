@@ -196,7 +196,7 @@ export default function Index(props) {
       <DatasetSelector
         currentDatasetId={props.currentDatasetId}
         setCurrentDatasetId={props.setCurrentDatasetId}
-        user={props.user}
+        datasets={props.user.datasets}
       />
       {workflow && workflow.id &&
         <MainPageContent {...workflow} />

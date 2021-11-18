@@ -40,7 +40,7 @@ export default function AuthWrapper({ Component, pageProps }) {
             ...pageProps,
             user: {
                 ...userDetails,
-                datasets
+                datasets: datasets.datasets
             },
             currentDatasetId, setCurrentDatasetId,
         }} />
