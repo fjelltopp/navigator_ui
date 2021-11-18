@@ -82,7 +82,7 @@ export default function Index(props) {
         updatedWorkflow.currentTask = { ...data };
         setWorkflow(updatedWorkflow);
       })
-    } else if (actionToCarryOut === actions.skipTask) {
+    } else if (actionToCarryOut === actions.skipTaskAndFetchLatestWorkflowState) {
       makeApiRequest(
         taskSkipRequest(
           props.currentDatasetId,
