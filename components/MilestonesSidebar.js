@@ -9,17 +9,18 @@ export default function MilestonesSidebar(props) {
         const variant = active ? 'dark' : null;
         const iconColor = milestone.completed ? 'text-success' : 'text-muted';
         const iconIcon = milestone.completed ? faCheckCircle : faCircle;
+        const displayProgress = active || (milestone.progress > 0);        
         return (
             <ListGroup.Item key={milestone.id} variant={variant}>
                 <Row>
                     <Col xs={1}><FontAwesomeIcon className={`me-2 ${iconColor}`} icon={iconIcon} /></Col>
                     <Col>{milestone.title}</Col>
                 </Row>
-                {(active || milestone.progress) && (
+                {displayProgress &&
                     <ProgressBar className="mb-1 mt-1">
                         <ProgressBar variant="danger" now={milestone.progress || 1} />
                     </ProgressBar>
-                )}
+                }
             </ListGroup.Item>
         )
     }
