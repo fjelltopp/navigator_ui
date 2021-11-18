@@ -2,9 +2,7 @@ import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { makeUseAxios } from 'axios-hooks'
 import {
-    baseAxiosConfig,
-    getUserDetails, getDatasets,
-    getWorkflow
+    baseAxiosConfig, getUserDetails, getDatasets,
 } from '../lib/api';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
@@ -23,14 +21,6 @@ export default function AuthWrapper({ Component, pageProps }) {
         loading: datasetsLoading,
         error: datasetsError
     }] = useAxios(getDatasets);
-    const [
-        {
-            data: datasetState,
-            loading: datasetStateLoading,
-            error: datasetStateError
-        },
-        fetchDatasetState
-    ] = useAxios(getWorkflow, {manual: true});
 
     if (userDetailsLoading || datasetsLoading) {
         return <p>Loading...</p>
@@ -44,19 +34,15 @@ export default function AuthWrapper({ Component, pageProps }) {
         }
     } else {
         if (!currentDatasetId) {
-            setCurrentDatasetId(datasets[0].id);
+            setCurrentDatasetId(datasets.datasets[0].id);
         }
         return <Component {...{
             ...pageProps,
             user: {
                 ...userDetails,
-                datasets
+                datasets: datasets.datasets
             },
             currentDatasetId, setCurrentDatasetId,
-            datasetState,
-            datasetStateLoading,
-            datasetStateError,
-            fetchDatasetState,
         }} />
     }
 

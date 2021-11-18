@@ -6,7 +6,7 @@ import '../styles/globals.css'
 
 export default function MyApp({ Component, pageProps }) {
   const { asPath } = useRouter();
-  const insecurePages = ['/login'];
+  const insecurePages = ['/login', '/logout', '/manoj'];
 
   if (insecurePages.includes(asPath)) {
     return <Component {...pageProps} />

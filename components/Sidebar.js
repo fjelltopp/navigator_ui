@@ -1,24 +1,41 @@
 import Link from 'next/link'
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Badge } from 'react-bootstrap';
 
 export default function Sidebar() {
 
+    const workInProgress = label => {
+        const badgeStyle = {
+            opacity: 0.5,
+            fontWeight: 'normal'
+        }
+        return (
+            <>
+                <span>{label} </span>
+                <Badge bg="danger" style={badgeStyle}>WIP</Badge>
+            </>
+        )
+    };
+
     const sidebarLinks = [
-        { label: 'Home', href: '/' },
-        { label: 'My Profile', href: '/profile' },
+        { label: "What's Next?", href: '/' },
+        { label: workInProgress('Task List'), href: '/tasks' },
         { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
-        { label: 'Training Resources', href: 'https://hivtools.unaids.org' },
-        { label: 'Help', href: 'https://hivtools.unaids.org' },
-        { label: 'Logout', href: 'https://example.com/' } // TODO: configure
+        { label: workInProgress('Contact Us'), href: 'TODO' },
+        { label: 'Log Out', href: '/logout' }
     ];
 
     const listItem = (link, key) => {
-        if (link.href.includes('http')) {
+        // TODO: figure out why we need this strange work around to get
+        // the logout page to open without calling AuthWrapper.js
+        const isLogoutLink = link.href === '/logout';
+        if (link.href.includes('http') || isLogoutLink) {
+            const handleClick = () =>
+                window.open(link.href, isLogoutLink ? '_self' : '_blank');
             return (
                 <ListGroup.Item
                     action
                     key={key}
-                    onClick={() => window.open(link.href, '_blank')}>
+                    onClick={handleClick}>
                     <span>{link.label}</span>
                 </ListGroup.Item>
             )

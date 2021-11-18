@@ -1,112 +1,104 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Row, Col, ButtonToolbar, ButtonGroup, Button, OverlayTrigger,
-  Tooltip, Offcanvas, ProgressBar, Badge, ListGroup
+  Row, Col, ButtonToolbar, ListGroup, Offcanvas,
+  ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faAngleDoubleLeft, faAngleDoubleRight,
-  faCheckCircle, faCircleNotch, faLink
-} from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faLink, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
-import { getDatasetState, completeWorkflowTask, skipWorkflowTask } from '../lib/api';
+import MilestonesSidebar from '../components/MilestonesSidebar';
+import {
+  TaskCompleteCheckbox,
+  MainThreeActionButtons
+} from '../components/ActionButtons';
+import { makeUseAxios } from 'axios-hooks'
+import {
+  baseAxiosConfig, getWorkflow, getWorkflowTask,
+  taskSkipRequest, taskCompleteRequest, taskCompleteDeleteRequest
+} from '../lib/api';
+import { actions } from '../lib/actionButtons';
+
+const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function Index(props) {
-  const [isLoading, setLoading] = useState(false);
+  const [displayState, setDisplayState] = useState(false);
+  const [workflow, setWorkflow] = useState();
 
-  async function twentyMilisecondDelay() {
-    setLoading(true);
-    await new Promise((resolve) => setTimeout(resolve, 2000));
-    return setLoading(false);
-  }
-
-  async function updateDatasetState() {
-    await twentyMilisecondDelay();
-    await props.fetchDatasetState(
-      getDatasetState(props.currentDatasetId),
-      { manual: true }
-    );
+  const [{ loading, error }, makeApiRequest] = useAxios(
+    null, { manual: true }
+  );
+  async function fetchWorkflow() {
+    makeApiRequest(
+      getWorkflow(props.currentDatasetId)
+    ).then(res => setWorkflow(res.data))
   }
 
   useEffect(() => {
-    updateDatasetState();
+    fetchWorkflow();
   }, [props.currentDatasetId]);
 
-  function MainPageContent({ id: workflowId, milestones, taskBreadcrumps, currentTask }) {
-
-    const currentMilestone = milestones.filter(
-      milestone => milestone.id === currentTask.details.milestoneId
-    )[0];
-    const progressBars = [
-      { variant: "danger", now: currentMilestone.progress },
-      // TODO: figure out if we've gone back steps and add
-      // the grey part of the progress bar back:
-      // { variant: "secondary", now: 10 }
-    ];
-
-    const handleNextButton = async apiRequest => {
-      const apiRequestConfig = apiRequest(workflowId, currentTask.id);
-      await props.fetchDatasetState(apiRequestConfig);
-      await updateDatasetState();
-    }
-
-    function SkipWorkflowTaskButton() {
-      const handleClick = () =>
-        handleNextButton(skipWorkflowTask);
-      const button = (
-        <Button
-          variant="danger"
-          onClick={handleClick}
-          disabled={!currentTask.details.skippable}
-        >
-          <FontAwesomeIcon icon={faAngleDoubleRight} />
-          <span> Skip</span>
-        </Button>
-      )
-      if (currentTask.details.skippable) {
-        return button;
+  function carryOutActions(actionToCarryOut) {
+    const updateWorkflowComplete = (complete, postToApi) => {
+      function updateLocalState() {
+        let updatedWorkflow = { ...workflow };
+        updatedWorkflow.currentTask.details.complete = complete;
+        setWorkflow(updatedWorkflow)
+      }
+      if (postToApi) {
+        const apiRequest = complete
+          ? taskCompleteRequest
+          : taskCompleteDeleteRequest
+        makeApiRequest(
+          apiRequest(
+            props.currentDatasetId,
+            workflow.currentTask.id
+          )
+        ).then(() => updateLocalState())
       } else {
-        return (
-          <OverlayTrigger
-            placement="bottom"
-            overlay={<Tooltip>This task cannot be skipped</Tooltip>}
-          >
-            <span style={{ marginRight: -2 }}>{button}</span>
-          </OverlayTrigger>
-        )
+        updateLocalState();
       }
     }
-
-    function GoBackOneStepWorkflowTaskButton() {
-      // TODO: build back button functionality
-      const handleClick = () =>
-        alert('This feature is not built yet');
-      return (
-        <Button
-          variant="danger"
-          onClick={handleClick}
-          disabled={!taskBreadcrumps.lenth}
-        >
-          <FontAwesomeIcon icon={faAngleDoubleLeft} />
-          <span> Back</span>
-        </Button>
-      )
+    if (actionToCarryOut === actions.markTaskAsComplete) {
+      updateWorkflowComplete(true, true);
+    } else if (actionToCarryOut === actions.markTaskAsIncomplete) {
+      updateWorkflowComplete(false, true);
+    } else if ([
+      actions.getPreviousTask,
+      actions.getNextTask
+    ].includes(actionToCarryOut)) {
+      const taskBreadcrumbs = workflow.taskBreadcrumbs;
+      const indexOfCurrentTask = taskBreadcrumbs.indexOf(workflow.currentTask.id);
+      const newTaskId = actionToCarryOut === actions.getPreviousTask
+        ? taskBreadcrumbs[indexOfCurrentTask - 1]
+        : taskBreadcrumbs[indexOfCurrentTask + 1]
+      makeApiRequest(
+        getWorkflowTask(
+          props.currentDatasetId,
+          newTaskId
+        )
+      ).then(({ data }) => {
+        let updatedWorkflow = { ...workflow };
+        updatedWorkflow.currentTask = { ...data };
+        setWorkflow(updatedWorkflow);
+      })
+    } else if (actionToCarryOut === actions.skipTaskAndFetchLatestWorkflowState) {
+      makeApiRequest(
+        taskSkipRequest(
+          props.currentDatasetId,
+          workflow.currentTask.id
+        )
+      ).then(() => fetchWorkflow());
+    } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
+      fetchWorkflow();
+    } else if (actionToCarryOut === actions.toggleCompleteStateLocally) {
+      updateWorkflowComplete(!workflow.currentTask.details.complete, false);
+    } else {
+      throw new Error([`Unknown action: ${actionToCarryOut}`])
     }
+  }
 
-    function CompleteWorkflowTaskButton() {
-      const handleClick = () =>
-        handleNextButton(completeWorkflowTask);
-      return (
-        <Button
-          variant="danger"
-          onClick={handleClick}
-        >
-          <FontAwesomeIcon icon={faCheckCircle} />
-          <span> Mark as complete</span>
-        </Button>
-      )
-    }
+  function MainPageContent({ id: workflowId, milestones, message, currentTask, taskBreadcrumbs, progress, milestoneListFullyResolved }) {
 
     function HelpUrlsComponent({ helpUrls }) {
       return (
@@ -121,7 +113,7 @@ export default function Index(props) {
                   href={action.url}
                   target="_blank"
                 >
-                  <FontAwesomeIcon icon={faLink} />
+                  <FontAwesomeIcon icon={faLink} className="me-2" />
                   <span>{action.label}</span>
                 </ListGroup.Item>
               )}
@@ -133,39 +125,67 @@ export default function Index(props) {
 
     return (
       <>
-        <ProgressBar>
-          {progressBars.map(({ variant, now }, index) =>
-            <ProgressBar key={index} variant={variant} now={now} />
-          )}
+        <ProgressBar className="mt-2">
+          <ProgressBar variant="danger" now={progress || 1} />
         </ProgressBar>
-        <Badge bg="danger">{currentMilestone.title}</Badge>
-        <hr />
-        <h3>{currentTask.details.title}</h3>
-        <div dangerouslySetInnerHTML={{ __html: currentTask.details.displayHtml }}></div>
-        {currentTask.details.helpUrls &&
-          <>
-            <br />
-            <HelpUrlsComponent helpUrls={currentTask.details.helpUrls} />
-          </>
-        }
-        <hr />
+        <br />
         <Row>
-          <Col>
-            <small className="text-muted">Workflow {workflowId}</small>
-            <br />
-            <small className="text-muted">Task {currentTask.id}</small>
+          <Col md={3}>
+            <MilestonesSidebar
+              milestones={milestones}
+              currentMilestoneId={currentTask.milestoneID}
+              milestoneListFullyResolved={milestoneListFullyResolved}
+            />
           </Col>
-          <Col>
-            <ButtonToolbar className="justify-content-end">
-              <ButtonGroup>
-                <GoBackOneStepWorkflowTaskButton />
-                <SkipWorkflowTaskButton />
-                <CompleteWorkflowTaskButton />
-              </ButtonGroup>
-            </ButtonToolbar>
+          <Col className="border-start">
+            {message && (
+              <Alert variant={message.level}>{message.text}</Alert>
+            )}
+            <h4>{currentTask.details.title}</h4>
+            <br />
+            <div dangerouslySetInnerHTML={{ __html: currentTask.details.displayHTML }}></div>
+            <Row>
+              <Col xs={9}>
+                {currentTask.details.helpURLs &&
+                  <>
+                    <br />
+                    <HelpUrlsComponent helpUrls={currentTask.details.helpURLs} />
+                  </>
+                }
+              </Col>
+              <Col xs={3} className="d-flex align-items-end flex-column">
+                <div className="mt-auto">
+                  <TaskCompleteCheckbox
+                    workflow={{ currentTask, taskBreadcrumbs }}
+                    handleClick={carryOutActions}
+                    displayState={displayState}
+                  />
+                </div>
+              </Col>
+            </Row>
+            <hr />
+            <Row>
+              <Col>
+                <div id="WorkflowAndTaskIds">
+                  <div>Workflow {workflowId}</div>
+                  <div>Task {currentTask.id}</div>
+                  <div>
+                    <a onClick={() => setDisplayState(!displayState)}>Debug Mode</a>
+                  </div>
+                </div>
+              </Col>
+              <Col>
+                <ButtonToolbar className="justify-content-end">
+                  <MainThreeActionButtons
+                    workflow={{ currentTask, taskBreadcrumbs }}
+                    handleClick={carryOutActions}
+                    displayState={displayState}
+                  />
+                </ButtonToolbar>
+              </Col>
+            </Row>
           </Col>
         </Row>
-
       </>
     )
 
@@ -173,19 +193,36 @@ export default function Index(props) {
 
   return (
     <Layout>
-      <DatasetSelector {...props} />
-      <br />
-      {props.datasetState && props.datasetState.id &&
-        <MainPageContent {...props.datasetState} />
+      <DatasetSelector
+        currentDatasetId={props.currentDatasetId}
+        setCurrentDatasetId={props.setCurrentDatasetId}
+        datasets={props.user.datasets}
+      />
+      {workflow && workflow.id &&
+        <MainPageContent {...workflow} />
       }
-      <Offcanvas show={isLoading} placement="top" keyboard={false}>
+      <Offcanvas show={loading} placement="top" keyboard={false}>
         <Offcanvas.Body className="text-center">
           <h2 className="text-danger">
-            <FontAwesomeIcon icon={faCircleNotch} spin />
-            <span> Please wait...</span>
+            <FontAwesomeIcon icon={faCircleNotch} spin className="me-2" />
+            <span>Please wait...</span>
           </h2>
         </Offcanvas.Body>
       </Offcanvas>
+      <Offcanvas show={error} placement="top" keyboard={false}>
+        <Offcanvas.Body className="text-center">
+          <h4 className="text-danger">
+            <FontAwesomeIcon icon={faExclamationCircle} className="me-2" />
+            <span>Something went wrong, please refresh this page</span>
+          </h4>
+        </Offcanvas.Body>
+      </Offcanvas>
+      {displayState && (
+        <>
+          <hr />
+          <pre style={{ fontSize: 10 }}>{JSON.stringify(workflow, null, 3)}</pre>
+        </>
+      )}
     </Layout>
   )
 
