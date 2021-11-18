@@ -11,11 +11,15 @@ import {
     whatsNextButton
 } from '../lib/actionButtons';
 
-const displayStatsData = (onClickAction) => (
-    <div>
-        <hr />
-        <p>{onClickAction}</p>
-    </div>
+const displayStatsData = (displayState, onClickAction) => (
+    <>
+        {displayState &&
+            <div>
+                <hr />
+                <p>{onClickAction}</p>
+            </div>
+        }
+    </>
 )
 
 export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
@@ -44,7 +48,7 @@ export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
         >
             <span>{button.label}</span>
             <FontAwesomeIcon icon={button.icon} className="ms-2" />
-            {button.onClickAction && displayStatsData(button.onClickAction)}
+            {button.onClickAction && displayStatsData(displayState, button.onClickAction)}
         </Button>
     )
 }
@@ -79,7 +83,7 @@ export function MainThreeActionButtons({ workflow, handleClick, displayState }) 
                     >
                         <FontAwesomeIcon icon={button.icon} className="me-2" />
                         <span>{button.label}</span>
-                        {button.onClickAction && displayStatsData(button.onClickAction)}
+                        {button.onClickAction && displayStatsData(displayState, button.onClickAction)}
                     </Button>
                 </>
             )
