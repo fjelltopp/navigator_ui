@@ -15,9 +15,9 @@ export default function MilestonesSidebar(props) {
                     <Col xs={1}><FontAwesomeIcon className={`me-2 ${iconColor}`} icon={iconIcon} /></Col>
                     <Col>{milestone.title}</Col>
                 </Row>
-                {active && (
+                {(active || milestone.progress) && (
                     <ProgressBar className="mb-1 mt-1">
-                        <ProgressBar variant="danger" now={milestone.progress} />
+                        <ProgressBar variant="danger" now={milestone.progress || 1} />
                     </ProgressBar>
                 )}
             </ListGroup.Item>

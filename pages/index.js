@@ -131,7 +131,7 @@ export default function Index(props) {
     return (
       <>
         <ProgressBar className="mt-2">
-          <ProgressBar variant="danger" now={progress} />
+          <ProgressBar variant="danger" now={progress || 1} />
         </ProgressBar>
         <br />
         <Row>
