@@ -23,10 +23,8 @@ const displayStatsData = (displayState, onClickAction) => (
 )
 
 export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
-    const isLatestTask = [...workflow.taskBreadcrumbs].pop() === workflow.currentTask.id;
-    const complete = !(isLatestTask || workflow.currentTask.skipped);
     const buttonAppearance = (
-        complete
+        workflow.currentTask.details.complete
             ? {
                 label: 'Task Complete',
                 variant: 'outline-success',
