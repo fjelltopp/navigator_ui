@@ -28,10 +28,18 @@ export default function Index(props) {
   const [{ loading, error }, makeApiRequest] = useAxios(
     null, { manual: true }
   );
+  function addNavigatorUiVariables(workflow) {
+    const { currentTask, taskBreadcrumbs } = workflow;
+    const isLatestTask = [...taskBreadcrumbs].pop() === currentTask.id;
+    const navigatorUiVariables = {
+      taskComplete: !(isLatestTask || currentTask.skipped)
+    };
+    return { ...workflow, navigatorUiVariables }
+  }
   async function fetchWorkflow() {
     makeApiRequest(
       getWorkflow(props.currentDatasetId)
-    ).then(res => setWorkflow(res.data))
+    ).then(res => setWorkflow(addNavigatorUiVariables(res.data)))
   }
 
   useEffect(() => {
@@ -42,7 +50,7 @@ export default function Index(props) {
     const updateWorkflowComplete = (complete, postToApi) => {
       function updateLocalState() {
         let updatedWorkflow = { ...workflow };
-        updatedWorkflow.currentTask.details.complete = complete;
+        updatedWorkflow.navigatorUiVariables.taskComplete = complete;
         setWorkflow(updatedWorkflow)
       }
       if (postToApi) {
@@ -92,7 +100,7 @@ export default function Index(props) {
     } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
       fetchWorkflow();
     } else if (actionToCarryOut === actions.toggleCompleteStateLocally) {
-      updateWorkflowComplete(!workflow.currentTask.details.complete, false);
+      updateWorkflowComplete(!workflow.navigatorUiVariables.taskComplete, false);
     } else {
       throw new Error([`Unknown action: ${actionToCarryOut}`])
     }
@@ -156,7 +164,7 @@ export default function Index(props) {
               <Col xs={3} className="d-flex align-items-end flex-column">
                 <div className="mt-auto">
                   <TaskCompleteCheckbox
-                    workflow={{ currentTask, taskBreadcrumbs }}
+                    workflow={workflow}
                     handleClick={carryOutActions}
                     displayState={displayState}
                   />
