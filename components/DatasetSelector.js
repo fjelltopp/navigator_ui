@@ -15,7 +15,7 @@ export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId,
 
     function DatasetsListView() {
         return (
-            <ListGroup variant="flush" className="shadow bg-body m-3 mt-">
+            <ListGroup className="shadow bg-body m-3 mt-1">
                 {datasets.map(dataset =>
                     <ListGroup.Item
                         key={dataset.id}
@@ -28,7 +28,7 @@ export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId,
                             </Col>
                             <Col>
                                 <div><b>{dataset.name}</b></div>
-                                <div>{dataset.organizationName}</div>
+                                <small className="text-muted">{dataset.organizationName}</small>
                             </Col>
                         </Row>
                     </ListGroup.Item>
@@ -48,14 +48,10 @@ export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId,
                 {CurrentDatasetName}
                 <FontAwesomeIcon icon={faCaretDown} className="ms-2" />
             </Button>
-            <Collapse in={open}>
-                <Row>
-                    <Col xs={6}>
-                        <div id="DatasetListView">
-                            <DatasetsListView />
-                        </div>
-                    </Col>
-                </Row>
+            <Collapse in={open} style={{ position: 'absolute', zIndex: 999 }}>
+                <div id="DatasetListView">
+                    <DatasetsListView />
+                </div>
             </Collapse>
         </>
     )
