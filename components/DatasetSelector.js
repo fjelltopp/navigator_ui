@@ -27,11 +27,8 @@ export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId,
                                 <FontAwesomeIcon icon={faFile} className="mt-3" />
                             </Col>
                             <Col>
-                                {/* TODO: replace with dataset.title */}
-                                <div><b>Dataset Title</b></div>
-                                <small className="text-muted">
-                                    <span>{dataset.organizationName} | {dataset.name}</span>
-                                </small>
+                                <div><b>{dataset.name}</b></div>
+                                <small className="text-muted">{dataset.organizationName}</small>
                             </Col>
                         </Row>
                     </ListGroup.Item>
