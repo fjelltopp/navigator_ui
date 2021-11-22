@@ -8,7 +8,8 @@ import {
     taskCompleteCheckbox,
     priorTaskButton,
     nextTaskButton,
-    whatsNextButton
+    whatsNextButton,
+    getWorkflowStats
 } from '../lib/actionButtons';
 
 const displayStatsData = (displayState, onClickAction) => (
@@ -23,8 +24,9 @@ const displayStatsData = (displayState, onClickAction) => (
 )
 
 export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
+    const { complete } = getWorkflowStats(workflow);
     const buttonAppearance = (
-        workflow.currentTask.details.complete
+        complete
             ? {
                 label: 'Task Complete',
                 variant: 'outline-success',

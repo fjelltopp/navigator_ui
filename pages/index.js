@@ -42,7 +42,7 @@ export default function Index(props) {
     const updateWorkflowComplete = (complete, postToApi) => {
       function updateLocalState() {
         let updatedWorkflow = { ...workflow };
-        updatedWorkflow.currentTask.details.complete = complete;
+        updatedWorkflow.currentTask.skipped = !complete;
         setWorkflow(updatedWorkflow)
       }
       if (postToApi) {
@@ -92,7 +92,7 @@ export default function Index(props) {
     } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
       fetchWorkflow();
     } else if (actionToCarryOut === actions.toggleCompleteStateLocally) {
-      updateWorkflowComplete(!workflow.currentTask.details.complete, false);
+      updateWorkflowComplete(!workflow.currentTask.skipped, false);
     } else {
       throw new Error([`Unknown action: ${actionToCarryOut}`])
     }
@@ -220,7 +220,7 @@ export default function Index(props) {
       {displayState && (
         <>
           <hr />
-          <pre style={{ fontSize: 10 }}>{JSON.stringify(workflow, null, 3)}</pre>
+          <pre style={{ fontSize: 10 }}>{JSON.stringify({ workflow, props }, null, 3)}</pre>
         </>
       )}
     </Layout>
