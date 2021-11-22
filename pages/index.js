@@ -103,7 +103,7 @@ export default function Index(props) {
     function HelpUrlsComponent({ helpUrls }) {
       return (
         <Row id="HelpUrlsComponent">
-          <Col md={6}>
+          <Col md={9}>
             <ListGroup variant="flush">
               {helpUrls.map((action, index) =>
                 <ListGroup.Item
@@ -113,8 +113,10 @@ export default function Index(props) {
                   href={action.url}
                   target="_blank"
                 >
-                  <FontAwesomeIcon icon={faLink} className="me-2" />
-                  <span>{action.label}</span>
+                  <Row>
+                    <Col xs={1}><FontAwesomeIcon icon={faLink} className="me-2" /></Col>
+                    <Col>{action.label}</Col>
+                  </Row>
                 </ListGroup.Item>
               )}
             </ListGroup>
