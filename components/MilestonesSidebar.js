@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckCircle, faCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircle } from '@fortawesome/free-regular-svg-icons';
+import { faCheckCircle, faCircle as faSolidCircle } from '@fortawesome/free-solid-svg-icons';
 import { Row, Col, ListGroup, ProgressBar } from 'react-bootstrap';
 
 export default function MilestonesSidebar(props) {
@@ -8,8 +9,8 @@ export default function MilestonesSidebar(props) {
         const active = props.currentMilestoneId === milestone.id;
         const variant = active ? 'dark' : null;
         const iconColor = milestone.completed ? 'text-success' : 'text-muted';
-        const iconIcon = milestone.completed ? faCheckCircle : faCircle;
-        const displayProgress = active || (milestone.progress > 0);        
+        const iconIcon = milestone.completed ? faCheckCircle : (active ? faSolidCircle : faCircle);
+        const displayProgress = active || (milestone.progress > 0);
         return (
             <ListGroup.Item key={milestone.id} variant={variant}>
                 <Row>

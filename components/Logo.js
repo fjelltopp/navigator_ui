@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCompass } from '@fortawesome/free-solid-svg-icons';
+import { faCompass } from '@fortawesome/free-regular-svg-icons';
 
 export default function Logo() {
     return (

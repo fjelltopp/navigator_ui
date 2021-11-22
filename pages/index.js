@@ -4,7 +4,8 @@ import {
   ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch, faLink, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
 import MilestonesSidebar from '../components/MilestonesSidebar';

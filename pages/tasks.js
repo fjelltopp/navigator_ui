@@ -1,7 +1,8 @@
 import { Layout } from '../components/Layout'
 import { Accordion, Badge, ListGroup, ProgressBar } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCheckSquare, faSquare } from '@fortawesome/free-solid-svg-icons';
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import DatasetSelector from '../components/DatasetSelector';
 
 export default function TasksPage(props) {
