@@ -27,11 +27,18 @@ export default function Login({ }) {
         loginRequest
     ] = useAxios(loginApiRequest, { manual: true });
 
-    const errorMessage = () => (
-        loginStateError.message.includes('401')
-            ? 'Login failed. Bad username or password.'
-            : loginStateError.message
-    )
+    function ErrorBanner() {
+        return (
+            loginStateError &&
+            <Alert variant={'danger'} className="mt-2">
+                {(
+                    loginStateError.message.includes('401')
+                        ? 'Login failed. Bad username or password.'
+                        : loginStateError.message
+                )}
+            </Alert>
+        )
+    }
 
     if (loginState) {
         router.push('/');
@@ -51,6 +58,7 @@ export default function Login({ }) {
             <p>Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!</p>
             <p>The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done.</p>
             <hr />
+            <ErrorBanner />
             <form id="LoiginForm" onSubmit={handleSubmit}>
                 <p>
                     <span>Please login using your </span>
@@ -89,7 +97,6 @@ export default function Login({ }) {
                     target="_blank"
                     className="text-secondary"
                 >Register</Button>
-                {loginStateError && <Alert variant={'danger'} className="mt-2">{errorMessage}</Alert>}
             </form>
             <hr />
             <Row className="text-center">
