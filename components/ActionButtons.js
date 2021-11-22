@@ -1,8 +1,9 @@
 import { ButtonGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import {
-    faAngleLeft, faAngleRight, faAngleDoubleRight,
-    faTimes, faCheckSquare
+    faAngleLeft, faAngleRight,
+    faAngleDoubleRight, faCheckSquare
 } from '@fortawesome/free-solid-svg-icons';
 import {
     taskCompleteCheckbox,
@@ -35,7 +36,7 @@ export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
             : {
                 label: 'Task Incomplete',
                 variant: 'outline-danger',
-                icon: faTimes
+                icon: faSquare
             }
     )
     const button = {
