@@ -59,7 +59,7 @@ export default function Login({ }) {
             <p>The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done.</p>
             <hr />
             <ErrorBanner />
-            <form id="LoiginForm" onSubmit={handleSubmit}>
+            <form id="LoginPage" onSubmit={handleSubmit}>
                 <p>
                     <span>Please login using your </span>
                     <a
