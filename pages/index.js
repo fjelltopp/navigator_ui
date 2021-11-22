@@ -28,18 +28,10 @@ export default function Index(props) {
   const [{ loading, error }, makeApiRequest] = useAxios(
     null, { manual: true }
   );
-  function addNavigatorUiVariables(workflow) {
-    const { currentTask, taskBreadcrumbs } = workflow;
-    const isLatestTask = [...taskBreadcrumbs].pop() === currentTask.id;
-    const navigatorUiVariables = {
-      taskComplete: !(isLatestTask || currentTask.skipped)
-    };
-    return { ...workflow, navigatorUiVariables }
-  }
   async function fetchWorkflow() {
     makeApiRequest(
       getWorkflow(props.currentDatasetId)
-    ).then(res => setWorkflow(addNavigatorUiVariables(res.data)))
+    ).then(res => setWorkflow(res.data))
   }
 
   useEffect(() => {
@@ -50,7 +42,7 @@ export default function Index(props) {
     const updateWorkflowComplete = (complete, postToApi) => {
       function updateLocalState() {
         let updatedWorkflow = { ...workflow };
-        updatedWorkflow.navigatorUiVariables.taskComplete = complete;
+        updatedWorkflow.currentTask.skipped = !complete;
         setWorkflow(updatedWorkflow)
       }
       if (postToApi) {
@@ -100,7 +92,7 @@ export default function Index(props) {
     } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
       fetchWorkflow();
     } else if (actionToCarryOut === actions.toggleCompleteStateLocally) {
-      updateWorkflowComplete(!workflow.navigatorUiVariables.taskComplete, false);
+      updateWorkflowComplete(!workflow.currentTask.skipped, false);
     } else {
       throw new Error([`Unknown action: ${actionToCarryOut}`])
     }
@@ -164,7 +156,7 @@ export default function Index(props) {
               <Col xs={3} className="d-flex align-items-end flex-column">
                 <div className="mt-auto">
                   <TaskCompleteCheckbox
-                    workflow={workflow}
+                    workflow={{ currentTask, taskBreadcrumbs }}
                     handleClick={carryOutActions}
                     displayState={displayState}
                   />
@@ -228,7 +220,7 @@ export default function Index(props) {
       {displayState && (
         <>
           <hr />
-          <pre style={{ fontSize: 10 }}>{JSON.stringify(workflow, null, 3)}</pre>
+          <pre style={{ fontSize: 10 }}>{JSON.stringify({ workflow, props }, null, 3)}</pre>
         </>
       )}
     </Layout>
