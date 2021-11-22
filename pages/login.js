@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useRouter } from 'next/router'
 import { makeUseAxios } from 'axios-hooks'
-import { Row, Col, Image, Form, ButtonGroup, Button, Alert } from 'react-bootstrap';
+import { Row, Col, Image, Form, Button, Alert } from 'react-bootstrap';
 import { LogInLayout } from '../components/Layout';
 import Logo from '../components/Logo';
 import { baseAxiosConfig, loginApiRequest } from '../lib/api';
@@ -17,8 +17,6 @@ const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function Login({ }) {
     const router = useRouter()
-    const [username, setUsername] = useState();
-    const [password, setPassword] = useState();
 
     const [
         {
@@ -29,10 +27,26 @@ export default function Login({ }) {
         loginRequest
     ] = useAxios(loginApiRequest, { manual: true });
 
+    function ErrorBanner() {
+        return (
+            loginStateError &&
+            <Alert variant={'danger'} className="mt-2">
+                {(
+                    loginStateError.message.includes('401')
+                        ? 'Login failed. Bad username or password.'
+                        : loginStateError.message
+                )}
+            </Alert>
+        )
+    }
+
     if (loginState) {
         router.push('/');
     }
-    const handleLogin = () => {
+    const handleSubmit = event => {
+        event.preventDefault();
+        const username = event.currentTarget.elements.username.value;
+        const password = event.currentTarget.elements.password.value;
         loginRequest({ data: { username, password } })
             .catch(error => console.error(error))
     }
@@ -41,11 +55,11 @@ export default function Login({ }) {
         <LogInLayout>
             <h3 className="text-center"><Logo /></h3>
             <hr />
-            {loginStateError && <Alert variant={'danger'}>{loginStateError.message}</Alert>}
             <p>Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!</p>
             <p>The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done.</p>
             <hr />
-            <div id="LoiginForm">
+            <ErrorBanner />
+            <form id="LoginPage" onSubmit={handleSubmit}>
                 <p>
                     <span>Please login using your </span>
                     <a
@@ -58,10 +72,9 @@ export default function Login({ }) {
                 <Form.Group className="mb-3">
                     <Form.Control
                         name="username"
-                        type="email"
+                        type="text"
                         placeholder="Username or Email"
-                        value={username}
-                        onChange={e => setUsername(e.target.value)}
+                        required
                     />
                 </Form.Group>
                 <Form.Group className="mb-3">
@@ -69,14 +82,13 @@ export default function Login({ }) {
                         name="password"
                         type="password"
                         placeholder="Password"
-                        value={password}
-                        onChange={e => setPassword(e.target.value)}
+                        required
                     />
                 </Form.Group>
                 <Button
                     variant="danger"
-                    onClick={handleLogin}
                     disabled={loginStateLoading}
+                    type="submit"
                 >{loginStateLoading ? 'Logging in...' : 'Login'}</Button>
                 <Button
                     as={'a'}
@@ -85,7 +97,7 @@ export default function Login({ }) {
                     target="_blank"
                     className="text-secondary"
                 >Register</Button>
-            </div>
+            </form>
             <hr />
             <Row className="text-center">
                 {logos.map(src => <Col key={src}><Image src={src} fluid /></Col>)}
