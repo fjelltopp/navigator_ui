@@ -1,4 +1,4 @@
-import { ButtonGroup, Button } from 'react-bootstrap';
+import { ButtonGroup, OverlayTrigger, Button, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -13,9 +13,9 @@ import {
     getWorkflowStats
 } from '../lib/actionButtons';
 
-const displayStatsData = (displayState, onClickAction) => (
+const displayStatsData = (showDebugData, onClickAction) => (
     <>
-        {displayState &&
+        {showDebugData &&
             <div>
                 <hr />
                 <p>{onClickAction}</p>
@@ -24,7 +24,7 @@ const displayStatsData = (displayState, onClickAction) => (
     </>
 )
 
-export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
+export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData }) {
     const { complete } = getWorkflowStats(workflow);
     const buttonAppearance = (
         complete
@@ -43,20 +43,25 @@ export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
         ...buttonAppearance,
         ...taskCompleteCheckbox(workflow)
     }
+    const overlay = <Tooltip>This task is automatically set by the system</Tooltip>
     return (
-        <Button
-            variant={button.variant}
-            onClick={() => handleClick(button.onClickAction)}
-            disabled={!button.enabled}
-        >
-            <span>{button.label}</span>
-            <FontAwesomeIcon icon={button.icon} className="ms-2" />
-            {button.onClickAction && displayStatsData(displayState, button.onClickAction)}
-        </Button>
+        <OverlayTrigger overlay={overlay}>
+            <span className="d-inline-block">
+                <Button
+                    variant={button.variant}
+                    onClick={() => handleClick(button.onClickAction)}
+                    disabled={button.enabled}
+                >
+                    <span>{button.label}</span>
+                    <FontAwesomeIcon icon={button.icon} className="ms-2" />
+                    {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
+                </Button>
+            </span>
+        </OverlayTrigger>
     )
 }
 
-export function MainThreeActionButtons({ workflow, handleClick, displayState }) {
+export function MainThreeActionButtons({ workflow, handleClick, showDebugData }) {
     const buttons = [
         {
             label: "Prior Task",
@@ -86,7 +91,7 @@ export function MainThreeActionButtons({ workflow, handleClick, displayState }) 
                     >
                         <FontAwesomeIcon icon={button.icon} className="me-2" />
                         <span>{button.label}</span>
-                        {button.onClickAction && displayStatsData(displayState, button.onClickAction)}
+                        {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
                     </Button>
                 </>
             )

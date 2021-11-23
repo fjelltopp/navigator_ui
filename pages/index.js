@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Row, Col, ButtonToolbar, ListGroup, Offcanvas,
-  ProgressBar, Alert
+  Row, Col, Button, ButtonGroup, ButtonToolbar,
+  ListGroup, Offcanvas, ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch, faExclamationCircle, faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
+import LogsComponent from '../components/LogsComponent';
 import MilestonesSidebar from '../components/MilestonesSidebar';
 import {
   TaskCompleteCheckbox,
@@ -23,7 +24,7 @@ import { actions } from '../lib/actionButtons';
 const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function Index(props) {
-  const [displayState, setDisplayState] = useState(false);
+  const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
 
   const [{ loading, error }, makeApiRequest] = useAxios(
@@ -33,6 +34,44 @@ export default function Index(props) {
     makeApiRequest(
       getWorkflow(props.currentDatasetId)
     ).then(res => setWorkflow(res.data))
+  }
+  function ErrorPageComponent() {
+    const [showJsonDump, setshowJsonDump] = useState(false);
+    const errorLogs = [
+      { title: 'API Request', data: error },
+      { title: 'workflow', data: workflow },
+      { title: 'props', data: props }
+    ];
+    return (
+      <Offcanvas show={true} placement="top" keyboard={false}>
+        <Offcanvas.Body>
+          <div className="text-center">
+            <h4 className="text-danger">
+              <FontAwesomeIcon icon={faExclamationCircle} className="me-2" />
+              <span>Something went wrong, please refresh this page</span>
+            </h4>
+            <ButtonGroup size="sm" className="mt-2">
+              <Button
+                variant="danger"
+                onClick={() => location.reload(true)}
+              >
+                <FontAwesomeIcon icon={faArrowsRotate} className="me-2" />
+                <span>Refresh Page</span>
+              </Button>
+              <Button
+                variant="light"
+                onClick={() => setshowJsonDump(!showJsonDump)}
+              >View Error Logs</Button>
+            </ButtonGroup>
+          </div>
+          {showJsonDump && (
+            <Col xs={{ span: 6, offset: 3 }}>
+              <LogsComponent objects={errorLogs} />
+            </Col>
+          )}
+        </Offcanvas.Body>
+      </Offcanvas>
+    )
   }
 
   useEffect(() => {
@@ -161,7 +200,7 @@ export default function Index(props) {
                   <TaskCompleteCheckbox
                     workflow={{ currentTask, taskBreadcrumbs }}
                     handleClick={carryOutActions}
-                    displayState={displayState}
+                    showDebugData={showDebugData}
                   />
                 </div>
               </Col>
@@ -173,7 +212,7 @@ export default function Index(props) {
                   <div>Workflow {workflowId}</div>
                   <div>Task {currentTask.id}</div>
                   <div>
-                    <a onClick={() => setDisplayState(!displayState)}>Debug Mode</a>
+                    <a onClick={() => setshowDebugData(!showDebugData)}>Debug Mode</a>
                   </div>
                 </div>
               </Col>
@@ -182,7 +221,7 @@ export default function Index(props) {
                   <MainThreeActionButtons
                     workflow={{ currentTask, taskBreadcrumbs }}
                     handleClick={carryOutActions}
-                    displayState={displayState}
+                    showDebugData={showDebugData}
                   />
                 </ButtonToolbar>
               </Col>
@@ -212,19 +251,12 @@ export default function Index(props) {
           </h2>
         </Offcanvas.Body>
       </Offcanvas>
-      <Offcanvas show={error} placement="top" keyboard={false}>
-        <Offcanvas.Body className="text-center">
-          <h4 className="text-danger">
-            <FontAwesomeIcon icon={faExclamationCircle} className="me-2" />
-            <span>Something went wrong, please refresh this page</span>
-          </h4>
-        </Offcanvas.Body>
-      </Offcanvas>
-      {displayState && (
-        <>
-          <hr />
-          <pre style={{ fontSize: 10 }}>{JSON.stringify({ workflow, props }, null, 3)}</pre>
-        </>
+      {error && <ErrorPageComponent />}
+      {showDebugData && (
+        <LogsComponent objects={[
+          { title: 'workflow', data: workflow },
+          { title: 'props', data: props }
+        ]} />
       )}
     </Layout>
   )
