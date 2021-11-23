@@ -1,4 +1,4 @@
-import { ButtonGroup, Button } from 'react-bootstrap';
+import { ButtonGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -43,7 +43,7 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData }) {
         ...buttonAppearance,
         ...taskCompleteCheckbox(workflow)
     }
-    return (
+    const buttonComponent = (
         <Button
             variant={button.variant}
             onClick={() => handleClick(button.onClickAction)}
@@ -54,6 +54,23 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData }) {
             {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
         </Button>
     )
+    if (button.enabled) {
+        return buttonComponent;
+    } else {
+        const overlay = (
+            <Tooltip>
+                <p>Task status is automatically checked by system.</p>
+                <p>Click "What's Next" once task is complete.</p>
+            </Tooltip>
+        )
+        return (
+            <OverlayTrigger overlay={overlay}>
+                <span className="d-inline-block">
+                    {buttonComponent}
+                </span>
+            </OverlayTrigger>
+        )
+    }
 }
 
 export function MainThreeActionButtons({ workflow, handleClick, showDebugData }) {
