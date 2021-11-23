@@ -13,9 +13,9 @@ import {
     getWorkflowStats
 } from '../lib/actionButtons';
 
-const displayStatsData = (displayState, onClickAction) => (
+const displayStatsData = (showDebugData, onClickAction) => (
     <>
-        {displayState &&
+        {showDebugData &&
             <div>
                 <hr />
                 <p>{onClickAction}</p>
@@ -24,7 +24,7 @@ const displayStatsData = (displayState, onClickAction) => (
     </>
 )
 
-export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
+export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData }) {
     const { complete } = getWorkflowStats(workflow);
     const buttonAppearance = (
         complete
@@ -51,12 +51,12 @@ export function TaskCompleteCheckbox({ workflow, handleClick, displayState }) {
         >
             <span>{button.label}</span>
             <FontAwesomeIcon icon={button.icon} className="ms-2" />
-            {button.onClickAction && displayStatsData(displayState, button.onClickAction)}
+            {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
         </Button>
     )
 }
 
-export function MainThreeActionButtons({ workflow, handleClick, displayState }) {
+export function MainThreeActionButtons({ workflow, handleClick, showDebugData }) {
     const buttons = [
         {
             label: "Prior Task",
@@ -86,7 +86,7 @@ export function MainThreeActionButtons({ workflow, handleClick, displayState }) 
                     >
                         <FontAwesomeIcon icon={button.icon} className="me-2" />
                         <span>{button.label}</span>
-                        {button.onClickAction && displayStatsData(displayState, button.onClickAction)}
+                        {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
                     </Button>
                 </>
             )

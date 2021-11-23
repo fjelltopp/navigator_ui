@@ -4,14 +4,15 @@ import {
   ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
+import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
+import LogsComponent from '../components/LogsComponent';
+import ErrorPagePopup from '../components/ErrorPagePopup';
 import MilestonesSidebar from '../components/MilestonesSidebar';
 import {
-  TaskCompleteCheckbox,
-  MainThreeActionButtons
+  TaskCompleteCheckbox, MainThreeActionButtons
 } from '../components/ActionButtons';
 import { makeUseAxios } from 'axios-hooks'
 import {
@@ -23,10 +24,10 @@ import { actions } from '../lib/actionButtons';
 const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function Index(props) {
-  const [displayState, setDisplayState] = useState(false);
+  const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
 
-  const [{ loading, error }, makeApiRequest] = useAxios(
+  const [{ loading, error: apiError }, makeApiRequest] = useAxios(
     null, { manual: true }
   );
   async function fetchWorkflow() {
@@ -161,7 +162,7 @@ export default function Index(props) {
                   <TaskCompleteCheckbox
                     workflow={{ currentTask, taskBreadcrumbs }}
                     handleClick={carryOutActions}
-                    displayState={displayState}
+                    showDebugData={showDebugData}
                   />
                 </div>
               </Col>
@@ -173,7 +174,7 @@ export default function Index(props) {
                   <div>Workflow {workflowId}</div>
                   <div>Task {currentTask.id}</div>
                   <div>
-                    <a onClick={() => setDisplayState(!displayState)}>Debug Mode</a>
+                    <a onClick={() => setshowDebugData(!showDebugData)}>Debug Mode</a>
                   </div>
                 </div>
               </Col>
@@ -182,7 +183,7 @@ export default function Index(props) {
                   <MainThreeActionButtons
                     workflow={{ currentTask, taskBreadcrumbs }}
                     handleClick={carryOutActions}
-                    displayState={displayState}
+                    showDebugData={showDebugData}
                   />
                 </ButtonToolbar>
               </Col>
@@ -212,19 +213,12 @@ export default function Index(props) {
           </h2>
         </Offcanvas.Body>
       </Offcanvas>
-      <Offcanvas show={error} placement="top" keyboard={false}>
-        <Offcanvas.Body className="text-center">
-          <h4 className="text-danger">
-            <FontAwesomeIcon icon={faExclamationCircle} className="me-2" />
-            <span>Something went wrong, please refresh this page</span>
-          </h4>
-        </Offcanvas.Body>
-      </Offcanvas>
-      {displayState && (
-        <>
-          <hr />
-          <pre style={{ fontSize: 10 }}>{JSON.stringify({ workflow, props }, null, 3)}</pre>
-        </>
+      {apiError && <ErrorPagePopup {...{ apiError, workflow, props }} />}
+      {showDebugData && (
+        <LogsComponent objects={[
+          { title: 'workflow', data: workflow },
+          { title: 'props', data: props }
+        ]} />
       )}
     </Layout>
   )
