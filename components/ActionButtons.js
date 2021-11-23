@@ -1,4 +1,4 @@
-import { ButtonGroup, OverlayTrigger, Button, Tooltip } from 'react-bootstrap';
+import { ButtonGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import {
@@ -43,21 +43,16 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData }) {
         ...buttonAppearance,
         ...taskCompleteCheckbox(workflow)
     }
-    const overlay = <Tooltip>This task is automatically set by the system</Tooltip>
     return (
-        <OverlayTrigger overlay={overlay}>
-            <span className="d-inline-block">
-                <Button
-                    variant={button.variant}
-                    onClick={() => handleClick(button.onClickAction)}
-                    disabled={button.enabled}
-                >
-                    <span>{button.label}</span>
-                    <FontAwesomeIcon icon={button.icon} className="ms-2" />
-                    {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
-                </Button>
-            </span>
-        </OverlayTrigger>
+        <Button
+            variant={button.variant}
+            onClick={() => handleClick(button.onClickAction)}
+            disabled={!button.enabled}
+        >
+            <span>{button.label}</span>
+            <FontAwesomeIcon icon={button.icon} className="ms-2" />
+            {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
+        </Button>
     )
 }
 
