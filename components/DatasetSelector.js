@@ -13,14 +13,19 @@ export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId,
     const CurrentDatasetName = datasets
         .filter(x => x.id === currentDatasetId)[0].name;
 
+    const handleChange = datasetId => {
+        setOpen(false);
+        setCurrentDatasetId(datasetId);
+    }
+
     function DatasetsListView() {
         return (
             <ListGroup className="shadow bg-body m-3 mt-1">
                 {datasets.map(dataset =>
                     <ListGroup.Item
-                        key={dataset.id}
                         action
-                        onClick={() => setCurrentDatasetId(dataset.id)}
+                        key={dataset.id}
+                        onClick={() => handleChange(dataset.id)}
                     >
                         <Row>
                             <Col xs={1} className="text-center">
