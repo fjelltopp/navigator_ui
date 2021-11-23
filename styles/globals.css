@@ -70,3 +70,8 @@ select {
   height: 6px;
   background-color: white;
 }
+
+#DatasetListView .list-group{
+  max-height: 234px;
+  overflow: scroll;
+}
