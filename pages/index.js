@@ -44,7 +44,7 @@ export default function Index(props) {
     const updateWorkflowComplete = (complete, postToApi) => {
       function updateLocalState() {
         let updatedWorkflow = { ...workflow };
-        updatedWorkflow.currentTask.skipped = !complete;
+        updatedWorkflow.currentTask.completed = complete;
         setWorkflow(updatedWorkflow)
       }
       if (postToApi) {
@@ -94,7 +94,7 @@ export default function Index(props) {
     } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
       fetchWorkflow();
     } else if (actionToCarryOut === actions.toggleCompleteStateLocally) {
-      updateWorkflowComplete(!workflow.currentTask.skipped, false);
+      updateWorkflowComplete(!workflow.currentTask.completed, false);
     } else {
       throw new Error([`Unknown action: ${actionToCarryOut}`])
     }
