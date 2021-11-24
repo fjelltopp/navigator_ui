@@ -73,5 +73,5 @@ select {
 
 #DatasetListView .list-group{
   max-height: 234px;
-  overflow: scroll;
+  overflow-y: scroll;
 }
