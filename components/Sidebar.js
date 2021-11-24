@@ -18,7 +18,7 @@ export default function Sidebar() {
 
     const sidebarLinks = [
         { label: "What's Next?", href: '/' },
-        { label: workInProgress('Task List'), href: '/tasks' },
+        { label: 'Task List', href: '/tasks' },
         { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
         { label: workInProgress('Contact Us'), href: 'TODO' },
         { label: 'Log Out', href: '/logout' }
