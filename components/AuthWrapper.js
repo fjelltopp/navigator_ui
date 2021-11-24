@@ -4,6 +4,7 @@ import { makeUseAxios } from 'axios-hooks'
 import {
     baseAxiosConfig, getUserDetails, getDatasets,
 } from '../lib/api';
+import ErrorPagePopup from './ErrorPagePopup';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 
@@ -25,12 +26,14 @@ export default function AuthWrapper({ Component, pageProps }) {
     if (userDetailsLoading || datasetsLoading) {
         return <p>Loading...</p>
     } else if (userDetailsError || datasetsError) {
-        const statusCode = JSON.parse(JSON.stringify(userDetailsError)).status;
-        if (statusCode === 401) {
+        const invalidAuthError =
+            userDetailsError && userDetailsError.message.includes('401')
+            || datasetsError && datasetsError.message.includes('401')
+        if (invalidAuthError) {
             router.push('/login');
             return null;
         } else {
-            return <p>Unknown Server Error</p>
+            return <ErrorPagePopup apiError={userDetailsError || datasetsError} />
         }
     } else {
         if (!currentDatasetId) {
