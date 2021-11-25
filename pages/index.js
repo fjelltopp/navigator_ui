@@ -110,8 +110,9 @@ export default function Index(props) {
               {helpUrls.map((action, index) =>
                 <ListGroup.Item
                   key={index}
-                  action as="a"
-                  className="link-danger"
+                  action
+                  variant="light"
+                  className="text-danger bg-white"
                   href={action.url}
                   target="_blank"
                 >
