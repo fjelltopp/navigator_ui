@@ -89,7 +89,7 @@ export default function TasksPage(props) {
                     {!data.fullyResolved &&
                         <ListGroup>
                             <ListGroup.Item className="text-muted">
-                                <span>More milestones may be added</span>
+                                <span>More tasks may be added</span>
                             </ListGroup.Item>
                         </ListGroup>
                     }
