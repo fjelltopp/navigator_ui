@@ -1,5 +1,4 @@
 import React from 'react';
-import { useRouter } from 'next/router'
 import { makeUseAxios } from 'axios-hooks'
 import { Row, Col, Image, Form, Button, Alert } from 'react-bootstrap';
 import { LogInLayout } from '../components/Layout';
@@ -16,7 +15,6 @@ const logos = [
 const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function Login({ }) {
-    const router = useRouter()
 
     const [
         {
@@ -41,7 +39,8 @@ export default function Login({ }) {
     }
 
     if (loginState) {
-        router.push('/');
+        window.location.href = '/';
+        return null;
     }
     const handleSubmit = event => {
         event.preventDefault();
