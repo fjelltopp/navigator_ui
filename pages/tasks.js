@@ -1,9 +1,9 @@
 import { Layout } from '../components/Layout'
-import { Col, Accordion, ListGroup, ProgressBar } from 'react-bootstrap';
+import { Col, Accordion, ListGroup, ProgressBar, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import DatasetSelector from '../components/DatasetSelector';
+import CheckboxWithLabel from '../components/CheckboxWithLabel';
 import LoadingBanner from '../components/LoadingBanner';
 import ErrorPagePopup from '../components/ErrorPagePopup';
 import { makeUseAxios } from 'axios-hooks'
@@ -13,28 +13,19 @@ const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function TasksPage(props) {
 
-    const [{ data, loading, error: apiError }] = useAxios(
+    const [{ data, loading, error: apiError }, makeApiRequest] = useAxios(
         getWorkflowTasks(props.currentDatasetId)
     );
-
-    const checkmarkTrue = (
-        <span className="me-2 text-success">
-            <FontAwesomeIcon icon={faCheckSquare} />
-        </span>
-    )
-    const checkmarkFalse = (
-        <span className="me-2 text-muted">
-            <FontAwesomeIcon icon={faSquare} />
-        </span>
-    )
 
     function TaskListInAccordion({ index, milestone }) {
         const taskList = (
             <ListGroup>
                 {milestone.tasks.map((task, index) => (
                     <ListGroup.Item key={index}>
-                        {task.completed ? checkmarkTrue : checkmarkFalse}
-                        <span>{task.title}</span>
+                        <CheckboxWithLabel
+                            checked={task.completed}
+                            label={task.title}
+                        />
                     </ListGroup.Item>
                 ))}
             </ListGroup>
@@ -47,8 +38,10 @@ export default function TasksPage(props) {
                             <div style={{ width: '100%' }}>
                                 <h4 className="m-0">
                                     <h4 className="m-0">
-                                        {milestone.progress === 100 ? checkmarkTrue : checkmarkFalse}
-                                        <span>{milestone.title}</span>
+                                        <CheckboxWithLabel
+                                            checked={milestone.progress === 100}
+                                            label={milestone.title}
+                                        />
                                     </h4>
                                 </h4>
                                 <ProgressBar className="mt-2" style={{ height: 5 }}>
@@ -72,8 +65,18 @@ export default function TasksPage(props) {
             return <LoadingBanner />
         } else {
             return (
-                <Col sm={6}>
-                    <h2 className="mt-4">Your Task List</h2>
+                <Col sm={9}>
+                    <h2 className="mt-5">
+                        <span>Your Task List</span>
+                        <Button
+                            variant="outline-danger"
+                            onClick={makeApiRequest}
+                            className="float-end"
+                        >
+                            <FontAwesomeIcon icon={faRefresh} className="me-2" />
+                            <span>Refresh</span>
+                        </Button>
+                    </h2>
                     <hr className="mb-4" />
                     {data.taskList.map((milestone, index) => (
                         <div className="mb-4">
@@ -83,6 +86,13 @@ export default function TasksPage(props) {
                             />
                         </div>
                     ))}
+                    {!data.fullyResolved &&
+                        <ListGroup>
+                            <ListGroup.Item className="text-muted">
+                                <span>More milestones may be added</span>
+                            </ListGroup.Item>
+                        </ListGroup>
+                    }
                 </Col>
             )
         }

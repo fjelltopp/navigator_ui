@@ -1,22 +1,18 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle } from '@fortawesome/free-regular-svg-icons';
-import { faCheckCircle, faCircle as faSolidCircle } from '@fortawesome/free-solid-svg-icons';
-import { Row, Col, ListGroup, ProgressBar } from 'react-bootstrap';
+import { ListGroup, ProgressBar } from 'react-bootstrap';
+import CheckboxWithLabel from '../components/CheckboxWithLabel';
 
 export default function MilestonesSidebar(props) {
 
     const listItem = milestone => {
         const active = props.currentMilestoneId === milestone.id;
         const variant = active ? 'dark' : null;
-        const iconColor = milestone.completed ? 'text-success' : 'text-muted';
-        const iconIcon = milestone.completed ? faCheckCircle : (active ? faSolidCircle : faCircle);
         const displayProgress = active || (milestone.progress > 0);
         return (
             <ListGroup.Item key={milestone.id} variant={variant}>
-                <Row>
-                    <Col xs={1}><FontAwesomeIcon className={`me-2 ${iconColor}`} icon={iconIcon} /></Col>
-                    <Col>{milestone.title}</Col>
-                </Row>
+                <CheckboxWithLabel
+                    checked={milestone.completed}
+                    label={milestone.title}
+                />
                 {displayProgress &&
                     <ProgressBar className="mb-1 mt-1">
                         <ProgressBar variant="danger" now={milestone.progress || 1} />
