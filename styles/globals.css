@@ -75,3 +75,7 @@ select {
   max-height: 234px;
   overflow-y: scroll;
 }
+
+.CheckboxWithLabel .field-with-icon{
+  width: 1.25em;
+}

@@ -990,31 +990,31 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@fortawesome/fontawesome-common-types@^0.3.0-beta2":
-  version "0.3.0-beta2"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.3.0-beta2.tgz#d50068077cca88c81695d3b6ae44161ddf85ab55"
-  integrity sha512-YrWMMGRhJ/iEwlP86AuW/uYGIZSwbVrpLQzB2JiWIGMTPCBhWLvurdSgckPJl5ry1fUNzWH4QNtgTf5rpdhCgg==
+"@fortawesome/fontawesome-common-types@^0.3.0-beta3":
+  version "0.3.0-beta3"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.3.0-beta3.tgz#8bd8fc862085998adf0875e06ba0cd16a4a12d82"
+  integrity sha512-OT7fRVwAgQPOivlNP2gYcCe2uzyf+r6vSv/TgliTKnOiGVNL5O7LYh8nLucY0gbnhC6OygaXnA8+hY899FVooQ==
 
 "@fortawesome/fontawesome-svg-core@^1.3.0-beta2":
-  version "1.3.0-beta2"
-  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.3.0-beta2.tgz#4f007f78dfb551d86c67cb36432044e9a55f952d"
-  integrity sha512-ppK3EYDiY4HYFCGxM2Zi7zIKzagElK2cttzmPCf5w0fGd54RJrxjO24mxFu5HnK7oyD3aP41uXyNyG39i8u1fA==
+  version "1.3.0-beta3"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-svg-core/-/fontawesome-svg-core-1.3.0-beta3.tgz#79eff2237ccef644ffdb3f2bef943458333f8614"
+  integrity sha512-LPK7WR5R+7xOhuDZIlqR8rqUyA87mj5OLQwaSO65DolZLiFrYPZwQc/dCfWP3Sa7LwULFJOE+FPqO9Iq/oiQ6Q==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.3.0-beta2"
+    "@fortawesome/fontawesome-common-types" "^0.3.0-beta3"
 
 "@fortawesome/free-regular-svg-icons@^6.0.0-beta2":
-  version "6.0.0-beta2"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.0.0-beta2.tgz#74525883a0f26acc053bceb2ba00b5ecd50aa315"
-  integrity sha512-MV2T0WRunzT0aqXJOs/OLeWoY/20W/vp9w2Em4UWaYpIucOIjzxWODVkc7uz2sP7tL3jNV2n5d0kwbftLyizjg==
+  version "6.0.0-beta3"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-regular-svg-icons/-/free-regular-svg-icons-6.0.0-beta3.tgz#b5614112ff78855c5701679aa6c62675480cbc52"
+  integrity sha512-4Nyi3FGB/t6c7WP9/0G6pk/mSi2Yc+NRMyI+ewgNjLsSDYaSErocJ27oW6tuglxDLSNXTRaa8sK5DYMaY5Fabg==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.3.0-beta2"
+    "@fortawesome/fontawesome-common-types" "^0.3.0-beta3"
 
 "@fortawesome/free-solid-svg-icons@^6.0.0-beta2":
-  version "6.0.0-beta2"
-  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.0.0-beta2.tgz#096fe9c6ad1875fa37eb2bb99f12490480157cf6"
-  integrity sha512-xOWg5eRLuaiLKctI9rt94llZhMRn8C23jTkSxywfy2Tyy3ggtVL/ocW7KUk0IbCgWfZSy+EMsGF2ZxxWs2Mhpw==
+  version "6.0.0-beta3"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-solid-svg-icons/-/free-solid-svg-icons-6.0.0-beta3.tgz#3c0570a6389c2e2a040479c16bd7fafe75465ad0"
+  integrity sha512-7+62D0MK5fy/mzmTNx0P4QzHWzKE4oXdUER6bvR3qzux7hpM3QNzqPAGML7iBf5LG5yYK8mnh+yHWa1KRKUfRg==
   dependencies:
-    "@fortawesome/fontawesome-common-types" "^0.3.0-beta2"
+    "@fortawesome/fontawesome-common-types" "^0.3.0-beta3"
 
 "@fortawesome/react-fontawesome@^0.1.16":
   version "0.1.16"
@@ -1484,9 +1484,9 @@
   integrity sha512-qcUXuemtEu+E5wZSJHNxUXeCZhAfXKQ41D+duX+VYPde7xyEVZci+/oXKJL13tnRs9lR2pr4fod59GT6/X1/yQ==
 
 "@types/node@*":
-  version "16.11.9"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.9.tgz#879be3ad7af29f4c1a5c433421bf99fab7047185"
-  integrity sha512-MKmdASMf3LtPzwLyRrFjtFFZ48cMf8jmX5VRYrDQiJa8Ybu5VAmkqBWqKU8fdCwD8ysw4mQ9nrEHvzg6gunR7A==
+  version "16.11.10"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-16.11.10.tgz#2e3ad0a680d96367103d3e670d41c2fed3da61ae"
+  integrity sha512-3aRnHa1KlOEEhJ6+CvyHKK5vE9BcLGjtUpwvqYLRvYNQKMfabu3BwfJaA/SLW8dxe28LsNDjtHwePTuzn3gmOA==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -2512,11 +2512,6 @@ chalk@^4.0.0:
     ansi-styles "^4.1.0"
     supports-color "^7.1.0"
 
-chance@^1.1.7:
-  version "1.1.8"
-  resolved "https://registry.yarnpkg.com/chance/-/chance-1.1.8.tgz#5d6c2b78c9170bf6eb9df7acdda04363085be909"
-  integrity sha512-v7fi5Hj2VbR6dJEGRWLmJBA83LJMS47pkAbmROFxHWd9qmE1esHRZW8Clf1Fhzr3rjxnNZVCjOEv/ivFxeIMtg==
-
 char-regex@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/char-regex/-/char-regex-1.0.2.tgz#d744358226217f981ed58f479b1d6bcc29545dcf"
@@ -2543,9 +2538,9 @@ chrome-trace-event@^1.0.2:
   integrity sha512-p3KULyQg4S7NIHixdwbGX+nFHkoBiA4YQmyWtjb8XngSKV124nJmRysgAeujbUVb15vh+RvFUfCPqU7rXk+hZg==
 
 ci-info@^3.2.0:
-  version "3.2.0"
-  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.2.0.tgz#2876cb948a498797b5236f0095bc057d0dca38b6"
-  integrity sha512-dVqRX7fLUm8J6FgHJ418XuIgDLZDkYcDFTeL6TA2gt5WlIZUQrrH6EZrNClwT/H0FateUsZkGIOPRrLbP+PR9A==
+  version "3.3.0"
+  resolved "https://registry.yarnpkg.com/ci-info/-/ci-info-3.3.0.tgz#b4ed1fb6818dea4803a55c623041f9165d2066b2"
+  integrity sha512-riT/3vI5YpVH6/qomlDnJow6TBee2PBKSEpx3O32EGPYbWGIRsIlGRms3Sm74wYE1JMo8RnO04Hb12+v1J5ICw==
 
 cipher-base@^1.0.0, cipher-base@^1.0.1, cipher-base@^1.0.3:
   version "1.0.4"
@@ -2899,9 +2894,9 @@ domexception@^2.0.1:
     webidl-conversions "^5.0.0"
 
 electron-to-chromium@^1.3.723, electron-to-chromium@^1.3.896:
-  version "1.3.904"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.904.tgz#52a353994faeb0f2a9fab3606b4e0614d1af7b58"
-  integrity sha512-x5uZWXcVNYkTh4JubD7KSC1VMKz0vZwJUqVwY3ihsW0bst1BXDe494Uqbg3Y0fDGVjJqA8vEeGuvO5foyH2+qw==
+  version "1.4.0"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.0.tgz#7456192519838f881e35e4038bf4ad2c36353e63"
+  integrity sha512-+oXCt6SaIu8EmFTPx8wNGSB0tHQ5biDscnlf6Uxuz17e9CjzMRtGk9B8705aMPnj0iWr3iC74WuIkngCsLElmA==
 
 elliptic@^6.5.3:
   version "6.5.4"
@@ -5663,9 +5658,9 @@ webpack-sources@^3.2.2:
   integrity sha512-cp5qdmHnu5T8wRg2G3vZZHoJPN14aqQ89SyQ11NpGH5zEMDCclt49rzo+MaRazk7/UeILhAI+/sEtcM+7Fr0nw==
 
 webpack@^5.51.1:
-  version "5.64.2"
-  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.64.2.tgz#152e28d4712a6223b06c06cba0d3e622a61611a0"
-  integrity sha512-4KGc0+Ozi0aS3EaLNRvEppfZUer+CaORKqL6OBjDLZOPf9YfN8leagFzwe6/PoBdHFxc/utKArl8LMC0Ivtmdg==
+  version "5.64.3"
+  resolved "https://registry.yarnpkg.com/webpack/-/webpack-5.64.3.tgz#f4792cc3f8528db2c18375fa2cd269f69e0bf69f"
+  integrity sha512-XF6/IL9Bw2PPQioiR1UYA8Bs4tX3QXJtSelezKECdLFeSFzWoe44zqTzPW5N+xI3fACaRl2/G3sNA4WYHD7Iww==
   dependencies:
     "@types/eslint-scope" "^3.7.0"
     "@types/estree" "^0.0.50"
@@ -5782,9 +5777,9 @@ write-file-atomic@^3.0.0:
     typedarray-to-buffer "^3.1.5"
 
 ws@^7.4.6:
-  version "7.5.5"
-  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.5.tgz#8b4bc4af518cfabd0473ae4f99144287b33eb881"
-  integrity sha512-BAkMFcAzl8as1G/hArkxOxq3G7pjUqQ3gzYbLL0/5zNkph70e+lCoxBGnm6AW1+/aiNeV4fnKqZ8m4GZewmH2w==
+  version "7.5.6"
+  resolved "https://registry.yarnpkg.com/ws/-/ws-7.5.6.tgz#e59fc509fb15ddfb65487ee9765c5a51dec5fe7b"
+  integrity sha512-6GLgCqo2cy2A2rjCNFlxQS6ZljG/coZfZXclldI8FB/1G3CCI36Zd8xy2HrFVACi8tfk5XrgLQEk+P0Tnz9UcA==
 
 xml-name-validator@^3.0.0:
   version "3.0.0"

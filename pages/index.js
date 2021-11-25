@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import {
-  Row, Col, ButtonToolbar, ListGroup, Offcanvas,
-  ProgressBar, Alert
+  Row, Col, ButtonToolbar, ListGroup,
+  Offcanvas, ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleNotch } from '@fortawesome/free-solid-svg-icons';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
 import LogsComponent from '../components/LogsComponent';
+import LoadingBanner from '../components/LoadingBanner';
 import ErrorPagePopup from '../components/ErrorPagePopup';
 import MilestonesSidebar from '../components/MilestonesSidebar';
 import {
@@ -205,14 +205,7 @@ export default function Index(props) {
       {workflow && workflow.id &&
         <MainPageContent {...workflow} />
       }
-      <Offcanvas show={loading} placement="top" keyboard={false}>
-        <Offcanvas.Body className="text-center">
-          <h2 className="text-danger">
-            <FontAwesomeIcon icon={faCircleNotch} spin className="me-2" />
-            <span>Please wait...</span>
-          </h2>
-        </Offcanvas.Body>
-      </Offcanvas>
+      {loading && <LoadingBanner />}
       {apiError && <ErrorPagePopup {...{ apiError, workflow, props }} />}
       {showDebugData && (
         <LogsComponent objects={[
