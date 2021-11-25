@@ -6,7 +6,7 @@ ARG NODE_ENV=development
 ARG NEXT_TELEMETRY_DISABLED=1
 COPY . .
 
-RUN yarn
+RUN yarn install --frozen-lockfile
 
 CMD ["yarn", "dev"]
 
