@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeUseAxios } from 'axios-hooks'
 import { Row, Col, Image, Form, Button, Alert } from 'react-bootstrap';
 import { LogInLayout } from '../components/Layout';
@@ -14,8 +14,8 @@ const logos = [
 ];
 const useAxios = makeUseAxios(baseAxiosConfig)
 
-export default function Login({ }) {
-
+export default function Login() {
+    const [username, setUsername] = useState('');
     const [
         {
             data: loginState,
@@ -34,6 +34,15 @@ export default function Login({ }) {
                         ? 'Login failed. Bad username or password.'
                         : loginStateError.message
                 )}
+            </Alert>
+        )
+    }
+    
+    function UsernameErrorAlert() {
+        return (
+            <Alert variant={'danger'} className="mt-2">
+                <div>Navigator does not currently support email addresses.</div>
+                <div>Please log in using your ADR <b>username</b></div>
             </Alert>
         )
     }
@@ -58,6 +67,7 @@ export default function Login({ }) {
             <p>The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done.</p>
             <hr />
             <ErrorBanner />
+            {username.includes('@') && <UsernameErrorAlert />}
             <form id="LoginPage" onSubmit={handleSubmit}>
                 <p>
                     <span>Please login using your </span>
@@ -72,8 +82,9 @@ export default function Login({ }) {
                     <Form.Control
                         name="username"
                         type="text"
-                        placeholder="Username or Email"
+                        placeholder="Username"
                         required
+                        onChange={e => setUsername(e.target.value)}
                     />
                 </Form.Group>
                 <Form.Group className="mb-3">
