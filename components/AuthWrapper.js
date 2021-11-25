@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useRouter } from 'next/router';
 import { makeUseAxios } from 'axios-hooks'
 import {
     baseAxiosConfig, getUserDetails, getDatasets,
@@ -9,7 +8,6 @@ import ErrorPagePopup from './ErrorPagePopup';
 const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function AuthWrapper({ Component, pageProps }) {
-    const router = useRouter()
     const [currentDatasetId, setCurrentDatasetId] = useState();
 
     const [{
@@ -30,7 +28,7 @@ export default function AuthWrapper({ Component, pageProps }) {
             userDetailsError && userDetailsError.message.includes('401')
             || datasetsError && datasetsError.message.includes('401')
         if (invalidAuthError) {
-            router.push('/login');
+            window.location.href = '/login';
             return null;
         } else {
             return <ErrorPagePopup apiError={userDetailsError || datasetsError} />
