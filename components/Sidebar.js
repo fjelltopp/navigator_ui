@@ -20,7 +20,7 @@ export default function Sidebar() {
         { label: "What's Next?", href: '/' },
         { label: workInProgress('Task List'), href: '/tasks' },
         { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
-        { label: workInProgress('Contact Us'), href: 'TODO' },
+        { label: workInProgress('Contact Us'), href: 'http://example.com' },
         { label: 'Log Out', href: '/logout' }
     ];
 
