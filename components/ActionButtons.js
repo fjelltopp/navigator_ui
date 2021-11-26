@@ -6,6 +6,7 @@ import {
     faAngleDoubleRight, faCheckSquare
 } from '@fortawesome/free-solid-svg-icons';
 import {
+    getWorkflowStats,
     taskCompleteCheckbox,
     priorTaskButton,
     nextTaskButton,
@@ -24,8 +25,9 @@ const displayStatsData = (showDebugData, onClickAction) => (
 )
 
 export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData }) {
+    const { completed } = getWorkflowStats(workflow);
     const buttonAppearance = (
-        workflow.currentTask.completed
+        completed
             ? {
                 label: 'Task Complete',
                 variant: 'outline-success',
@@ -55,14 +57,17 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData }) {
     if (button.enabled) {
         return buttonComponent;
     } else {
-        const overlay = (
-            <Tooltip>
-                <p>Task status is automatically checked by system.</p>
-                <p>Click "What's Next" once task is complete.</p>
-            </Tooltip>
-        )
+        const { terminus } = getWorkflowStats(workflow);
+        const overlayText = terminus
+            ? <span>This workflow is now complete</span>
+            : (
+                <>
+                    <div>Task status is automatically checked by system.</div>
+                    <div>Click "What's Next" once task is complete.</div>
+                </>
+            )
         return (
-            <OverlayTrigger overlay={overlay}>
+            <OverlayTrigger overlay={<Tooltip>{overlayText}</Tooltip>}>
                 <span className="d-inline-block">
                     {buttonComponent}
                 </span>
