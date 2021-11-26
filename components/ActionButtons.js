@@ -91,20 +91,17 @@ export function MainThreeActionButtons({ workflow, handleClick, showDebugData })
     ];
     return (
         <ButtonGroup>
-            {buttons.map(button => (
-                <>
-                    <Button
-                        key={button.label}
-                        variant="danger"
-                        onClick={() => handleClick(button.onClickAction)}
-                        disabled={!button.enabled}
-                    >
-                        <FontAwesomeIcon icon={button.icon} className="me-2" />
-                        <span>{button.label}</span>
-                        {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
-                    </Button>
-                </>
-            )
+            {buttons.map(button =>
+                <Button
+                    key={button.label}
+                    variant="danger"
+                    onClick={() => handleClick(button.onClickAction)}
+                    disabled={!button.enabled}
+                >
+                    <FontAwesomeIcon icon={button.icon} className="me-2" />
+                    <span>{button.label}</span>
+                    {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
+                </Button>
             )}
         </ButtonGroup>
     )

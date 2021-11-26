@@ -20,13 +20,13 @@ function LogComponent({ title, data }) {
 
 export default function LogsComponent({ objects }) {
 
-    return objects.map((object, index) => (
-        <div key={index}>
+    return objects.map(object =>
+        <div key={object.title}>
             <LogComponent
                 title={object.title}
                 data={object.data}
             />
         </div>
-    ))
+    )
 
 }

@@ -17,7 +17,7 @@ export default function TasksPage(props) {
         getWorkflowTasks(props.currentDatasetId)
     );
 
-    function TaskListInAccordion({ index, milestone }) {
+    function TaskListInAccordion({ milestone }) {
         const taskList = (
             <ListGroup>
                 {milestone.tasks.map((task, index) => (
@@ -32,7 +32,7 @@ export default function TasksPage(props) {
         )
         if (milestone.title) {
             return (
-                <Accordion key={index}>
+                <Accordion>
                     <Accordion.Item eventKey={0}>
                         <Accordion.Header>
                             <div style={{ width: '100%' }}>
@@ -79,11 +79,8 @@ export default function TasksPage(props) {
                     </h2>
                     <hr className="mb-4" />
                     {data.taskList.map((milestone, index) => (
-                        <div className="mb-4">
-                            <TaskListInAccordion
-                                index={index}
-                                milestone={milestone}
-                            />
+                        <div className="mb-4" key={index}>
+                            <TaskListInAccordion milestone={milestone} />
                         </div>
                     ))}
                     {!data.fullyResolved &&

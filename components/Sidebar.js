@@ -33,15 +33,15 @@ export default function Sidebar() {
                 window.open(link.href, isLogoutLink ? '_self' : '_blank');
             return (
                 <ListGroup.Item
-                    action
                     key={key}
+                    action
                     onClick={handleClick}>
                     <span>{link.label}</span>
                 </ListGroup.Item>
             )
         } else {
             return (
-                <Link href={link.href} key={key}>
+                <Link key={key} href={link.href}>
                     <ListGroup.Item action>{link.label}</ListGroup.Item>
                 </Link>
             )

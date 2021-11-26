@@ -23,8 +23,8 @@ export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId,
             <ListGroup className="shadow bg-body m-3 mt-1">
                 {datasets.map(dataset =>
                     <ListGroup.Item
-                        action
                         key={dataset.id}
+                        action
                         onClick={() => handleChange(dataset.id)}
                     >
                         <Row>

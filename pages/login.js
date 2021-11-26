@@ -99,7 +99,7 @@ export default function Login({ }) {
             </form>
             <hr />
             <Row className="text-center">
-                {logos.map(src => <Col key={src}><Image src={src} fluid /></Col>)}
+                {logos.map((src, index) => <Col key={index}><Image src={src} fluid /></Col>)}
             </Row>
         </LogInLayout>
     )

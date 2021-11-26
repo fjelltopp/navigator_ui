@@ -23,7 +23,7 @@ import { actions } from '../lib/actionButtons';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 
-export default function Index(props) {
+export default function IndexPage(props) {
   const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
 
