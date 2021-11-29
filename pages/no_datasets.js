@@ -8,9 +8,11 @@ export default function NoDatasetsPage() {
 
     return (
         <LogInLayout>
-            <h3>Dataset Error</h3>
+            <h3>No Country HIV Estimates Datasets found.</h3>
             <hr />
-            <p>Your ADR account does not have any Inputs Datasets associated with it. Please make sure you are logged into the correct account and have permission to edit an Inputs  Dataset.</p>
+            <p>Your ADR account does not have access to any Country HIV Estimates Datasets.
+                Please make sure you are logged into the correct account and you are added as an editor member
+                of the country organisation or a dataset collaborator.</p>
             <ButtonGroup size="sm">
                 <Link href={'/'}>
                     <Button variant="danger">
