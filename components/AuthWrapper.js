@@ -35,7 +35,12 @@ export default function AuthWrapper({ Component, pageProps }) {
         }
     } else {
         if (!currentDatasetId) {
-            setCurrentDatasetId(datasets.datasets[0].id);
+            if (datasets.datasets.length > 0) {
+                setCurrentDatasetId(datasets.datasets[0].id);
+            } else {
+                window.location.href = '/no_datasets';
+                return null;
+            }
         }
         return <Component {...{
             ...pageProps,
