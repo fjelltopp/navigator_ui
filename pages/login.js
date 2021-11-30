@@ -96,6 +96,13 @@ export default function Login({ }) {
                     target="_blank"
                     className="text-secondary"
                 >Register</Button>
+                <Button
+                    as={'a'}
+                    variant="link"
+                    href="https://adr.unaids.org/user/reset"
+                    target="_blank"
+                    className="text-secondary"
+                >Forgot password?</Button>
             </form>
             <hr />
             <Row className="text-center">
