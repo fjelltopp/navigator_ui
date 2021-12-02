@@ -34,7 +34,7 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData }) {
                 icon: faCheckSquare
             }
             : {
-                label: 'Task Incomplete',
+                label: 'Task Complete?',
                 variant: 'outline-danger',
                 icon: faSquare
             }
