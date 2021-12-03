@@ -19,6 +19,7 @@ import {
   baseAxiosConfig, getWorkflow, getWorkflowTask,
   taskSkipRequest, taskCompleteRequest, taskCompleteDeleteRequest
 } from '../lib/api';
+import { getWorkflowStats } from '../lib/actionButtons';
 import { actions } from '../lib/actionButtons';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
@@ -100,7 +101,8 @@ export default function IndexPage(props) {
     }
   }
 
-  function MainPageContent({ id: workflowId, milestones, message, currentTask, taskBreadcrumbs, progress, milestoneListFullyResolved }) {
+  function MainPageContent({ workflow }) {
+    const { isLatestTask } = getWorkflowStats(workflow)
 
     function HelpUrlsComponent({ helpUrls }) {
       return (
@@ -131,37 +133,37 @@ export default function IndexPage(props) {
     return (
       <>
         <ProgressBar className="mt-2">
-          <ProgressBar variant="danger" now={progress || 1} />
+          <ProgressBar variant="danger" now={workflow.progress || 1} />
         </ProgressBar>
         <br />
         <Row>
           <Col md={3}>
             <MilestonesSidebar
-              milestones={milestones}
-              currentMilestoneId={currentTask.milestoneID}
-              milestoneListFullyResolved={milestoneListFullyResolved}
+              milestones={workflow.milestones}
+              currentMilestoneId={workflow.currentTask.milestoneID}
+              milestoneListFullyResolved={workflow.milestoneListFullyResolved}
             />
           </Col>
           <Col className="border-start">
-            {message && (
-              <Alert variant={message.level}>{message.text}</Alert>
+            {workflow.message && isLatestTask && (
+              <Alert variant={workflow.message.level}>{workflow.message.text}</Alert>
             )}
-            <h4>{currentTask.details.title}</h4>
+            <h4>{workflow.currentTask.details.title}</h4>
             <br />
-            <div dangerouslySetInnerHTML={{ __html: currentTask.details.displayHTML }}></div>
+            <div dangerouslySetInnerHTML={{ __html: workflow.currentTask.details.displayHTML }}></div>
             <Row>
               <Col xs={9}>
-                {currentTask.details.helpURLs &&
+                {workflow.currentTask.details.helpURLs &&
                   <>
                     <br />
-                    <HelpUrlsComponent helpUrls={currentTask.details.helpURLs} />
+                    <HelpUrlsComponent helpUrls={workflow.currentTask.details.helpURLs} />
                   </>
                 }
               </Col>
               <Col xs={3} className="d-flex align-items-end flex-column">
                 <div className="mt-auto">
                   <TaskCompleteCheckbox
-                    workflow={{ currentTask, taskBreadcrumbs }}
+                    workflow={{ currentTask: workflow.currentTask, taskBreadcrumbs: workflow.taskBreadcrumbs }}
                     handleClick={carryOutActions}
                     showDebugData={showDebugData}
                   />
@@ -172,8 +174,8 @@ export default function IndexPage(props) {
             <Row>
               <Col>
                 <div id="WorkflowAndTaskIds">
-                  <div>Workflow {workflowId}</div>
-                  <div>Task {currentTask.id}</div>
+                  <div>Workflow {workflow.id}</div>
+                  <div>Task {workflow.currentTask.id}</div>
                   <div>
                     <a onClick={() => setshowDebugData(!showDebugData)}>Debug Mode</a>
                   </div>
@@ -182,7 +184,7 @@ export default function IndexPage(props) {
               <Col>
                 <ButtonToolbar className="justify-content-end">
                   <MainThreeActionButtons
-                    workflow={{ currentTask, taskBreadcrumbs }}
+                    workflow={{ currentTask: workflow.currentTask, taskBreadcrumbs: workflow.taskBreadcrumbs }}
                     handleClick={carryOutActions}
                     showDebugData={showDebugData}
                   />
@@ -204,7 +206,7 @@ export default function IndexPage(props) {
         datasets={props.user.datasets}
       />
       {workflow && workflow.id &&
-        <MainPageContent {...workflow} />
+        <MainPageContent {...{ workflow }} />
       }
       {loading && <LoadingBanner />}
       {apiError && <ErrorPagePopup {...{ apiError, workflow, props }} />}
