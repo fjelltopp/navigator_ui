@@ -79,3 +79,7 @@ select {
 .CheckboxWithLabel .field-with-icon{
   width: 1.25em;
 }
+
+#ContactUsPage main {
+  max-width: 550px;
+}
