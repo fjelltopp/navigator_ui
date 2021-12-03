@@ -58,14 +58,14 @@ export default function Login({ }) {
             <p>The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done.</p>
             <hr />
             <ErrorBanner />
-            <form id="LoginPage" onSubmit={handleSubmit}>
+            <form id="LoginForm" onSubmit={handleSubmit}>
                 <p>
                     <span>Please login using your </span>
                     <a
-                        href="https://adr.unaids.org"
+                        href={process.env.NEXT_PUBLIC_CKAN_SITE_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="link-danger">adr.unaids.org</a>
+                        className="link-danger">{process.env.NEXT_PUBLIC_CKAN_SITE_URL}</a>
                     <span> login details:</span>
                 </p>
                 <Form.Group className="mb-3">
@@ -92,10 +92,17 @@ export default function Login({ }) {
                 <Button
                     as={'a'}
                     variant="link"
-                    href="https://adr.unaids.org/user/register"
+                    href={`${process.env.NEXT_PUBLIC_CKAN_SITE_URL}/user/register`}
                     target="_blank"
                     className="text-secondary"
                 >Register</Button>
+                <Button
+                    as={'a'}
+                    variant="link"
+                    href={`${process.env.NEXT_PUBLIC_CKAN_SITE_URL}/user/reset`}
+                    target="_blank"
+                    className="text-secondary float-end"
+                >Forgot password?</Button>
             </form>
             <hr />
             <Row className="text-center">
