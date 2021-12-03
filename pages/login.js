@@ -62,10 +62,10 @@ export default function Login({ }) {
                 <p>
                     <span>Please login using your </span>
                     <a
-                        href={process.env.CKAN_SITE_URL}
+                        href={process.env.NEXT_PUBLIC_CKAN_SITE_URL}
                         target="_blank"
                         rel="noreferrer"
-                        className="link-danger">{process.env.CKAN_SITE_URL}</a>
+                        className="link-danger">{process.env.NEXT_PUBLIC_CKAN_SITE_URL}</a>
                     <span> login details:</span>
                 </p>
                 <Form.Group className="mb-3">
@@ -92,14 +92,14 @@ export default function Login({ }) {
                 <Button
                     as={'a'}
                     variant="link"
-                    href={`${process.env.CKAN_SITE_URL}/user/register`}
+                    href={`${process.env.NEXT_PUBLIC_CKAN_SITE_URL}/user/register`}
                     target="_blank"
                     className="text-secondary"
                 >Register</Button>
                 <Button
                     as={'a'}
                     variant="link"
-                    href={`${process.env.CKAN_SITE_URL}/user/reset`}
+                    href={`${process.env.NEXT_PUBLIC_CKAN_SITE_URL}/user/reset`}
                     target="_blank"
                     className="text-secondary float-end"
                 >Forgot password?</Button>
