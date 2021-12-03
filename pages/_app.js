@@ -8,10 +8,15 @@ export default function MyApp({ Component, pageProps }) {
   const { asPath } = useRouter();
   const insecurePages = ['/login', '/logout', '/no_datasets'];
 
-  if (insecurePages.includes(asPath)) {
-    return <Component {...pageProps} />
-  } else {
-    return <AuthWrapper {...{ Component, pageProps }} />
-  }
+  return (
+    <>
+      <link rel="icon" href="/images/favicon.ico" />
+      <title>HIV Estimates Navigator</title>
+      {insecurePages.includes(asPath)
+        ? <Component {...pageProps} />
+        : <AuthWrapper {...{ Component, pageProps }} />
+      }
+    </>
+  );
 
 }
