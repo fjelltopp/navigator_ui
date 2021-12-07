@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useRouter } from "next/router";
 import {
-  Row, Col, ButtonToolbar, ListGroup,
-  Offcanvas, ProgressBar, Alert
+  Row, Col, ButtonToolbar, ListGroup, ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink } from '@fortawesome/free-solid-svg-icons';
+import { faLink, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
 import LogsComponent from '../components/LogsComponent';
@@ -25,21 +25,43 @@ import { actions } from '../lib/actionButtons';
 const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function IndexPage(props) {
+  const router = useRouter();
+  const { redirectToTaskId } = router.query;
+
   const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
 
   const [{ loading, error: apiError }, makeApiRequest] = useAxios(
     null, { manual: true }
   );
-  async function fetchWorkflow() {
+  function fetchWorkflow() {
     makeApiRequest(
       getWorkflow(props.currentDatasetId)
     ).then(res => setWorkflow(res.data))
+  }
+  function updateWorkflowTask(newTaskId) {
+    makeApiRequest(
+      getWorkflowTask(
+        props.currentDatasetId,
+        newTaskId
+      )
+    ).then(({ data }) => {
+      let updatedWorkflow = { ...workflow };
+      updatedWorkflow.currentTask = { ...data };
+      setWorkflow(updatedWorkflow);
+    })
   }
 
   useEffect(() => {
     fetchWorkflow();
   }, [props.currentDatasetId]);
+
+  useEffect(() => {
+    if (workflow && redirectToTaskId) {
+      updateWorkflowTask(redirectToTaskId);
+      router.push('/', undefined, { shallow: true });
+    }
+  }, [workflow]);
 
   function carryOutActions(actionToCarryOut) {
     const updateWorkflowComplete = (complete, postToApi) => {
@@ -75,16 +97,7 @@ export default function IndexPage(props) {
       const newTaskId = actionToCarryOut === actions.getPreviousTask
         ? taskBreadcrumbs[indexOfCurrentTask - 1]
         : taskBreadcrumbs[indexOfCurrentTask + 1]
-      makeApiRequest(
-        getWorkflowTask(
-          props.currentDatasetId,
-          newTaskId
-        )
-      ).then(({ data }) => {
-        let updatedWorkflow = { ...workflow };
-        updatedWorkflow.currentTask = { ...data };
-        setWorkflow(updatedWorkflow);
-      })
+      updateWorkflowTask(newTaskId);
     } else if (actionToCarryOut === actions.skipTaskAndFetchLatestWorkflowState) {
       makeApiRequest(
         taskSkipRequest(
@@ -205,10 +218,10 @@ export default function IndexPage(props) {
         setCurrentDatasetId={props.setCurrentDatasetId}
         datasets={props.user.datasets}
       />
-      {workflow && workflow.id &&
+      {workflow && workflow.id && !loading &&
         <MainPageContent {...{ workflow }} />
       }
-      {loading && <LoadingBanner />}
+      {(loading || redirectToTaskId) && <LoadingBanner />}
       {apiError && <ErrorPagePopup {...{ apiError, workflow, props }} />}
       {showDebugData && (
         <LogsComponent objects={[

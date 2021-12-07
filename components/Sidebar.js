@@ -1,24 +1,11 @@
 import Link from 'next/link'
-import { ListGroup, Badge } from 'react-bootstrap';
+import { ListGroup } from 'react-bootstrap';
 
 export default function Sidebar() {
 
-    const workInProgress = label => {
-        const badgeStyle = {
-            opacity: 0.5,
-            fontWeight: 'normal'
-        }
-        return (
-            <>
-                <span>{label} </span>
-                <Badge bg="danger" style={badgeStyle}>WIP</Badge>
-            </>
-        )
-    };
-
     const sidebarLinks = [
         { label: "What's Next?", href: '/' },
-        { label: workInProgress('Task List'), href: '/tasks' },
+        { label: 'Task List', href: '/tasks' },
         { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
         { label: 'Contact Us', href: '/contact_us' },
         { label: 'Log Out', href: '/logout' }
