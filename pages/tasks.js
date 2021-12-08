@@ -1,4 +1,5 @@
-import { Layout } from '../components/Layout'
+import Link from 'next/link';
+import { Layout } from '../components/Layout';
 import { Col, Accordion, ListGroup, ProgressBar, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
@@ -6,16 +7,25 @@ import DatasetSelector from '../components/DatasetSelector';
 import CheckboxWithLabel from '../components/CheckboxWithLabel';
 import LoadingBanner from '../components/LoadingBanner';
 import ErrorPagePopup from '../components/ErrorPagePopup';
-import { makeUseAxios } from 'axios-hooks'
+import { makeUseAxios } from 'axios-hooks';
 import { baseAxiosConfig, getWorkflowTasks } from '../lib/api';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function TasksPage(props) {
-
     const [{ data, loading, error: apiError }, makeApiRequest] = useAxios(
         getWorkflowTasks(props.currentDatasetId)
     );
+
+    const previewTaskLink = task => (
+        task.reached
+            ? (
+                <Link href={`/?redirectToTaskId=${task.id}`}>
+                    <a className="link-dark">{task.title}</a>
+                </Link>
+            )
+            : task.title
+    )
 
     function TaskListInAccordion({ milestone }) {
         const taskList = (
@@ -24,7 +34,7 @@ export default function TasksPage(props) {
                     <ListGroup.Item key={index}>
                         <CheckboxWithLabel
                             checked={task.completed}
-                            label={task.title}
+                            label={previewTaskLink(task)}
                         />
                     </ListGroup.Item>
                 ))}
