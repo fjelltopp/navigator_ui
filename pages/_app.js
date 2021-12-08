@@ -6,7 +6,7 @@ import '../styles/globals.css'
 import Script from 'next/script'
 import Head from 'next/head'
 
-const GA_ID = process.env.NEXT_PUBLIC_GA_ID
+const GA_ID = process.env.NEXT_PUBLIC_GA_ID || ""
 
 export default function MyApp({ Component, pageProps }) {
   const { asPath } = useRouter();
