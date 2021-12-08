@@ -5,7 +5,8 @@ export default function Sidebar() {
 
     const sidebarLinks = [
         { label: "What's Next?", href: '/' },
-        { label: 'Task List', href: '/tasks' },
+        { label: workInProgress('Task List'), href: '/tasks' },
+        { label: 'How to use Navigator', href: 'https://hivtools.unaids.org/wp-content/uploads/G.13-How-to-use-the-ADR-Navigator.mp4' },
         { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
         { label: 'Contact Us', href: '/contact_us' },
         { label: 'Log Out', href: '/logout' }
