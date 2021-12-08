@@ -1,7 +1,20 @@
 import Link from 'next/link'
-import { ListGroup } from 'react-bootstrap';
+import { ListGroup, Badge } from 'react-bootstrap';
 
 export default function Sidebar() {
+
+    const workInProgress = label => {
+        const badgeStyle = {
+            opacity: 0.5,
+            fontWeight: 'normal'
+        }
+        return (
+          <>
+              <span>{label} </span>
+              <Badge bg="danger" style={badgeStyle}>WIP</Badge>
+          </>
+        )
+    };
 
     const sidebarLinks = [
         { label: "What's Next?", href: '/' },
