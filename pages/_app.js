@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import AuthWrapper from '../components/AuthWrapper';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.css'
+import Head from 'next/head'
 
 export default function MyApp({ Component, pageProps }) {
   const { asPath } = useRouter();
@@ -10,8 +11,9 @@ export default function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <link rel="icon" href="/images/favicon.ico" />
-      <title>HIV Estimates Navigator</title>
+      <Head>
+          <title>HIV Estimates Navigator</title>
+      </Head>
       {insecurePages.includes(asPath)
         ? <Component {...pageProps} />
         : <AuthWrapper {...{ Component, pageProps }} />
