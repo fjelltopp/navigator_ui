@@ -30,6 +30,8 @@ export default function IndexPage(props) {
 
   const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
+  const [alertText, setAlertText] = useState(false);
+  const [alertVariant, setAlertVariant] = useState(false)
 
   const [{ loading, error: apiError }, makeApiRequest] = useAxios(
     null, { manual: true }
@@ -38,6 +40,7 @@ export default function IndexPage(props) {
     makeApiRequest(
       getWorkflow(props.currentDatasetId)
     ).then(res => setWorkflow(res.data))
+    .catch(() => flashError("Failed to get workflow details."))
   }
   function updateWorkflowTask(newTaskId) {
     makeApiRequest(
@@ -52,6 +55,17 @@ export default function IndexPage(props) {
     })
   }
 
+  function flashError(message) {
+    setAlertVariant('danger')
+    setAlertText(message)
+    console.error(message)
+  }
+
+  function clearAlert() {
+    setAlertVariant(undefined)
+    setAlertText(undefined)
+  }
+
   useEffect(() => {
     fetchWorkflow();
   }, [props.currentDatasetId]);
@@ -64,6 +78,7 @@ export default function IndexPage(props) {
   }, [workflow]);
 
   function carryOutActions(actionToCarryOut) {
+    clearAlert()
     const updateWorkflowComplete = (complete, postToApi) => {
       function updateLocalState() {
         let updatedWorkflow = { ...workflow };
@@ -79,7 +94,9 @@ export default function IndexPage(props) {
             props.currentDatasetId,
             workflow.currentTask.id
           )
-        ).then(() => updateLocalState())
+        )
+        .then(() => updateLocalState())
+        .catch(() => flashError("Failed to mark the task as completed."))
       } else {
         updateLocalState();
       }
@@ -161,6 +178,9 @@ export default function IndexPage(props) {
             {workflow.message && isLatestTask && (
               <Alert variant={workflow.message.level}>{workflow.message.text}</Alert>
             )}
+            {alertText && (
+              <Alert variant={alertVariant}>{alertText}</Alert>
+            )}
             <h4>{workflow.currentTask.details.title}</h4>
             <br />
             <div dangerouslySetInnerHTML={{ __html: workflow.currentTask.details.displayHTML }}></div>
@@ -222,7 +242,6 @@ export default function IndexPage(props) {
         <MainPageContent {...{ workflow }} />
       }
       {(loading || redirectToTaskId) && <LoadingBanner />}
-      {apiError && <ErrorPagePopup {...{ apiError, workflow, props }} />}
       {showDebugData && (
         <LogsComponent objects={[
           { title: 'workflow', data: workflow },
