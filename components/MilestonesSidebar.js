@@ -3,16 +3,20 @@ import CheckboxWithLabel from '../components/CheckboxWithLabel';
 
 export default function MilestonesSidebar(props) {
 
-    const listItem = milestone => {
+    const listItem = (milestone, index) => {
         const active = props.currentMilestoneId === milestone.id;
         const variant = active ? 'dark' : null;
         const displayProgress = active || (milestone.progress > 0);
+        const currentActiveMilestoneId = props
+            .milestones.map(x => x.id)
+            .indexOf(props.currentMilestoneId);
+        const milestoneIsInTheFuture = index > currentActiveMilestoneId;
         return (
             <ListGroup.Item
                 key={milestone.id}
                 variant={variant}
-                action
-                onClick={() =>
+                action={!milestoneIsInTheFuture}
+                onClick={() => !milestoneIsInTheFuture &&
                     props.updateWorkflowTaskFromMilestoneId(milestone.id)
                 }
             >
@@ -31,7 +35,7 @@ export default function MilestonesSidebar(props) {
 
     return (
         <ListGroup id="MilestonesSidebar" variant="flush">
-            {props.milestones.map(milestone => listItem(milestone))}
+            {props.milestones.map((milestone, index) => listItem(milestone, index))}
             {!props.milestoneListFullyResolved &&
                 <ListGroup.Item className="text-muted text-center">
                     <small>More milestones may be added</small>
