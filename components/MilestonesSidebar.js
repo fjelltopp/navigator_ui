@@ -8,7 +8,14 @@ export default function MilestonesSidebar(props) {
         const variant = active ? 'dark' : null;
         const displayProgress = active || (milestone.progress > 0);
         return (
-            <ListGroup.Item key={milestone.id} variant={variant}>
+            <ListGroup.Item
+                key={milestone.id}
+                variant={variant}
+                action
+                onClick={() =>
+                    props.updateWorkflowTaskFromMilestoneId(milestone.id)
+                }
+            >
                 <CheckboxWithLabel
                     checked={milestone.completed}
                     label={milestone.title}

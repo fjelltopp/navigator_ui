@@ -16,7 +16,7 @@ import {
 } from '../components/ActionButtons';
 import { makeUseAxios } from 'axios-hooks'
 import {
-  baseAxiosConfig, getWorkflow, getWorkflowTask,
+  baseAxiosConfig, getWorkflow, getWorkflowTask, getMilestoneTask,
   taskSkipRequest, taskCompleteRequest, taskCompleteDeleteRequest
 } from '../lib/api';
 import { getWorkflowStats } from '../lib/actionButtons';
@@ -30,10 +30,13 @@ export default function IndexPage(props) {
 
   const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
+  const [_loading, setloading] = useState(false);
+  const [
+    { loading: apiRequestLoading, error: apiError },
+    makeApiRequest
+  ] = useAxios(null, { manual: true });
+  const loading = _loading || apiRequestLoading;
 
-  const [{ loading, error: apiError }, makeApiRequest] = useAxios(
-    null, { manual: true }
-  );
   function fetchWorkflow() {
     makeApiRequest(
       getWorkflow(props.currentDatasetId)
@@ -49,6 +52,19 @@ export default function IndexPage(props) {
       let updatedWorkflow = { ...workflow };
       updatedWorkflow.currentTask = { ...data };
       setWorkflow(updatedWorkflow);
+    })
+  }
+  function updateWorkflowTaskFromMilestoneId(milestoneId) {
+    setloading(true);
+    makeApiRequest(
+      getMilestoneTask(
+        props.currentDatasetId,
+        milestoneId
+      )
+    ).then(({ data }) => {
+      const firstTaskIdInMilestone = data.tasks[0].id;
+      updateWorkflowTask(firstTaskIdInMilestone);
+      setloading(false);
     })
   }
 
@@ -155,6 +171,7 @@ export default function IndexPage(props) {
               milestones={workflow.milestones}
               currentMilestoneId={workflow.currentTask.milestoneID}
               milestoneListFullyResolved={workflow.milestoneListFullyResolved}
+              updateWorkflowTaskFromMilestoneId={updateWorkflowTaskFromMilestoneId}
             />
           </Col>
           <Col className="border-start">
