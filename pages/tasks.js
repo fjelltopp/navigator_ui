@@ -112,9 +112,11 @@ export default function TasksPage(props) {
                 setCurrentDatasetId={props.setCurrentDatasetId}
                 datasets={props.user.datasets}
             />
-            <ProgressBar className="mt-2">
-                <ProgressBar variant="danger" now="38" />
-            </ProgressBar>
+            {data &&
+                <ProgressBar className="mt-2">
+                    <ProgressBar variant="danger" now={data.progress || 1} />
+                </ProgressBar>
+            }
             <MainPageContent />
         </Layout>
     )
