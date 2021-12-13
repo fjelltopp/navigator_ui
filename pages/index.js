@@ -62,9 +62,13 @@ export default function IndexPage(props) {
         milestoneId
       )
     ).then(({ data }) => {
-      const firstTaskIdInMilestone = data.tasks[0].id;
-      updateWorkflowTask(firstTaskIdInMilestone);
-      setloading(false);
+      if (data.tasks) {
+        const firstTaskIdInMilestone = data.tasks[0].id;
+        updateWorkflowTask(firstTaskIdInMilestone);
+        setloading(false);
+      } else {
+        throw new Error([`Milestone ${milestoneId} has no tasks`]);
+      }
     })
   }
 
