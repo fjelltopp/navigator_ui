@@ -16,7 +16,7 @@ import {
 } from '../components/ActionButtons';
 import { makeUseAxios } from 'axios-hooks'
 import {
-  baseAxiosConfig, getWorkflow, getWorkflowTask, getMilestoneTask,
+  baseAxiosConfig, getWorkflow, getWorkflowTask, getMilestone,
   taskSkipRequest, taskCompleteRequest, taskCompleteDeleteRequest
 } from '../lib/api';
 import { getWorkflowStats } from '../lib/actionButtons';
@@ -30,7 +30,7 @@ export default function IndexPage(props) {
 
   const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
-  const [_loading, setloading] = useState(false);
+  const [_loading, setLoading] = useState(false);
   const [
     { loading: apiRequestLoading, error: apiError },
     makeApiRequest
@@ -55,9 +55,9 @@ export default function IndexPage(props) {
     })
   }
   function updateWorkflowTaskFromMilestoneId(milestoneId) {
-    setloading(true);
+    setLoading(true);
     makeApiRequest(
-      getMilestoneTask(
+      getMilestone(
         props.currentDatasetId,
         milestoneId
       )
@@ -65,7 +65,7 @@ export default function IndexPage(props) {
       if (data.tasks) {
         const firstTaskIdInMilestone = data.tasks[0].id;
         updateWorkflowTask(firstTaskIdInMilestone);
-        setloading(false);
+        setLoading(false);
       } else {
         throw new Error([`Milestone ${milestoneId} has no tasks`]);
       }
