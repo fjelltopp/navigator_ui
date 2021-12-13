@@ -1,4 +1,5 @@
 import React from 'react';
+import { CookiesProvider } from 'react-cookie';
 import { useRouter } from 'next/router';
 import AuthWrapper from '../components/AuthWrapper';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -13,7 +14,7 @@ export default function MyApp({ Component, pageProps }) {
   const insecurePages = ['/login', '/logout', '/no_datasets'];
 
   return (
-    <>
+    <CookiesProvider>
       <Head>
         <title>HIV Estimates Navigator</title>
       </Head>
@@ -40,7 +41,7 @@ export default function MyApp({ Component, pageProps }) {
         ? <Component {...pageProps} />
         : <AuthWrapper {...{ Component, pageProps }} />
       }
-    </>
+    </CookiesProvider>
   );
 
 }
