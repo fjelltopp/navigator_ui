@@ -1,6 +1,6 @@
-import Link from 'next/link';
+import { useRouter } from "next/router";
 import { Layout } from '../components/Layout';
-import { Col, Accordion, ListGroup, ProgressBar, Button } from 'react-bootstrap';
+import { Accordion, ListGroup, ProgressBar, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import DatasetSelector from '../components/DatasetSelector';
@@ -8,33 +8,32 @@ import CheckboxWithLabel from '../components/CheckboxWithLabel';
 import LoadingBanner from '../components/LoadingBanner';
 import ErrorPagePopup from '../components/ErrorPagePopup';
 import { makeUseAxios } from 'axios-hooks';
-import { baseAxiosConfig, getWorkflowTasks } from '../lib/api';
+import { baseAxiosConfig, getWorkflow, getWorkflowTasks } from '../lib/api';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function TasksPage(props) {
-    const [{ data, loading, error: apiError }, makeApiRequest] = useAxios(
-        getWorkflowTasks(props.currentDatasetId)
-    );
+    const router = useRouter();
+    const [{ data: workflow, error: workflowError }] =
+        useAxios(getWorkflow(props.currentDatasetId));
+    const [{ data: workflowTasks, error: workflowTasksError }, fetchWorkflowTasks] =
+        useAxios(getWorkflowTasks(props.currentDatasetId));
+    const apiError = workflowError || workflowTasksError;
 
-    const previewTaskLink = task => (
-        task.reached
-            ? (
-                <Link href={`/?redirectToTaskId=${task.id}`}>
-                    <a className="link-dark">{task.title}</a>
-                </Link>
-            )
-            : task.title
-    )
-
-    function TaskListInAccordion({ milestone }) {
+    function TaskListInAccordion({ milestone, expanded }) {
+        const listGroupAttrs = task => task.reached
+            ? {
+                action: true,
+                onClick: () => router.push(`/?redirectToTaskId=${task.id}`)
+            }
+            : {}
         const taskList = (
             <ListGroup>
-                {milestone.tasks.map((task, index) => (
-                    <ListGroup.Item key={index}>
+                {milestone.tasks.map(task => (
+                    <ListGroup.Item key={task.id} {...listGroupAttrs(task)}>
                         <CheckboxWithLabel
                             checked={task.completed}
-                            label={previewTaskLink(task)}
+                            label={task.title}
                         />
                     </ListGroup.Item>
                 ))}
@@ -42,8 +41,8 @@ export default function TasksPage(props) {
         )
         if (milestone.title) {
             return (
-                <Accordion>
-                    <Accordion.Item eventKey={0}>
+                <Accordion defaultActiveKey={expanded ? 1 : 0}>
+                    <Accordion.Item eventKey={1}>
                         <Accordion.Header>
                             <div style={{ width: '100%' }}>
                                 <h4 className="m-0">
@@ -70,17 +69,21 @@ export default function TasksPage(props) {
 
     function MainPageContent() {
         if (apiError) {
-            return <ErrorPagePopup {...{ apiError, props }} />;
-        } else if (loading) {
+            return <ErrorPagePopup
+                props={props}
+                workflow={workflow}
+                apiError={workflowError || workflowTasksError}
+            />
+        } else if (!workflow || !workflowTasks) {
             return <LoadingBanner />
         } else {
             return (
-                <Col sm={9}>
+                <>
                     <h2 className="mt-5">
                         <span>Your Task List</span>
                         <Button
                             variant="outline-danger"
-                            onClick={makeApiRequest}
+                            onClick={fetchWorkflowTasks}
                             className="float-end"
                         >
                             <FontAwesomeIcon icon={faRefresh} className="me-2" />
@@ -88,19 +91,22 @@ export default function TasksPage(props) {
                         </Button>
                     </h2>
                     <hr className="mb-4" />
-                    {data.taskList.map((milestone, index) => (
-                        <div className="mb-4" key={index}>
-                            <TaskListInAccordion milestone={milestone} />
+                    {workflowTasks.taskList.map(milestone => (
+                        <div className="mb-4" key={milestone.id}>
+                            <TaskListInAccordion
+                                milestone={milestone}
+                                expanded={milestone.id === workflow.currentTask.milestoneID}
+                            />
                         </div>
                     ))}
-                    {!data.fullyResolved &&
+                    {!workflowTasks.fullyResolved &&
                         <ListGroup>
                             <ListGroup.Item className="text-muted">
                                 <span>More tasks may be added</span>
                             </ListGroup.Item>
                         </ListGroup>
                     }
-                </Col>
+                </>
             )
         }
     }
@@ -112,9 +118,9 @@ export default function TasksPage(props) {
                 setCurrentDatasetId={props.setCurrentDatasetId}
                 datasets={props.user.datasets}
             />
-            {data &&
+            {workflowTasks &&
                 <ProgressBar className="mt-2">
-                    <ProgressBar variant="danger" now={data.progress || 1} />
+                    <ProgressBar variant="danger" now={workflowTasks.progress || 1} />
                 </ProgressBar>
             }
             <MainPageContent />
