@@ -3,22 +3,29 @@ import CheckboxWithLabel from '../components/CheckboxWithLabel';
 
 export default function MilestonesSidebar(props) {
 
-    const listItem = (milestone, index) => {
+    const milestoneIsClickable = milestone => {
+        const incompleteMilestones = props.milestones.filter(x => !x.completed);
+        if (incompleteMilestones.length) {
+            if (incompleteMilestones[0] === milestone) {
+                return true;
+            } else if (incompleteMilestones.includes(milestone)) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    const listItem = (milestone) => {
         const active = props.currentMilestoneId === milestone.id;
         const variant = active ? 'dark' : null;
         const displayProgress = active || (milestone.progress > 0);
-        const currentActiveMilestoneId = props
-            .milestones.map(x => x.id)
-            .indexOf(props.currentMilestoneId);
-        const milestoneIsInTheFuture = index > currentActiveMilestoneId;
+        const enabled = milestoneIsClickable(milestone);
         return (
             <ListGroup.Item
                 key={milestone.id}
                 variant={variant}
-                action={!milestoneIsInTheFuture}
-                onClick={() => !milestoneIsInTheFuture &&
-                    props.updateWorkflowTaskFromMilestoneId(milestone.id)
-                }
+                action={enabled}
+                onClick={() => enabled && props.updateWorkflowTaskFromMilestoneId(milestone.id)}
             >
                 <CheckboxWithLabel
                     checked={milestone.completed}
@@ -35,7 +42,7 @@ export default function MilestonesSidebar(props) {
 
     return (
         <ListGroup id="MilestonesSidebar" variant="flush">
-            {props.milestones.map((milestone, index) => listItem(milestone, index))}
+            {props.milestones.map(milestone => listItem(milestone))}
             {!props.milestoneListFullyResolved &&
                 <ListGroup.Item className="text-muted text-center">
                     <small>More milestones may be added</small>
