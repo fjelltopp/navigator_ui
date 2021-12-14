@@ -67,7 +67,7 @@ export default function IndexPage(props) {
         updateWorkflowTask(firstTaskIdInMilestone);
         setLoading(false);
       } else {
-        throw new Error([`Milestone ${milestoneId} has no tasks`]);
+        console.error(`Milestone ${milestoneId} has no tasks`);
       }
     })
   }
