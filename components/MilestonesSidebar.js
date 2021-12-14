@@ -3,12 +3,30 @@ import CheckboxWithLabel from '../components/CheckboxWithLabel';
 
 export default function MilestonesSidebar(props) {
 
-    const listItem = milestone => {
+    const milestoneIsClickable = milestone => {
+        const incompleteMilestones = props.milestones.filter(x => !x.completed);
+        if (incompleteMilestones.length) {
+            if (incompleteMilestones[0] === milestone) {
+                return true;
+            } else if (incompleteMilestones.includes(milestone)) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    const listItem = (milestone) => {
         const active = props.currentMilestoneId === milestone.id;
         const variant = active ? 'dark' : null;
         const displayProgress = active || (milestone.progress > 0);
+        const enabled = milestoneIsClickable(milestone);
         return (
-            <ListGroup.Item key={milestone.id} variant={variant}>
+            <ListGroup.Item
+                key={milestone.id}
+                variant={variant}
+                action={enabled}
+                onClick={() => enabled && props.updateWorkflowTaskFromMilestoneId(milestone.id)}
+            >
                 <CheckboxWithLabel
                     checked={milestone.completed}
                     label={milestone.title}
