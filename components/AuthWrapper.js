@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { makeUseAxios } from 'axios-hooks'
 import {
     baseAxiosConfig, getUserDetails, getDatasets,
@@ -6,9 +7,18 @@ import {
 import ErrorPagePopup from './ErrorPagePopup';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
+const cookieExpiry = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
 
 export default function AuthWrapper({ Component, pageProps }) {
-    const [currentDatasetId, setCurrentDatasetId] = useState();
+    const [cookies, setCookie] = useCookies(['currentDatasetId']);
+    const [currentDatasetId, _setCurrentDatasetId] = useState(cookies.currentDatasetId);
+    const setCurrentDatasetId = datasetId => {
+        setCookie(
+            'currentDatasetId', datasetId,
+            { path: '/', expires: cookieExpiry }
+        );
+        _setCurrentDatasetId(datasetId);
+    }
 
     const [{
         data: userDetails,
@@ -34,22 +44,25 @@ export default function AuthWrapper({ Component, pageProps }) {
             return <ErrorPagePopup apiError={userDetailsError || datasetsError} />
         }
     } else {
-        if (!currentDatasetId) {
-            if (datasets.datasets.length > 0) {
+        if (datasets.datasets.length > 0) {
+            const currentDatasetIdIsValid = datasets.datasets
+                .map(dataset => dataset.id).includes(currentDatasetId);
+            if (!currentDatasetId || !currentDatasetIdIsValid) {
                 setCurrentDatasetId(datasets.datasets[0].id);
-            } else {
-                window.location.href = '/no_datasets';
-                return null;
             }
+            return <Component {...{
+                ...pageProps,
+                user: {
+                    ...userDetails,
+                    datasets: datasets.datasets
+                },
+                currentDatasetId,
+                setCurrentDatasetId,
+            }} />
+        } else {
+            window.location.href = '/no_datasets';
+            return null;
         }
-        return <Component {...{
-            ...pageProps,
-            user: {
-                ...userDetails,
-                datasets: datasets.datasets
-            },
-            currentDatasetId, setCurrentDatasetId,
-        }} />
     }
 
 }
