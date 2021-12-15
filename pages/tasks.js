@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
 import { Layout } from '../components/Layout';
 import { Accordion, ListGroup, ProgressBar, Button } from 'react-bootstrap';
@@ -14,11 +15,32 @@ const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function TasksPage(props) {
     const router = useRouter();
-    const [{ data: workflow, error: workflowError }] =
-        useAxios(getWorkflow(props.currentDatasetId));
-    const [{ data: workflowTasks, error: workflowTasksError }, fetchWorkflowTasks] =
-        useAxios(getWorkflowTasks(props.currentDatasetId));
+
+    const [_loading, setLoading] = useState(true);
+    const [{
+        data: workflow,
+        loading: workflowLoading,
+        error: workflowError
+    }, fetchWorkflow] = useAxios(
+        getWorkflow(props.currentDatasetId),
+        { manual: true }
+    );
+    const [{
+        data: workflowTasks,
+        loading: workflowTasksLoading,
+        error: workflowTasksError
+    }, fetchWorkflowTasks] = useAxios(
+        getWorkflowTasks(props.currentDatasetId),
+        { manual: true }
+    );
+    const loading = _loading || workflowLoading || workflowTasksLoading;
     const apiError = workflowError || workflowTasksError;
+
+    useEffect(async () => {
+        await fetchWorkflow();
+        await fetchWorkflowTasks();
+        setLoading(false);
+    }, [props.currentDatasetId]);
 
     function TaskListInAccordion({ milestone, expanded }) {
         const listGroupAttrs = task => task.reached
@@ -74,7 +96,7 @@ export default function TasksPage(props) {
                 workflow={workflow}
                 apiError={workflowError || workflowTasksError}
             />
-        } else if (!workflow || !workflowTasks) {
+        } else if (loading) {
             return <LoadingBanner />
         } else {
             return (
