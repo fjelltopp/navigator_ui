@@ -11,6 +11,7 @@ import LogsComponent from '../components/LogsComponent';
 import LoadingBanner from '../components/LoadingBanner';
 import ErrorPagePopup from '../components/ErrorPagePopup';
 import MilestonesSidebar from '../components/MilestonesSidebar';
+import { FetchWorkflowError } from '../components/ErrorComponents';
 import {
   TaskCompleteCheckbox, MainThreeActionButtons
 } from '../components/ActionButtons';
@@ -35,13 +36,20 @@ export default function IndexPage(props) {
     { loading: apiRequestLoading, error: apiError },
     makeApiRequest
   ] = useAxios(null, { manual: true });
-  const loading = _loading || apiRequestLoading;
-
+  const [
+    {
+      loading: fetchWorkflowLoading,
+      error: fetchWorkflowError
+    },
+    _fetchWorkflow
+  ] = useAxios(null, { manual: true });
   function fetchWorkflow() {
-    makeApiRequest(
+    _fetchWorkflow(
       getWorkflow(props.currentDatasetId)
     ).then(res => setWorkflow(res.data))
   }
+  const loading = _loading || apiRequestLoading || fetchWorkflowLoading;
+
   function updateWorkflowTask(newTaskId) {
     makeApiRequest(
       getWorkflowTask(
@@ -241,6 +249,12 @@ export default function IndexPage(props) {
       />
       {workflow && workflow.id && !loading &&
         <MainPageContent {...{ workflow }} />
+      }
+      {fetchWorkflowError &&
+        <FetchWorkflowError
+          currentDatasetId={props.currentDatasetId}
+          datasets={props.user.datasets}
+        />
       }
       {(loading || redirectToTaskId) && <LoadingBanner />}
       {apiError && <ErrorPagePopup {...{ apiError, workflow, props }} />}
