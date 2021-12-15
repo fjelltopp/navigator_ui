@@ -247,14 +247,17 @@ export default function IndexPage(props) {
         setCurrentDatasetId={props.setCurrentDatasetId}
         datasets={props.user.datasets}
       />
-      {workflow && workflow.id && !loading &&
-        <MainPageContent {...{ workflow }} />
-      }
-      {fetchWorkflowError &&
-        <FetchWorkflowError
-          currentDatasetId={props.currentDatasetId}
-          datasets={props.user.datasets}
-        />
+      {fetchWorkflowError
+        ? (
+          <FetchWorkflowError
+            currentDatasetId={props.currentDatasetId}
+            datasets={props.user.datasets}
+          />
+        )
+        : (
+          workflow && workflow.id && !loading &&
+          <MainPageContent {...{ workflow }} />
+        )
       }
       {(loading || redirectToTaskId) && <LoadingBanner />}
       {apiError && <ErrorPagePopup {...{ apiError, workflow, props }} />}
