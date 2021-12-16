@@ -4,14 +4,17 @@ import {
   Row, Col, ButtonToolbar, ListGroup, ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLink, faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
 import LogsComponent from '../components/LogsComponent';
 import LoadingBanner from '../components/LoadingBanner';
 import ErrorPagePopup from '../components/ErrorPagePopup';
 import MilestonesSidebar from '../components/MilestonesSidebar';
-import { FetchWorkflowError } from '../components/ErrorComponents';
+import {
+  FetchWorkflowError, FetchWorkflowTaskError,
+  FetchMilestoneError
+} from '../components/ErrorComponents';
 import {
   TaskCompleteCheckbox, MainThreeActionButtons
 } from '../components/ActionButtons';
@@ -32,6 +35,7 @@ export default function IndexPage(props) {
   const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
   const [_loading, setLoading] = useState(false);
+
   const [
     { loading: apiRequestLoading, error: apiError },
     makeApiRequest
@@ -43,15 +47,34 @@ export default function IndexPage(props) {
     },
     _fetchWorkflow
   ] = useAxios(null, { manual: true });
+  const [
+    {
+      loading: fetchWorkflowTaskLoading,
+      error: fetchWorkflowTaskError
+    },
+    _fetchWorkflowTask
+  ] = useAxios(null, { manual: true });
+  const [
+    {
+      loading: fetchMilestoneLoading,
+      error: fetchMilestoneError
+    },
+    _fetchMilestone
+  ] = useAxios(null, { manual: true });
+
+  const loading = _loading
+    || apiRequestLoading
+    || fetchWorkflowLoading
+    || fetchWorkflowTaskLoading
+    || fetchMilestoneLoading
+
   function fetchWorkflow() {
     _fetchWorkflow(
       getWorkflow(props.currentDatasetId)
     ).then(res => setWorkflow(res.data))
   }
-  const loading = _loading || apiRequestLoading || fetchWorkflowLoading;
-
   function updateWorkflowTask(newTaskId) {
-    makeApiRequest(
+    _fetchWorkflowTask(
       getWorkflowTask(
         props.currentDatasetId,
         newTaskId
@@ -64,20 +87,21 @@ export default function IndexPage(props) {
   }
   function updateWorkflowTaskFromMilestoneId(milestoneId) {
     setLoading(true);
-    makeApiRequest(
+    _fetchMilestone(
       getMilestone(
         props.currentDatasetId,
         milestoneId
       )
-    ).then(({ data }) => {
-      if (data.tasks) {
-        const firstTaskIdInMilestone = data.tasks[0].id;
-        updateWorkflowTask(firstTaskIdInMilestone);
-        setLoading(false);
-      } else {
-        console.error(`Milestone ${milestoneId} has no tasks`);
-      }
-    })
+    )
+      .then(({ data }) => {
+        if (data.tasks) {
+          const firstTaskIdInMilestone = data.tasks[0].id;
+          updateWorkflowTask(firstTaskIdInMilestone);
+        } else {
+          console.error(`Milestone ${milestoneId} has no tasks`);
+        }
+      })
+      .finally(() => setLoading(false))
   }
 
   useEffect(() => {
@@ -240,6 +264,40 @@ export default function IndexPage(props) {
 
   }
 
+  const displayMainPageContentOrError = () => {
+    if (fetchWorkflowError) {
+      return (
+        <FetchWorkflowError
+          error={{ title: 'FetchWorkflowError', data: fetchWorkflowError }}
+          currentDatasetId={props.currentDatasetId}
+          datasets={props.user.datasets}
+        />
+      )
+    } else if (fetchWorkflowTaskError) {
+      return (
+        <FetchWorkflowTaskError
+          error={{
+            title: 'FetchWorkflowTaskError',
+            data: fetchWorkflowTaskError
+          }}
+        />
+      )
+    } else if (fetchMilestoneError) {
+      return (
+        <FetchMilestoneError
+          error={{
+            title: 'fetchMilestoneError',
+            data: fetchMilestoneError
+          }}
+        />
+      )
+    } else if (workflow && workflow.id && !loading) {
+      return <MainPageContent {...{ workflow }} />
+    } else {
+      return null;
+    }
+  }
+
   return (
     <Layout>
       <DatasetSelector
@@ -247,18 +305,7 @@ export default function IndexPage(props) {
         setCurrentDatasetId={props.setCurrentDatasetId}
         datasets={props.user.datasets}
       />
-      {fetchWorkflowError
-        ? (
-          <FetchWorkflowError
-            currentDatasetId={props.currentDatasetId}
-            datasets={props.user.datasets}
-          />
-        )
-        : (
-          workflow && workflow.id && !loading &&
-          <MainPageContent {...{ workflow }} />
-        )
-      }
+      {displayMainPageContentOrError()}
       {(loading || redirectToTaskId) && <LoadingBanner />}
       {apiError && <ErrorPagePopup {...{ apiError, workflow, props }} />}
       {showDebugData && (
