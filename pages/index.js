@@ -35,6 +35,10 @@ export default function IndexPage(props) {
   const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
   const [_loading, setLoading] = useState(false);
+  const [actionError, _setActionError] = useState(null);
+  function setActionError(action, error) {
+    _setActionError({ action, error });
+  }
 
   const [
     {
@@ -58,24 +62,15 @@ export default function IndexPage(props) {
     _fetchMilestone
   ] = useAxios(null, { manual: true });
   const [
-    {
-      loading: markTaskAsCompleteLoading,
-      error: markTaskAsCompleteError
-    },
+    { loading: markTaskAsCompleteLoading },
     _markTaskAsComplete
   ] = useAxios(null, { manual: true });
   const [
-    {
-      loading: markTaskAsIncompleteLoading,
-      error: markTaskAsIncompleteError
-    },
+    { loading: markTaskAsIncompleteLoading },
     _markTaskAsIncomplete
   ] = useAxios(null, { manual: true });
   const [
-    {
-      loading: skipTaskLoading,
-      error: skipTaskError
-    },
+    { loading: skipTaskLoading },
     _skipTask
   ] = useAxios(null, { manual: true });
 
@@ -135,6 +130,7 @@ export default function IndexPage(props) {
   }, [workflow]);
 
   function carryOutActions(actionToCarryOut) {
+    setActionError(null);
     const updateWorkflowComplete = (complete, postToApi) => {
       function updateLocalState() {
         let updatedWorkflow = { ...workflow };
@@ -151,7 +147,14 @@ export default function IndexPage(props) {
         apiClient(apiRequest(
           props.currentDatasetId,
           workflow.currentTask.id
-        )).then(() => updateLocalState())
+        ))
+          .then(() => updateLocalState())
+          .catch(error => {
+            const actionName = complete
+              ? 'markTaskAsComplete'
+              : 'markTaskAsIncomplete'
+            setActionError(actionName, error)
+          })
       } else {
         updateLocalState();
       }
@@ -174,7 +177,9 @@ export default function IndexPage(props) {
       _skipTask(taskSkipRequest(
         props.currentDatasetId,
         workflow.currentTask.id
-      )).then(() => fetchWorkflow());
+      ))
+        .then(() => fetchWorkflow())
+        .catch(error => setActionError('skipTask', error))
     } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
       fetchWorkflow();
     } else if (actionToCarryOut === actions.toggleCompleteStateLocally) {
@@ -323,33 +328,40 @@ export default function IndexPage(props) {
   }
 
   function TaskDetailsError() {
-    if (markTaskAsCompleteError) {
-      return (
-        <MarkTaskAsCompleteError
-          error={{
-            title: 'MarkTaskAsCompleteError',
-            data: markTaskAsCompleteError
-          }}
-        />
-      )
-    } else if (markTaskAsIncompleteError) {
-      return (
-        <MarkTaskAsIncompleteError
-          error={{
-            title: 'MarkTaskAsIncompleteError',
-            data: markTaskAsIncompleteError
-          }}
-        />
-      )
-    } else if (skipTaskError) {
-      return (
-        <SkipTaskError
-          error={{
-            title: 'SkipTaskError',
-            data: skipTaskError
-          }}
-        />
-      )
+    if (actionError) {
+      switch (actionError.action) {
+        case 'markTaskAsComplete':
+          return (
+            <MarkTaskAsCompleteError
+              error={{
+                title: 'MarkTaskAsCompleteError',
+                data: actionError.error
+              }}
+            />
+          )
+        case 'markTaskAsIncomplete':
+          return (
+            <MarkTaskAsIncompleteError
+              error={{
+                title: 'MarkTaskAsIncompleteError',
+                data: actionError.error
+              }}
+            />
+          )
+        case 'skipTask':
+          return (
+            <SkipTaskError
+              error={{
+                title: 'SkipTaskError',
+                data: actionError.error
+              }}
+            />
+          )
+        case null:
+          return null;
+        default:
+          return `actionError.action ${actionError.action} unhandled`
+      }
     } else {
       return null;
     }
