@@ -36,8 +36,8 @@ export default function IndexPage(props) {
   const [workflow, setWorkflow] = useState();
   const [_loading, setLoading] = useState(false);
   const [actionError, _setActionError] = useState(null);
-  function setActionError(action, error) {
-    _setActionError({ action, error });
+  function setActionError(name, error) {
+    _setActionError({ name, error });
   }
 
   const [
@@ -150,10 +150,10 @@ export default function IndexPage(props) {
         ))
           .then(() => updateLocalState())
           .catch(error => {
-            const actionName = complete
-              ? 'markTaskAsComplete'
-              : 'markTaskAsIncomplete'
-            setActionError(actionName, error)
+            const errorName = complete
+              ? 'MarkTaskAsCompleteError'
+              : 'MarkTaskAsIncompleteError'
+            setActionError(errorName, error)
           })
       } else {
         updateLocalState();
@@ -179,7 +179,7 @@ export default function IndexPage(props) {
         workflow.currentTask.id
       ))
         .then(() => fetchWorkflow())
-        .catch(error => setActionError('skipTask', error))
+        .catch(error => setActionError('SkipTaskError', error))
     } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
       fetchWorkflow();
     } else if (actionToCarryOut === actions.toggleCompleteStateLocally) {
@@ -329,30 +329,30 @@ export default function IndexPage(props) {
 
   function TaskDetailsError() {
     if (actionError) {
-      switch (actionError.action) {
-        case 'markTaskAsComplete':
+      switch (actionError.name) {
+        case 'MarkTaskAsCompleteError':
           return (
             <MarkTaskAsCompleteError
               error={{
-                title: 'MarkTaskAsCompleteError',
+                title: actionError.name,
                 data: actionError.error
               }}
             />
           )
-        case 'markTaskAsIncomplete':
+        case 'MarkTaskAsIncompleteError':
           return (
             <MarkTaskAsIncompleteError
               error={{
-                title: 'MarkTaskAsIncompleteError',
+                title: actionError.name,
                 data: actionError.error
               }}
             />
           )
-        case 'skipTask':
+        case 'SkipTaskError':
           return (
             <SkipTaskError
               error={{
-                title: 'SkipTaskError',
+                title: actionError.name,
                 data: actionError.error
               }}
             />
@@ -360,7 +360,7 @@ export default function IndexPage(props) {
         case null:
           return null;
         default:
-          return `actionError.action ${actionError.action} unhandled`
+          return `actionError.name ${actionError.name} unhandled`;
       }
     } else {
       return null;
