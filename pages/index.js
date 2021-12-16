@@ -9,11 +9,11 @@ import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
 import LogsComponent from '../components/LogsComponent';
 import LoadingBanner from '../components/LoadingBanner';
-import ErrorPagePopup from '../components/ErrorPagePopup';
 import MilestonesSidebar from '../components/MilestonesSidebar';
 import {
   FetchWorkflowError, FetchWorkflowTaskError,
-  FetchMilestoneError
+  FetchMilestoneError, MarkTaskAsCompleteError,
+  MarkTaskAsIncompleteError, SkipTaskError
 } from '../components/ErrorComponents';
 import {
   TaskCompleteCheckbox, MainThreeActionButtons
@@ -37,10 +37,6 @@ export default function IndexPage(props) {
   const [_loading, setLoading] = useState(false);
 
   const [
-    { loading: apiRequestLoading, error: apiError },
-    makeApiRequest
-  ] = useAxios(null, { manual: true });
-  const [
     {
       loading: fetchWorkflowLoading,
       error: fetchWorkflowError
@@ -61,12 +57,35 @@ export default function IndexPage(props) {
     },
     _fetchMilestone
   ] = useAxios(null, { manual: true });
+  const [
+    {
+      loading: markTaskAsCompleteLoading,
+      error: markTaskAsCompleteError
+    },
+    _markTaskAsComplete
+  ] = useAxios(null, { manual: true });
+  const [
+    {
+      loading: markTaskAsIncompleteLoading,
+      error: markTaskAsIncompleteError
+    },
+    _markTaskAsIncomplete
+  ] = useAxios(null, { manual: true });
+  const [
+    {
+      loading: skipTaskLoading,
+      error: skipTaskError
+    },
+    _skipTask
+  ] = useAxios(null, { manual: true });
 
   const loading = _loading
-    || apiRequestLoading
     || fetchWorkflowLoading
     || fetchWorkflowTaskLoading
     || fetchMilestoneLoading
+    || markTaskAsCompleteLoading
+    || markTaskAsIncompleteLoading
+    || skipTaskLoading
 
   function fetchWorkflow() {
     _fetchWorkflow(
@@ -123,15 +142,16 @@ export default function IndexPage(props) {
         setWorkflow(updatedWorkflow)
       }
       if (postToApi) {
+        const apiClient = complete
+          ? _markTaskAsComplete
+          : _markTaskAsIncomplete
         const apiRequest = complete
           ? taskCompleteRequest
           : taskCompleteDeleteRequest
-        makeApiRequest(
-          apiRequest(
-            props.currentDatasetId,
-            workflow.currentTask.id
-          )
-        ).then(() => updateLocalState())
+        apiClient(apiRequest(
+          props.currentDatasetId,
+          workflow.currentTask.id
+        )).then(() => updateLocalState())
       } else {
         updateLocalState();
       }
@@ -151,12 +171,10 @@ export default function IndexPage(props) {
         : taskBreadcrumbs[indexOfCurrentTask + 1]
       updateWorkflowTask(newTaskId);
     } else if (actionToCarryOut === actions.skipTaskAndFetchLatestWorkflowState) {
-      makeApiRequest(
-        taskSkipRequest(
-          props.currentDatasetId,
-          workflow.currentTask.id
-        )
-      ).then(() => fetchWorkflow());
+      _skipTask(taskSkipRequest(
+        props.currentDatasetId,
+        workflow.currentTask.id
+      )).then(() => fetchWorkflow());
     } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
       fetchWorkflow();
     } else if (actionToCarryOut === actions.toggleCompleteStateLocally) {
@@ -211,6 +229,7 @@ export default function IndexPage(props) {
             />
           </Col>
           <Col className="border-start">
+            <TaskDetailsError />
             {workflow.message && isLatestTask && (
               <Alert variant={workflow.message.level}>{workflow.message.text}</Alert>
             )}
@@ -264,35 +283,73 @@ export default function IndexPage(props) {
 
   }
 
-  const displayMainPageContentOrError = () => {
-    if (fetchWorkflowError) {
-      return (
-        <FetchWorkflowError
-          error={{ title: 'FetchWorkflowError', data: fetchWorkflowError }}
-          currentDatasetId={props.currentDatasetId}
-          datasets={props.user.datasets}
-        />
-      )
-    } else if (fetchWorkflowTaskError) {
-      return (
-        <FetchWorkflowTaskError
-          error={{
-            title: 'FetchWorkflowTaskError',
-            data: fetchWorkflowTaskError
-          }}
-        />
-      )
-    } else if (fetchMilestoneError) {
-      return (
-        <FetchMilestoneError
-          error={{
-            title: 'fetchMilestoneError',
-            data: fetchMilestoneError
-          }}
-        />
-      )
+  function MainPageContentOrError() {
+    const errorComponent = () => {
+      if (fetchWorkflowError) {
+        return (
+          <FetchWorkflowError
+            error={{ title: 'FetchWorkflowError', data: fetchWorkflowError }}
+            currentDatasetId={props.currentDatasetId}
+            datasets={props.user.datasets}
+          />
+        )
+      } else if (fetchWorkflowTaskError) {
+        return (
+          <FetchWorkflowTaskError
+            error={{
+              title: 'FetchWorkflowTaskError',
+              data: fetchWorkflowTaskError
+            }}
+          />
+        )
+      } else if (fetchMilestoneError) {
+        return (
+          <FetchMilestoneError
+            error={{
+              title: 'fetchMilestoneError',
+              data: fetchMilestoneError
+            }}
+          />
+        )
+      }
+    }
+    if (errorComponent()) {
+      return <div className="mt-3 mb-1">{errorComponent()}</div>
     } else if (workflow && workflow.id && !loading) {
       return <MainPageContent {...{ workflow }} />
+    } else {
+      return null;
+    }
+  }
+
+  function TaskDetailsError() {
+    if (markTaskAsCompleteError) {
+      return (
+        <MarkTaskAsCompleteError
+          error={{
+            title: 'MarkTaskAsCompleteError',
+            data: markTaskAsCompleteError
+          }}
+        />
+      )
+    } else if (markTaskAsIncompleteError) {
+      return (
+        <MarkTaskAsIncompleteError
+          error={{
+            title: 'MarkTaskAsIncompleteError',
+            data: markTaskAsIncompleteError
+          }}
+        />
+      )
+    } else if (skipTaskError) {
+      return (
+        <SkipTaskError
+          error={{
+            title: 'SkipTaskError',
+            data: skipTaskError
+          }}
+        />
+      )
     } else {
       return null;
     }
@@ -305,9 +362,8 @@ export default function IndexPage(props) {
         setCurrentDatasetId={props.setCurrentDatasetId}
         datasets={props.user.datasets}
       />
-      {displayMainPageContentOrError()}
+      <MainPageContentOrError />
       {(loading || redirectToTaskId) && <LoadingBanner />}
-      {apiError && <ErrorPagePopup {...{ apiError, workflow, props }} />}
       {showDebugData && (
         <LogsComponent objects={[
           { title: 'workflow', data: workflow },
