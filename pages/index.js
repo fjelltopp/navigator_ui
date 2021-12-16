@@ -101,6 +101,7 @@ export default function IndexPage(props) {
   }
   function updateWorkflowTaskFromMilestoneId(milestoneId) {
     setLoading(true);
+    setActionError(null);
     _fetchMilestone(
       getMilestone(
         props.currentDatasetId,
@@ -120,11 +121,13 @@ export default function IndexPage(props) {
 
   useEffect(() => {
     fetchWorkflow();
+    setActionError(null);
   }, [props.currentDatasetId]);
 
   useEffect(() => {
     if (workflow && redirectToTaskId) {
       updateWorkflowTask(redirectToTaskId);
+      setActionError(null);
       router.push('/', undefined, { shallow: true });
     }
   }, [workflow]);
