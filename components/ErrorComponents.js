@@ -86,3 +86,12 @@ export function SkipTaskError({ error }) {
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
+
+export function FetchWorkflowTasksError({ error }) {
+    const title = `Failed to load task list`;
+    const lines = [
+        'An unexpected error occurred when trying to laod this task list,',
+        'Please try refreshing this page or switching to another dataset.'
+    ];
+    return <BaseErrorAlert {...{ title, lines, error }} />
+}
