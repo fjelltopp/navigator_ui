@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import { Layout } from '../components/Layout';
 import { Accordion, ListGroup, ProgressBar, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { faRefresh } from '@fortawesome/free-solid-svg-icons';
 import DatasetSelector from '../components/DatasetSelector';
 import CheckboxWithLabel from '../components/CheckboxWithLabel';
-import LoadingBanner from '../components/LoadingBanner';
-import ErrorPagePopup from '../components/ErrorPagePopup';
+import { FetchWorkflowError, FetchWorkflowTasksError } from '../components/ErrorComponents';
 import { makeUseAxios } from 'axios-hooks';
 import { baseAxiosConfig, getWorkflow, getWorkflowTasks } from '../lib/api';
 
@@ -19,22 +19,21 @@ export default function TasksPage(props) {
     const [_loading, setLoading] = useState(true);
     const [{
         data: workflow,
-        loading: workflowLoading,
-        error: workflowError
+        loading: fetchWorkflowLoading,
+        error: fetchWorkflowError
     }, fetchWorkflow] = useAxios(
         getWorkflow(props.currentDatasetId),
         { manual: true }
     );
     const [{
         data: workflowTasks,
-        loading: workflowTasksLoading,
-        error: workflowTasksError
+        loading: fetchWorkflowTasksLoading,
+        error: fetchWorkflowTasksError
     }, fetchWorkflowTasks] = useAxios(
         getWorkflowTasks(props.currentDatasetId),
         { manual: true }
     );
-    const loading = _loading || workflowLoading || workflowTasksLoading;
-    const apiError = workflowError || workflowTasksError;
+    const loading = _loading || fetchWorkflowLoading || fetchWorkflowTasksLoading;
 
     useEffect(async () => {
         await fetchWorkflow();
@@ -90,47 +89,67 @@ export default function TasksPage(props) {
     }
 
     function MainPageContent() {
-        if (apiError) {
-            return <ErrorPagePopup
-                props={props}
-                workflow={workflow}
-                apiError={workflowError || workflowTasksError}
-            />
-        } else if (loading) {
-            return <LoadingBanner />
-        } else {
-            return (
-                <>
-                    <h2 className="mt-5">
-                        <span>Your Task List</span>
-                        <Button
-                            variant="outline-danger"
-                            onClick={fetchWorkflowTasks}
-                            className="float-end"
-                        >
-                            <FontAwesomeIcon icon={faRefresh} className="me-2" />
-                            <span>Refresh</span>
-                        </Button>
-                    </h2>
-                    <hr className="mb-4" />
-                    {workflowTasks.taskList.map(milestone => (
-                        <div className="mb-4" key={milestone.id}>
-                            <TaskListInAccordion
-                                milestone={milestone}
-                                expanded={milestone.id === workflow.currentTask.milestoneID}
-                            />
-                        </div>
-                    ))}
-                    {!workflowTasks.fullyResolved &&
-                        <ListGroup>
-                            <ListGroup.Item className="text-muted">
-                                <span>More tasks may be added</span>
-                            </ListGroup.Item>
-                        </ListGroup>
-                    }
-                </>
-            )
+        function Body() {
+            if (fetchWorkflowError) {
+                return (
+                    <FetchWorkflowError
+                        error={{ title: 'FetchWorkflowError', data: fetchWorkflowError }}
+                        currentDatasetId={props.currentDatasetId}
+                        datasets={props.user.datasets}
+                    />
+                )
+            } else if (fetchWorkflowTasksError) {
+                return (
+                    <FetchWorkflowTasksError
+                        error={{ title: 'workflowTasksError', data: fetchWorkflowTasksError }}
+                    />
+                )
+            } else if (loading) {
+                return (
+                    <h3 className="text-muted">
+                        <FontAwesomeIcon spin icon={faSpinner} className="ms-2" />
+                    </h3>
+                )
+            } else {
+                return (
+                    <>
+                        {workflowTasks.taskList.map(milestone => (
+                            <div className="mb-4" key={milestone.id}>
+                                <TaskListInAccordion
+                                    milestone={milestone}
+                                    expanded={milestone.id === workflow.currentTask.milestoneID}
+                                />
+                            </div>
+                        ))}
+                        {!workflowTasks.fullyResolved &&
+                            <ListGroup>
+                                <ListGroup.Item className="text-muted">
+                                    <span>More tasks may be added</span>
+                                </ListGroup.Item>
+                            </ListGroup>
+                        }
+                    </>
+                )
+            }
         }
+        return (
+            <>
+                <h2 className="mt-5">
+                    <span>Your Task List</span>
+                    <Button
+                        variant="outline-danger"
+                        onClick={fetchWorkflowTasks}
+                        className="float-end"
+                        disabled={loading}
+                    >
+                        <FontAwesomeIcon icon={faRefresh} className="me-2" />
+                        <span>Refresh</span>
+                    </Button>
+                </h2>
+                <hr className="mb-4" />
+                <Body />
+            </>
+        )
     }
 
     return (
@@ -140,11 +159,11 @@ export default function TasksPage(props) {
                 setCurrentDatasetId={props.setCurrentDatasetId}
                 datasets={props.user.datasets}
             />
-            {workflowTasks &&
-                <ProgressBar className="mt-2">
+            <ProgressBar className="mt-2">
+                {workflowTasks &&
                     <ProgressBar variant="danger" now={workflowTasks.progress || 1} />
-                </ProgressBar>
-            }
+                }
+            </ProgressBar>
             <MainPageContent />
         </Layout>
     )
