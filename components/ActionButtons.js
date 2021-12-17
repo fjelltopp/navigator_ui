@@ -2,7 +2,7 @@ import { ButtonGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import {
-    faAngleLeft, faAngleRight,
+    faAngleLeft, faAngleRight, faSpinner,
     faAngleDoubleRight, faCheckSquare
 } from '@fortawesome/free-solid-svg-icons';
 import {
@@ -24,55 +24,78 @@ const displayStatsData = (showDebugData, onClickAction) => (
     </>
 )
 
-export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData }) {
-    const { completed } = getWorkflowStats(workflow);
-    const buttonAppearance = (
-        completed
-            ? {
-                label: 'Task Complete',
-                variant: 'outline-success',
-                icon: faCheckSquare
-            }
-            : {
-                label: 'Task Complete?',
-                variant: 'outline-danger',
-                icon: faSquare
-            }
-    )
-    const button = {
-        ...buttonAppearance,
-        ...taskCompleteCheckbox(workflow)
-    }
-    const buttonComponent = (
-        <Button
-            variant={button.variant}
-            onClick={() => handleClick(button.onClickAction)}
-            disabled={!button.enabled}
-        >
-            <span>{button.label}</span>
-            <FontAwesomeIcon icon={button.icon} className="ms-2" />
-            {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
-        </Button>
-    )
-    if (button.enabled) {
-        return buttonComponent;
-    } else {
-        const { terminus } = getWorkflowStats(workflow);
-        const overlayText = terminus
-            ? <span>This workflow is now complete</span>
-            : (
-                <>
-                    <div>Task status is automatically checked by system.</div>
-                    <div>Click "What's Next" once task is complete.</div>
-                </>
-            )
-        return (
-            <OverlayTrigger overlay={<Tooltip>{overlayText}</Tooltip>}>
-                <span className="d-inline-block">
-                    {buttonComponent}
-                </span>
-            </OverlayTrigger>
+export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, markTaskAsCompleteLoading, markTaskAsIncompleteLoading }) {
+    if (markTaskAsCompleteLoading || markTaskAsIncompleteLoading) {
+        const button = (
+            markTaskAsCompleteLoading
+                ? {
+                    label: 'Task Complete',
+                    variant: 'outline-success',
+                }
+                : {
+                    label: 'Task Complete?',
+                    variant: 'outline-danger',
+                }
         )
+        return (
+            <Button
+                variant={button.variant}
+                disabled={true}
+            >
+                <span>{button.label}</span>
+                <FontAwesomeIcon spin icon={faSpinner} className="ms-2" />
+            </Button>
+        )
+    } else {
+        const { completed } = getWorkflowStats(workflow);
+        const buttonAppearance = (
+            completed
+                ? {
+                    label: 'Task Complete',
+                    variant: 'outline-success',
+                    icon: faCheckSquare
+                }
+                : {
+                    label: 'Task Complete?',
+                    variant: 'outline-danger',
+                    icon: faSquare
+                }
+        )
+        const button = {
+            ...buttonAppearance,
+            ...taskCompleteCheckbox(workflow)
+        }
+        const buttonComponent = (
+            <Button
+                variant={button.variant}
+                onClick={() => handleClick(button.onClickAction)}
+                disabled={!button.enabled}
+            >
+                <span>{button.label}</span>
+                <FontAwesomeIcon icon={button.icon} className="ms-2" />
+                {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
+            </Button>
+        )
+        if (button.enabled) {
+            return buttonComponent;
+        } else {
+            const { terminus } = getWorkflowStats(workflow);
+            const overlayText = terminus
+                ? <span>This workflow is now complete</span>
+                : (
+                    <>
+                        <div>Task status is automatically checked by system.</div>
+                        <div>Click "What's Next" once task is complete.</div>
+                    </>
+                )
+            return (
+                <OverlayTrigger overlay={<Tooltip>{overlayText}</Tooltip>}>
+                    <span className="d-inline-block">
+                        {buttonComponent}
+                    </span>
+                </OverlayTrigger>
+            )
+        }
     }
 }
 

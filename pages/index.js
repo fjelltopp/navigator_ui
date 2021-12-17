@@ -78,8 +78,6 @@ export default function IndexPage(props) {
     || fetchWorkflowLoading
     || fetchWorkflowTaskLoading
     || fetchMilestoneLoading
-    || markTaskAsCompleteLoading
-    || markTaskAsIncompleteLoading
     || skipTaskLoading
 
   function fetchWorkflow() {
@@ -258,7 +256,7 @@ export default function IndexPage(props) {
                   <TaskCompleteCheckbox
                     workflow={{ currentTask: workflow.currentTask, taskBreadcrumbs: workflow.taskBreadcrumbs }}
                     handleClick={carryOutActions}
-                    showDebugData={showDebugData}
+                    {...{ showDebugData, markTaskAsCompleteLoading, markTaskAsIncompleteLoading }}
                   />
                 </div>
               </Col>
