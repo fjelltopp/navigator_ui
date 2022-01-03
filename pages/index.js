@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
+import Skeleton from 'react-loading-skeleton'
 import {
   Row, Col, ButtonToolbar, ListGroup, ProgressBar, Alert
 } from 'react-bootstrap';
@@ -220,7 +221,7 @@ export default function IndexPage(props) {
     }
 
     return (
-      <>
+      <div id="WorkflowComponent" className={loading ? 'loading' : ''}>
         <ProgressBar className="mt-2">
           <ProgressBar variant="danger" now={workflow.progress || 1} />
         </ProgressBar>
@@ -235,20 +236,20 @@ export default function IndexPage(props) {
             />
           </Col>
           <Col className="border-start">
-            <TaskDetailsError />
-            {workflow.message && isLatestTask && (
+            {!loading && <TaskDetailsError />}
+            {!loading && workflow.message && isLatestTask && (
               <Alert variant={workflow.message.level}>{workflow.message.text}</Alert>
             )}
-            <h4>{workflow.currentTask.details.title}</h4>
+            <h4>{loading ? <Skeleton width="75%" /> : workflow.currentTask.details.title}</h4>
             <br />
-            <div dangerouslySetInnerHTML={{ __html: workflow.currentTask.details.displayHTML }}></div>
-            <Row>
+            {loading
+              ? <Skeleton count={15} />
+              : <div dangerouslySetInnerHTML={{ __html: workflow.currentTask.details.displayHTML }}></div>
+            }
+            <Row className="mt-4">
               <Col xs={9}>
-                {workflow.currentTask.details.helpURLs &&
-                  <>
-                    <br />
-                    <HelpUrlsComponent helpUrls={workflow.currentTask.details.helpURLs} />
-                  </>
+                {!loading && workflow.currentTask.details.helpURLs &&
+                  <HelpUrlsComponent helpUrls={workflow.currentTask.details.helpURLs} />
                 }
               </Col>
               <Col xs={3} className="d-flex align-items-end flex-column">
@@ -284,7 +285,7 @@ export default function IndexPage(props) {
             </Row>
           </Col>
         </Row>
-      </>
+      </div>
     )
 
   }
@@ -321,7 +322,7 @@ export default function IndexPage(props) {
     }
     if (errorComponent()) {
       return <div className="mt-3 mb-1">{errorComponent()}</div>
-    } else if (workflow && workflow.id && !loading) {
+    } else if (workflow && workflow.id) {
       return <WorkflowComponent {...{ workflow }} />
     } else {
       return (

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import AuthWrapper from '../components/AuthWrapper';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../styles/globals.css'
+import 'react-loading-skeleton/dist/skeleton.css'
 import Script from 'next/script'
 import Head from 'next/head'
 

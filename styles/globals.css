@@ -84,3 +84,7 @@ select {
 #ContactUsPage main {
   max-width: 550px;
 }
+
+#WorkflowComponent.loading{
+  cursor: progress;
+}
