@@ -190,7 +190,7 @@ export default function IndexPage(props) {
     }
   }
 
-  function MainPageContent({ workflow }) {
+  function WorkflowComponent({ workflow }) {
     const { isLatestTask } = getWorkflowStats(workflow)
 
     function HelpUrlsComponent({ helpUrls }) {
@@ -321,10 +321,16 @@ export default function IndexPage(props) {
     }
     if (errorComponent()) {
       return <div className="mt-3 mb-1">{errorComponent()}</div>
-    } else if (workflow && workflow.id && !loading) {
-      return <MainPageContent {...{ workflow }} />
+    } else if (loading) {
+      return (
+        <div className="mt-4 mb-2">
+          <LoadingBanner />
+        </div>
+      )
+    } else if (workflow && workflow.id) {
+      return <WorkflowComponent {...{ workflow }} />
     } else {
-      return null;
+      throw new Error(['Unhandled case'])
     }
   }
 
@@ -376,7 +382,6 @@ export default function IndexPage(props) {
         datasets={props.user.datasets}
       />
       <MainPageContentOrError />
-      {(loading || redirectToTaskId) && <LoadingBanner />}
       {showDebugData && (
         <LogsComponent objects={[
           { title: 'workflow', data: workflow },
