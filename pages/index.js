@@ -321,16 +321,14 @@ export default function IndexPage(props) {
     }
     if (errorComponent()) {
       return <div className="mt-3 mb-1">{errorComponent()}</div>
-    } else if (loading) {
+    } else if (workflow && workflow.id && !loading) {
+      return <WorkflowComponent {...{ workflow }} />
+    } else {
       return (
         <div className="mt-4 mb-2">
           <LoadingComponent />
         </div>
       )
-    } else if (workflow && workflow.id) {
-      return <WorkflowComponent {...{ workflow }} />
-    } else {
-      throw new Error(['Unhandled case'])
     }
   }
 
