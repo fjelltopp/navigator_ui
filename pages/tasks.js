@@ -53,7 +53,7 @@ export default function TasksPage(props) {
                 {milestone.tasks.map(task => (
                     <ListGroup.Item key={task.id} {...listGroupAttrs(task)}>
                         <CheckboxWithLabel
-                            checked={task.completed}
+                            checked={task.completed || workflowTasks.progress === 100}
                             label={task.title}
                         />
                     </ListGroup.Item>
