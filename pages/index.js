@@ -8,7 +8,7 @@ import { faLink } from '@fortawesome/free-solid-svg-icons';
 import { Layout } from '../components/Layout'
 import DatasetSelector from '../components/DatasetSelector';
 import LogsComponent from '../components/LogsComponent';
-import LoadingBanner from '../components/LoadingBanner';
+import LoadingComponent from '../components/LoadingComponent';
 import MilestonesSidebar from '../components/MilestonesSidebar';
 import {
   FetchWorkflowError, FetchWorkflowTaskError,
@@ -324,7 +324,7 @@ export default function IndexPage(props) {
     } else if (loading) {
       return (
         <div className="mt-4 mb-2">
-          <LoadingBanner />
+          <LoadingComponent />
         </div>
       )
     } else if (workflow && workflow.id) {
