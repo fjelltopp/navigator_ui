@@ -43,7 +43,8 @@ export function FetchWorkflowError({ error, currentDatasetId, datasets }) {
 }
 
 export function FetchWorkflowTaskError({ error }) {
-    const title = `Failed to load task`;
+    const taskId = error.data.config.url.split('/').slice(-1);
+    const title = `Failed to load task ${taskId}`;
     const lines = [
         'An unexpected error occurred when trying to load this task,',
         'Please try refreshing this page or switching to another dataset.'
@@ -52,7 +53,8 @@ export function FetchWorkflowTaskError({ error }) {
 }
 
 export function FetchMilestoneError({ error }) {
-    const title = `Failed to load milestone`;
+    const milestoneId = error.data.config.url.split('/').slice(-1);
+    const title = `Failed to load milestone ${milestoneId}`;
     const lines = [
         'An unexpected error occurred when trying to load this milestone,',
         'Please try refreshing this page or switching to another dataset.'
@@ -61,7 +63,8 @@ export function FetchMilestoneError({ error }) {
 }
 
 export function MarkTaskAsCompleteError({ error }) {
-    const title = `Failed to complete task`;
+    const taskId = error.data.config.url.split('/').slice(-2)[0];
+    const title = `Failed to complete task ${taskId}`;
     const lines = [
         'An unexpected error occurred when trying to mark this task as complete,',
         'Please try completing the action again or refreshing this page.'
@@ -70,7 +73,8 @@ export function MarkTaskAsCompleteError({ error }) {
 }
 
 export function MarkTaskAsIncompleteError({ error }) {
-    const title = `Failed to mark task as incomplete`;
+    const taskId = error.data.config.url.split('/').slice(-2)[0];
+    const title = `Failed to mark task ${taskId} as incomplete`;
     const lines = [
         'An unexpected error occurred when trying to mark this task as incomplete,',
         'Please try completing the action again or refreshing this page.'
@@ -79,7 +83,8 @@ export function MarkTaskAsIncompleteError({ error }) {
 }
 
 export function SkipTaskError({ error }) {
-    const title = `Failed to skip task`;
+    const taskId = error.data.config.url.split('/').slice(-2)[0];
+    const title = `Failed to skip task ${taskId}`;
     const lines = [
         'An unexpected error occurred when trying to skip this task,',
         'Please try completing the action again or refreshing this page.'
@@ -88,7 +93,8 @@ export function SkipTaskError({ error }) {
 }
 
 export function FetchWorkflowTasksError({ error }) {
-    const title = `Failed to load task list`;
+    const datasetId = error.data.config.url.split('/').slice(-2)[0];
+    const title = `Failed to load task list for dataset ${datasetId}`;
     const lines = [
         'An unexpected error occurred when trying to laod this task list,',
         'Please try refreshing this page or switching to another dataset.'
