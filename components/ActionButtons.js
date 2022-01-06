@@ -24,6 +24,25 @@ const displayStatsData = (showDebugData, onClickAction) => (
     </>
 )
 
+function ButtonWithTooltip({ button, buttonComponent }) {
+    if (button.tooltip) {
+        const tooltip = (
+            <Tooltip>
+                {button.tooltip.map(line => <div>{line}</div>)}
+            </Tooltip>
+        )
+        return (
+            <OverlayTrigger overlay={tooltip}>
+                <span className="d-inline-block">
+                    {buttonComponent}
+                </span>
+            </OverlayTrigger>
+        )
+    } else {
+        return buttonComponent;
+    }
+}
+
 export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, markTaskAsCompleteLoading, markTaskAsIncompleteLoading }) {
     if (markTaskAsCompleteLoading || markTaskAsIncompleteLoading) {
         const button = (
@@ -76,61 +95,49 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, mar
                 {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
             </Button>
         )
-        if (button.enabled) {
-            return buttonComponent;
-        } else {
-            const { terminus } = getWorkflowStats(workflow);
-            const overlayText = terminus
-                ? <span>This workflow is now complete</span>
-                : (
-                    <>
-                        <div>Task status is automatically checked by system.</div>
-                        <div>Click "What's Next" once task is complete.</div>
-                    </>
-                )
-            return (
-                <OverlayTrigger overlay={<Tooltip>{overlayText}</Tooltip>}>
-                    <span className="d-inline-block">
-                        {buttonComponent}
-                    </span>
-                </OverlayTrigger>
-            )
-        }
+        return <ButtonWithTooltip {...{ button, buttonComponent }} />
     }
 }
 
 export function MainThreeActionButtons({ workflow, handleClick, showDebugData }) {
     const buttons = [
         {
-            label: "Prior Task",
+            label: 'Prior Task',
             icon: faAngleLeft,
+            style: { borderRadius: '.25rem 0 0 .25rem' },
             ...priorTaskButton(workflow),
         },
         {
-            label: "Next Task",
+            label: 'Next Task',
             icon: faAngleRight,
+            style: { borderRadius: 0 },
             ...nextTaskButton(workflow),
         },
         {
-            label: "What's Next?",
+            label: 'What\'s Next?',
             icon: faAngleDoubleRight,
+            style: { borderRadius: '0 .25rem .25rem 0' },
             ...whatsNextButton(workflow),
         },
     ];
     return (
         <ButtonGroup>
-            {buttons.map(button =>
-                <Button
-                    key={button.label}
-                    variant="danger"
-                    onClick={() => handleClick(button.onClickAction)}
-                    disabled={!button.enabled}
-                >
-                    <FontAwesomeIcon icon={button.icon} className="me-2" />
-                    <span>{button.label}</span>
-                    {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
-                </Button>
-            )}
+            {buttons.map(button => {
+                const buttonComponent = (
+                    <Button
+                        key={button.label}
+                        style={button.style}
+                        variant="danger"
+                        onClick={() => handleClick(button.onClickAction)}
+                        disabled={!button.enabled}
+                    >
+                        <FontAwesomeIcon icon={button.icon} className="me-2" />
+                        <span>{button.label}</span>
+                        {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
+                    </Button>
+                )
+                return <ButtonWithTooltip {...{ button, buttonComponent }} />
+            })}
         </ButtonGroup>
     )
 }
