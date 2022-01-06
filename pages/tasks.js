@@ -42,16 +42,14 @@ export default function TasksPage(props) {
     }, [props.currentDatasetId]);
 
     function TaskListInAccordion({ milestone, expanded }) {
-        const listGroupAttrs = task => task.reached
-            ? {
-                action: true,
-                onClick: () => router.push(`/?redirectToTaskId=${task.id}`)
-            }
-            : {}
         const taskList = (
             <ListGroup>
                 {milestone.tasks.map(task => (
-                    <ListGroup.Item key={task.id} {...listGroupAttrs(task)}>
+                    <ListGroup.Item
+                        action
+                        key={task.id}
+                        onClick={() => router.push(`/?redirectToTaskId=${task.id}`)}
+                    >
                         <CheckboxWithLabel
                             checked={task.completed}
                             label={task.title}
