@@ -1,8 +1,8 @@
 import { render, act, screen } from '@testing-library/react';
-import AuthWrapper from '../../components/AuthWrapper';
+import AuthWrapper from '../../../components/AuthWrapper';
 import {
     validMockedUser, erroredMockedDatasets
-} from '../../jest/mocks';
+} from '../../../jest/mocks';
 
 const mockedApiResponses = {
     '/user': validMockedUser,
