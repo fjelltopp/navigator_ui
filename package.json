@@ -51,6 +51,7 @@
     ],
     "setupFilesAfterEnv": [
       "./jest/setupTests.js"
-    ]
+    ],
+    "testEnvironment": "jsdom"
   }
 }

@@ -38,7 +38,7 @@ export default function AuthWrapper({ Component, pageProps }) {
             userDetailsError && userDetailsError.message.includes('401')
             || datasetsError && datasetsError.message.includes('401')
         if (invalidAuthError) {
-            window.location.href = '/login';
+            window.open = '/login';
             return null;
         } else {
             return <ErrorPagePopup apiError={userDetailsError || datasetsError} />
@@ -60,7 +60,7 @@ export default function AuthWrapper({ Component, pageProps }) {
                 setCurrentDatasetId,
             }} />
         } else {
-            window.location.href = '/no_datasets';
+            window.open = '/no_datasets';
             return null;
         }
     }
