@@ -20,10 +20,11 @@ function Component() {
 }
 
 test('When fetching the datasets returns a 401 Unauthorized, redirect to the login page', async () => {
-    window.open = jest.fn()
+    delete window.location;
+    window.location = { href: '' };
     await act(async () => {
         render(<AuthWrapper {...{ Component }} />);
     })
-    expect(window.open).toEqual('/login')
+    expect(window.location.href).toBe('/login');
     expect(screen.queryByText('My Component')).not.toBeInTheDocument();
 })
