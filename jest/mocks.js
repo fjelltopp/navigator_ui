@@ -56,3 +56,11 @@ export const validMockedDatasets = {
     },
     error: null
 }
+
+export const validButNoDatasetsMockedDatasets = {
+    loading: null,
+    data: {
+        "datasets": []
+    },
+    error: null
+}
