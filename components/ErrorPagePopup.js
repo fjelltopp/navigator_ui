@@ -21,7 +21,7 @@ export default function ErrorPagePopup({ apiError, workflow, props }) {
                 <div className="text-center">
                     <h4 className="text-danger">
                         <FontAwesomeIcon icon={faExclamationCircle} className="me-2" />
-                        <span>Something went wrong, please refresh this page</span>
+                        <span data-testid="ErrorMessage">Something went wrong, please refresh this page</span>
                     </h4>
                     <ButtonGroup size="sm" className="mt-2">
                         <Button
