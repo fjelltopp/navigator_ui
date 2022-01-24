@@ -1,4 +1,5 @@
 import React from 'react';
+import { appWithTranslation } from 'next-i18next';
 import { CookiesProvider } from 'react-cookie';
 import { useRouter } from 'next/router';
 import AuthWrapper from '../components/AuthWrapper';
@@ -10,7 +11,7 @@ import Head from 'next/head'
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || ""
 
-export default function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }) {
   const { asPath } = useRouter();
   const insecurePages = ['/login', '/logout', '/no_datasets'];
 
@@ -46,3 +47,5 @@ export default function MyApp({ Component, pageProps }) {
   );
 
 }
+
+export default appWithTranslation(MyApp);

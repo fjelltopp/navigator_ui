@@ -1,4 +1,6 @@
 import React from 'react';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 import { makeUseAxios } from 'axios-hooks'
 import { Row, Col, Image, Form, Button, Alert } from 'react-bootstrap';
 import { LogInLayout } from '../components/Layout';
@@ -16,6 +18,7 @@ const useAxios = makeUseAxios(baseAxiosConfig)
 
 export default function Login({ }) {
 
+    const { t } = useTranslation('login-page')
     const [
         {
             data: loginState,
@@ -54,6 +57,7 @@ export default function Login({ }) {
         <LogInLayout>
             <h3 className="text-center"><Logo /></h3>
             <hr />
+            <p>{t('welcome')}</p>
             <p>Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!</p>
             <p>The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done.</p>
             <hr />
@@ -112,3 +116,9 @@ export default function Login({ }) {
     )
 
 }
+
+export const getStaticProps = async ({ locale }) => ({
+    props: {
+        ...await serverSideTranslations(locale, ['login-page']),
+    },
+})
