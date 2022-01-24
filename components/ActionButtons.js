@@ -1,3 +1,4 @@
+import { useTranslation } from 'next-i18next';
 import { ButtonGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
@@ -44,15 +45,16 @@ function ButtonWithTooltip({ button, buttonComponent }) {
 }
 
 export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, markTaskAsCompleteLoading, markTaskAsIncompleteLoading }) {
+    const { t } = useTranslation('common');
     if (markTaskAsCompleteLoading || markTaskAsIncompleteLoading) {
         const button = (
             markTaskAsCompleteLoading
                 ? {
-                    label: 'Task Complete',
+                    label: t('task-complete-button-checked'),
                     variant: 'outline-success',
                 }
                 : {
-                    label: 'Task Complete?',
+                    label: t('task-complete-button-unchecked'),
                     variant: 'outline-danger',
                 }
         )
@@ -70,12 +72,12 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, mar
         const buttonAppearance = (
             completed
                 ? {
-                    label: 'Task Complete',
+                    label: t('task-complete-button-checked'),
                     variant: 'outline-success',
                     icon: faCheckSquare
                 }
                 : {
-                    label: 'Task Complete?',
+                    label: t('task-complete-button-unchecked'),
                     variant: 'outline-danger',
                     icon: faSquare
                 }
@@ -100,21 +102,22 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, mar
 }
 
 export function MainThreeActionButtons({ workflow, handleClick, showDebugData }) {
+    const { t } = useTranslation('common');
     const buttons = [
         {
-            label: 'Prior Task',
+            label: t('prior-task-button'),
             icon: faAngleLeft,
             style: { borderRadius: '.25rem 0 0 .25rem' },
             ...priorTaskButton(workflow),
         },
         {
-            label: 'Next Task',
+            label: t('next-task-button'),
             icon: faAngleRight,
             style: { borderRadius: 0 },
             ...nextTaskButton(workflow),
         },
         {
-            label: 'What\'s Next?',
+            label: t('whats-next-button'),
             icon: faAngleDoubleRight,
             style: { borderRadius: '0 .25rem .25rem 0' },
             ...whatsNextButton(workflow),

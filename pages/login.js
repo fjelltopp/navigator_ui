@@ -1,6 +1,6 @@
 import React from 'react';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
+import { useTranslation } from 'next-i18next';
 import { makeUseAxios } from 'axios-hooks'
 import { Row, Col, Image, Form, Button, Alert } from 'react-bootstrap';
 import { LogInLayout } from '../components/Layout';
@@ -118,6 +118,6 @@ export default function Login({ }) {
 
 export const getStaticProps = async ({ locale }) => ({
     props: {
-        ...await serverSideTranslations(locale, ['login-page']),
+        ...await serverSideTranslations(locale, ['common', 'login-page']),
     },
 })

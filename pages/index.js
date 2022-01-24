@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useRouter } from "next/router";
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import Skeleton from 'react-loading-skeleton'
 import {
   Row, Col, ButtonToolbar, ListGroup, ProgressBar, Alert
@@ -391,3 +392,9 @@ export default function IndexPage(props) {
   )
 
 }
+
+export const getStaticProps = async ({ locale }) => ({
+  props: {
+    ...await serverSideTranslations(locale, ['common', 'login-page']),
+  },
+})
