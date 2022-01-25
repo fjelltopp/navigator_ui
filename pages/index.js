@@ -161,6 +161,14 @@ export default function IndexPage(props) {
         updateLocalState();
       }
     }
+    const getPreviousOrNextTask = actionToCarryOut => {
+      const taskBreadcrumbs = workflow.taskBreadcrumbs;
+      const indexOfCurrentTask = taskBreadcrumbs.indexOf(workflow.currentTask.id);
+      const newTaskId = actionToCarryOut === actions.getPreviousTask
+        ? taskBreadcrumbs[indexOfCurrentTask - 1]
+        : taskBreadcrumbs[indexOfCurrentTask + 1]
+      return newTaskId;
+    }
     if (actionToCarryOut === actions.markTaskAsComplete) {
       updateWorkflowComplete(true, true);
     } else if (actionToCarryOut === actions.markTaskAsIncomplete) {
@@ -169,11 +177,7 @@ export default function IndexPage(props) {
       actions.getPreviousTask,
       actions.getNextTask
     ].includes(actionToCarryOut)) {
-      const taskBreadcrumbs = workflow.taskBreadcrumbs;
-      const indexOfCurrentTask = taskBreadcrumbs.indexOf(workflow.currentTask.id);
-      const newTaskId = actionToCarryOut === actions.getPreviousTask
-        ? taskBreadcrumbs[indexOfCurrentTask - 1]
-        : taskBreadcrumbs[indexOfCurrentTask + 1]
+      const newTaskId = getPreviousOrNextTask(actionToCarryOut);
       updateWorkflowTask(newTaskId);
     } else if (actionToCarryOut === actions.skipTaskAndFetchLatestWorkflowState) {
       _skipTask(taskSkipRequest(
@@ -181,6 +185,26 @@ export default function IndexPage(props) {
         workflow.currentTask.id
       ))
         .then(() => fetchWorkflow())
+        .catch(error => setActionError('SkipTaskError', error))
+    } else if (actionToCarryOut === actions.skipTaskAndGetNextTask) {
+      _skipTask(taskSkipRequest(
+        props.currentDatasetId,
+        workflow.currentTask.id
+      ))
+        .then(() => {
+          const newTaskId = getPreviousOrNextTask(actions.getNextTask);
+          updateWorkflowTask(newTaskId);
+        })
+        .catch(error => setActionError('SkipTaskError', error))
+    } else if (actionToCarryOut === actions.skipTaskAndGetPreviousTask) {
+      _skipTask(taskSkipRequest(
+        props.currentDatasetId,
+        workflow.currentTask.id
+      ))
+        .then(() => {
+          const newTaskId = getPreviousOrNextTask(actions.getPreviousTask);
+          updateWorkflowTask(newTaskId);
+        })
         .catch(error => setActionError('SkipTaskError', error))
     } else if (actionToCarryOut === actions.fetchLatestWorkflowState) {
       fetchWorkflow();
