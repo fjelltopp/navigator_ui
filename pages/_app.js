@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CookiesProvider } from 'react-cookie';
 import { useRouter } from 'next/router';
 import AuthWrapper from '../components/AuthWrapper';
@@ -7,41 +7,51 @@ import '../styles/globals.css'
 import 'react-loading-skeleton/dist/skeleton.css'
 import Script from 'next/script'
 import Head from 'next/head'
+import { i18n } from '@lingui/core';
+import { I18nProvider } from '@lingui/react';
+import { activateLocale } from '../lib/i18n';
 
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID || ""
 
 export default function MyApp({ Component, pageProps }) {
-  const { asPath } = useRouter();
+  const { asPath, locale } = useRouter();
   const insecurePages = ['/login', '/logout', '/no_datasets'];
+
+  useEffect(async () => {
+    activateLocale(locale);
+  }, [locale])
 
   return (
     <CookiesProvider>
-      <Head>
-        <title>HIV Estimates Navigator</title>
-      </Head>
-      {GA_ID.length > 0 &&
-        <Script
-          strategy='lazyOnload'
-          src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-        />
-      }
-      {GA_ID.length > 0 &&
-        <Script id='ga-analytics'>
-          {
-            `
+      <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
+        <Head>
+          <title>HIV Estimates Navigator</title>
+          <meta http-equiv="content-language" content="fr" />
+        </Head>
+        {GA_ID.length > 0 &&
+          <Script
+            strategy='lazyOnload'
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+          />
+        }
+        {GA_ID.length > 0 &&
+          <Script id='ga-analytics'>
+            {
+              `
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
 
               gtag('config', '${GA_ID}');
             `
-          }
-        </Script>
-      }
-      {insecurePages.includes(asPath)
-        ? <Component {...pageProps} />
-        : <AuthWrapper {...{ Component, pageProps }} />
-      }
+            }
+          </Script>
+        }
+        {insecurePages.includes(asPath)
+          ? <Component {...pageProps} />
+          : <AuthWrapper {...{ Component, pageProps }} />
+        }
+      </I18nProvider>
     </CookiesProvider>
   );
 

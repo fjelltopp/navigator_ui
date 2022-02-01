@@ -1,15 +1,26 @@
-import Link from 'next/link'
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import { useCookies } from 'react-cookie';
 import { ListGroup } from 'react-bootstrap';
+import { Trans } from '@lingui/react';
 
 export default function Sidebar() {
+    const router = useRouter();
+    const { pathname, asPath, query } = router;
+
+    const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
+    const updateLocale = locale => {
+        setCookie('NEXT_LOCALE', locale);
+        router.push({ pathname, query }, asPath, { locale })
+    }
 
     const sidebarLinks = [
-        { label: "What's Next?", href: '/' },
-        { label: 'Task List', href: '/tasks' },
-        { label: 'How to use Navigator', href: 'https://hivtools.unaids.org/wp-content/uploads/G.13-How-to-use-the-ADR-Navigator.mp4' },
-        { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
-        { label: 'Contact Us', href: '/contact_us' },
-        { label: 'Log Out', href: '/logout' }
+        { label: <Trans id="What's Next?" />, href: '/' },
+        { label: <Trans id="Task List" />, href: '/tasks' },
+        { label: <Trans id="How to use Navigator" />, href: 'https://hivtools.unaids.org/wp-content/uploads/G.13-How-to-use-the-ADR-Navigator.mp4' },
+        { label: <Trans id="HIV Tools" />, href: 'https://hivtools.unaids.org' },
+        { label: <Trans id="Contact Us" />, href: '/contact_us' },
+        { label: <Trans id="Log Out" />, href: '/logout' }
     ];
 
     const listItem = (link, key) => {
@@ -37,9 +48,21 @@ export default function Sidebar() {
     }
 
     return (
-        <ListGroup variant="flush">
-            {sidebarLinks.map((link, index) => listItem(link, index))}
-        </ListGroup>
+        <>
+            <ListGroup variant="flush">
+                {sidebarLinks.map((link, index) => listItem(link, index))}
+            </ListGroup>
+            <ListGroup variant="flush">
+                {['en', 'fr'].map(locale => (
+                    <ListGroup.Item
+                        key={locale}
+                        action
+                        variant="danger"
+                        onClick={() => updateLocale(locale)}
+                    >{locale}</ListGroup.Item>
+                ))}
+            </ListGroup>
+        </>
     )
 
 }
