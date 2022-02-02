@@ -1,18 +1,9 @@
 import Link from 'next/link';
-import { useRouter } from 'next/router';
-import { useCookies } from 'react-cookie';
-import { ListGroup } from 'react-bootstrap';
 import { Trans } from '@lingui/react';
+import { ListGroup } from 'react-bootstrap';
+import LocaleSelector from './LocaleSelector';
 
 export default function Sidebar() {
-    const router = useRouter();
-    const { pathname, asPath, query } = router;
-
-    const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
-    const updateLocale = locale => {
-        setCookie('NEXT_LOCALE', locale);
-        router.push({ pathname, query }, asPath, { locale })
-    }
 
     const sidebarLinks = [
         { label: <Trans id="What's Next?" />, href: '/' },
@@ -49,18 +40,11 @@ export default function Sidebar() {
 
     return (
         <>
-            <ListGroup variant="flush">
+            <ListGroup variant="flush" className="mb-auto">
                 {sidebarLinks.map((link, index) => listItem(link, index))}
             </ListGroup>
             <ListGroup variant="flush">
-                {['en', 'fr'].map(locale => (
-                    <ListGroup.Item
-                        key={locale}
-                        action
-                        variant="danger"
-                        onClick={() => updateLocale(locale)}
-                    >{locale}</ListGroup.Item>
-                ))}
+                <LocaleSelector />
             </ListGroup>
         </>
     )

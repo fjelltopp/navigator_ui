@@ -15,23 +15,23 @@ msgstr ""
 
 #: components/Sidebar.js:22
 msgid "Contact Us"
-msgstr ""
+msgstr "Contactez-nous"
 
 #: components/Sidebar.js:21
 msgid "HIV Tools"
-msgstr ""
+msgstr "HIV Outils"
 
 #: components/Sidebar.js:20
 msgid "How to use Navigator"
-msgstr ""
+msgstr "Comment utiliser Navigator"
 
 #: components/Sidebar.js:23
 msgid "Log Out"
-msgstr ""
+msgstr "Se déconnecter"
 
 #: components/Sidebar.js:19
 msgid "Task List"
-msgstr ""
+msgstr "Liste des tâches"
 
 #: components/Sidebar.js:18
 msgid "What's Next?"
