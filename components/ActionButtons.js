@@ -28,7 +28,9 @@ function ButtonWithTooltip({ button, buttonComponent }) {
     if (button.tooltip) {
         const tooltip = (
             <Tooltip>
-                {button.tooltip.map(line => <div>{line}</div>)}
+                {button.tooltip.map((line, index) =>
+                    <div key={index}>{line}</div>
+                )}
             </Tooltip>
         )
         return (
@@ -125,7 +127,6 @@ export function MainThreeActionButtons({ workflow, handleClick, showDebugData })
             {buttons.map(button => {
                 const buttonComponent = (
                     <Button
-                        key={button.label}
                         style={button.style}
                         variant="danger"
                         onClick={() => handleClick(button.onClickAction)}
@@ -136,7 +137,11 @@ export function MainThreeActionButtons({ workflow, handleClick, showDebugData })
                         {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
                     </Button>
                 )
-                return <ButtonWithTooltip {...{ button, buttonComponent }} />
+                return (
+                    <div key={button.label}>
+                        <ButtonWithTooltip {...{ button, buttonComponent }} />
+                    </div>
+                )
             })}
         </ButtonGroup>
     )
