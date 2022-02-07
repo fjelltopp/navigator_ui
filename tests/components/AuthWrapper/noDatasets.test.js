@@ -3,6 +3,7 @@ import AuthWrapper from '../../../components/AuthWrapper';
 import {
     validMockedUser, validButNoDatasetsMockedDatasets
 } from '../../../jest/mocks';
+import wrapper from '../../i18nProvider';
 
 const mockedApiResponses = {
     '/user': validMockedUser,
@@ -23,7 +24,7 @@ test('When fetching the datasets no datasets, redirect to the no_datasets page',
     delete window.location;
     window.location = { href: '' };
     await act(async () => {
-        render(<AuthWrapper {...{ Component }} />);
+        render(<AuthWrapper {...{ Component }} />, { wrapper });
     })
     expect(window.location.href).toBe('/no_datasets');
     expect(screen.queryByText('My Component')).not.toBeInTheDocument();

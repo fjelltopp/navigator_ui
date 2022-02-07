@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react';
 import { ButtonGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
@@ -48,11 +49,11 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, mar
         const button = (
             markTaskAsCompleteLoading
                 ? {
-                    label: 'Task Complete',
+                    label: <Trans id="Task Complete" />,
                     variant: 'outline-success',
                 }
                 : {
-                    label: 'Task Complete?',
+                    label: <Trans id="Task Complete?" />,
                     variant: 'outline-danger',
                 }
         )
@@ -70,12 +71,12 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, mar
         const buttonAppearance = (
             completed
                 ? {
-                    label: 'Task Complete',
+                    label: <Trans id="Task Complete" />,
                     variant: 'outline-success',
                     icon: faCheckSquare
                 }
                 : {
-                    label: 'Task Complete?',
+                    label: <Trans id="Task Complete?" />,
                     variant: 'outline-danger',
                     icon: faSquare
                 }
@@ -102,19 +103,19 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, mar
 export function MainThreeActionButtons({ workflow, handleClick, showDebugData }) {
     const buttons = [
         {
-            label: 'Prior Task',
+            label: <Trans id="Prior Task" />,
             icon: faAngleLeft,
             style: { borderRadius: '.25rem 0 0 .25rem' },
             ...priorTaskButton(workflow),
         },
         {
-            label: 'Next Task',
+            label: <Trans id="Next Task" />,
             icon: faAngleRight,
             style: { borderRadius: 0 },
             ...nextTaskButton(workflow),
         },
         {
-            label: 'What\'s Next?',
+            label: <Trans id="What's Next?" />,
             icon: faAngleDoubleRight,
             style: { borderRadius: '0 .25rem .25rem 0' },
             ...whatsNextButton(workflow),

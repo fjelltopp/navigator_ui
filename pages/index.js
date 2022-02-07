@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useCookies } from 'react-cookie';
 import { useRouter } from "next/router";
 import Skeleton from 'react-loading-skeleton'
 import {
@@ -27,9 +28,9 @@ import {
 import { getWorkflowStats } from '../lib/actionButtons';
 import { actions } from '../lib/actionButtons';
 
-const useAxios = makeUseAxios(baseAxiosConfig)
-
 export default function IndexPage(props) {
+  const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
+  const useAxios = makeUseAxios(baseAxiosConfig(cookies.NEXT_LOCALE));
   const router = useRouter();
   const { redirectToTaskId } = router.query;
 

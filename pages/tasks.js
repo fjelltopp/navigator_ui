@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Trans } from '@lingui/react';
+import { useCookies } from 'react-cookie';
 import { useRouter } from "next/router";
 import { Layout } from '../components/Layout';
 import { Accordion, ListGroup, ProgressBar, Button } from 'react-bootstrap';
@@ -11,9 +13,9 @@ import { FetchWorkflowError, FetchWorkflowTasksError } from '../components/Error
 import { makeUseAxios } from 'axios-hooks';
 import { baseAxiosConfig, getWorkflow, getWorkflowTasks } from '../lib/api';
 
-const useAxios = makeUseAxios(baseAxiosConfig)
-
 export default function TasksPage(props) {
+    const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
+    const useAxios = makeUseAxios(baseAxiosConfig(cookies.NEXT_LOCALE));
     const router = useRouter();
 
     const [_loading, setLoading] = useState(true);
@@ -122,7 +124,7 @@ export default function TasksPage(props) {
                         {!workflowTasks.fullyResolved &&
                             <ListGroup>
                                 <ListGroup.Item className="text-muted">
-                                    <span>More tasks may be added</span>
+                                    <Trans id="More tasks may be added" />
                                 </ListGroup.Item>
                             </ListGroup>
                         }
@@ -133,7 +135,7 @@ export default function TasksPage(props) {
         return (
             <>
                 <h2 className="mt-5">
-                    <span>Your Task List</span>
+                    <Trans id="Your Task List" />
                     <Button
                         variant="outline-danger"
                         onClick={fetchWorkflowTasks}
@@ -141,7 +143,7 @@ export default function TasksPage(props) {
                         disabled={loading}
                     >
                         <FontAwesomeIcon icon={faRefresh} className="me-2" />
-                        <span>Refresh</span>
+                        <Trans id="Refresh" />
                     </Button>
                 </h2>
                 <hr className="mb-4" />

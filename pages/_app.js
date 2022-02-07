@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 import { CookiesProvider } from 'react-cookie';
+import { Trans } from '@lingui/react';
 import { useRouter } from 'next/router';
 import AuthWrapper from '../components/AuthWrapper';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import '../styles/globals.css'
-import 'react-loading-skeleton/dist/skeleton.css'
-import Script from 'next/script'
-import Head from 'next/head'
+import '../styles/globals.css';
+import 'react-loading-skeleton/dist/skeleton.css';
+import Script from 'next/script';
 import { i18n } from '@lingui/core';
 import { I18nProvider } from '@lingui/react';
 import { activateLocale } from '../lib/i18n';
@@ -24,10 +24,7 @@ export default function MyApp({ Component, pageProps }) {
   return (
     <CookiesProvider>
       <I18nProvider i18n={i18n} forceRenderOnLocaleChange={false}>
-        <Head>
-          <title>HIV Estimates Navigator</title>
-          <meta http-equiv="content-language" content="fr" />
-        </Head>
+        <title><Trans id="HIV Estimates Navigator" /></title>
         {GA_ID.length > 0 &&
           <Script
             strategy='lazyOnload'

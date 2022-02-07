@@ -6,11 +6,11 @@ import {
 } from '../lib/api';
 import ErrorPagePopup from './ErrorPagePopup';
 
-const useAxios = makeUseAxios(baseAxiosConfig)
 const cookieExpiry = new Date(new Date().setFullYear(new Date().getFullYear() + 1));
 
 export default function AuthWrapper({ Component, pageProps }) {
-    const [cookies, setCookie] = useCookies(['currentDatasetId']);
+    const [cookies, setCookie] = useCookies(['NEXT_LOCALE', 'currentDatasetId']);
+    const useAxios = makeUseAxios(baseAxiosConfig(cookies.NEXT_LOCALE));
     const [currentDatasetId, _setCurrentDatasetId] = useState(cookies.currentDatasetId);
     const setCurrentDatasetId = datasetId => {
         setCookie(

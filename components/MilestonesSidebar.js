@@ -1,3 +1,4 @@
+import { Trans } from '@lingui/react';
 import { ListGroup, ProgressBar } from 'react-bootstrap';
 import CheckboxWithLabel from '../components/CheckboxWithLabel';
 
@@ -45,7 +46,7 @@ export default function MilestonesSidebar(props) {
             {props.milestones.map(milestone => listItem(milestone))}
             {!props.milestoneListFullyResolved &&
                 <ListGroup.Item className="text-muted text-center">
-                    <small>More milestones may be added</small>
+                    <Trans id="More milestones may be added" />
                 </ListGroup.Item>
             }
         </ListGroup>

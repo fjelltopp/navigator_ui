@@ -13,26 +13,252 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-#: components/Sidebar.js:22
+#: components/ErrorComponents.js:121
+msgid "An unexpected error occurred when trying to laod this task list"
+msgstr ""
+
+#: components/ErrorComponents.js:43
+msgid "An unexpected error occurred when trying to load this dataset"
+msgstr ""
+
+#: components/ErrorComponents.js:69
+msgid "An unexpected error occurred when trying to load this milestone"
+msgstr ""
+
+#: components/ErrorComponents.js:56
+msgid "An unexpected error occurred when trying to load this task"
+msgstr ""
+
+#: components/ErrorComponents.js:82
+msgid "An unexpected error occurred when trying to mark this task as complete"
+msgstr ""
+
+#: components/ErrorComponents.js:95
+msgid "An unexpected error occurred when trying to mark this task as incomplete"
+msgstr ""
+
+#: components/ErrorComponents.js:108
+msgid "An unexpected error occurred when trying to skip this task"
+msgstr ""
+
+#: components/Sidebar.js:13
+#: pages/contact_us.js:20
 msgid "Contact Us"
 msgstr "Contactez-nous"
 
-#: components/Sidebar.js:21
+#: components/ErrorComponents.js:77
+msgid "Failed to complete task {taskId}"
+msgstr ""
+
+#: components/ErrorComponents.js:64
+msgid "Failed to load milestone {milestoneId}"
+msgstr ""
+
+#: components/ErrorComponents.js:116
+msgid "Failed to load task list for dataset {datasetId}"
+msgstr ""
+
+#: components/ErrorComponents.js:51
+msgid "Failed to load task {taskId}"
+msgstr ""
+
+#: components/ErrorComponents.js:38
+msgid "Failed to load {CurrentDatasetName}"
+msgstr ""
+
+#: components/ErrorComponents.js:90
+msgid "Failed to mark task {taskId} as incomplete"
+msgstr ""
+
+#: components/ErrorComponents.js:103
+msgid "Failed to skip task {taskId}"
+msgstr ""
+
+#: pages/contact_us.js:23
+msgid "For questions about the estimates process or to provide feedback to UNAIDS about task descriptions found in the Navigator, please contact <0>GeneralSupportEmailAddress</0>. If you are commenting on a specific task, be sure to capture a screenshot or copy and paste the text in question."
+msgstr ""
+
+#: components/ErrorComponents.js:16
+msgid "For technical support, contact"
+msgstr ""
+
+#: pages/login.js:107
+msgid "Forgot password?"
+msgstr ""
+
+#: components/Logo.js:9
+#: pages/_app.js:27
+msgid "HIV Estimates Navigator"
+msgstr ""
+
+#: components/Sidebar.js:12
 msgid "HIV Tools"
 msgstr "HIV Outils"
 
-#: components/Sidebar.js:20
+#: components/Sidebar.js:11
 msgid "How to use Navigator"
 msgstr "Comment utiliser Navigator"
 
-#: components/Sidebar.js:23
+#: pages/contact_us.js:25
+msgid "If you need help materials and guides or training materials for the HIV epidemiological estimates process, you can visit our library of HIV estimates training materials."
+msgstr ""
+
+#: components/Sidebar.js:14
+#: pages/no_datasets.js:23
 msgid "Log Out"
 msgstr "Se déconnecter"
 
-#: components/Sidebar.js:19
+#: pages/login.js:93
+msgid "Logging in..."
+msgstr ""
+
+#: pages/logout.js:12
+msgid "Logging out..."
+msgstr ""
+
+#: pages/login.js:93
+msgid "Login"
+msgstr ""
+
+#: pages/login.js:35
+msgid "Login failed. Bad username or password."
+msgstr ""
+
+#: components/MilestonesSidebar.js:49
+msgid "More milestones may be added"
+msgstr ""
+
+#: pages/tasks.js:126
+msgid "More tasks may be added"
+msgstr ""
+
+#: components/ActionButtons.js:112
+msgid "Next Task"
+msgstr ""
+
+#: pages/no_datasets.js:12
+msgid "No Country HIV Estimates Datasets found."
+msgstr ""
+
+#: pages/login.js:85
+msgid "Password"
+msgstr ""
+
+#: pages/login.js:71
+msgid "Please login using your <0>linkToCkanSite</0> login details:"
+msgstr ""
+
+#: components/ErrorComponents.js:83
+#: components/ErrorComponents.js:96
+#: components/ErrorComponents.js:109
+msgid "Please try completing the action again or refreshing this page."
+msgstr ""
+
+#: components/ErrorComponents.js:44
+#: components/ErrorComponents.js:57
+#: components/ErrorComponents.js:70
+#: components/ErrorComponents.js:122
+msgid "Please try refreshing this page or switching to another dataset."
+msgstr ""
+
+#: components/LoadingComponent.js:9
+msgid "Please wait..."
+msgstr ""
+
+#: components/ActionButtons.js:106
+msgid "Prior Task"
+msgstr "FR prior task"
+
+#: pages/tasks.js:145
+msgid "Refresh"
+msgstr ""
+
+#: components/ErrorComponents.js:20
+#: components/ErrorPagePopup.js:35
+#: pages/no_datasets.js:19
+msgid "Refresh Page"
+msgstr ""
+
+#: pages/login.js:100
+msgid "Register"
+msgstr ""
+
+#: components/ErrorPagePopup.js:26
+msgid "Something went wrong, please refresh this page"
+msgstr ""
+
+#: components/ActionButtons.js:52
+#: components/ActionButtons.js:74
+msgid "Task Complete"
+msgstr "FR task complete"
+
+#: components/ActionButtons.js:56
+#: components/ActionButtons.js:79
+msgid "Task Complete?"
+msgstr "FR task complete?"
+
+#: components/Sidebar.js:10
 msgid "Task List"
 msgstr "Liste des tâches"
 
-#: components/Sidebar.js:18
+#: pages/login.js:66
+msgid "The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done."
+msgstr ""
+
+#: pages/contact_us.js:24
+msgid "To report bugs or problems or to provide feedback about the Navigator software, please contact <0>TechnicalSupportEmailAddress</0>. If relevant capture a screenshot of the error you are receiving or the task in question."
+msgstr "---> <0>TechnicalSupportEmailAddress</0> <---"
+
+#: pages/contact_us.js:22
+msgid "UNAIDS and its partners are committed to providing the highest level of support to country teams using its platforms and models during the estimates process. You can contact us in one of two ways:"
+msgstr ""
+
+#: pages/login.js:77
+msgid "Username or Email"
+msgstr ""
+
+#: components/ErrorComponents.js:23
+#: components/ErrorPagePopup.js:40
+msgid "View Error Logs"
+msgstr ""
+
+#: pages/login.js:65
+msgid "Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!"
+msgstr ""
+
+#: components/ActionButtons.js:118
+#: components/Sidebar.js:9
 msgid "What's Next?"
 msgstr "Tâche Suivante"
+
+#: pages/no_datasets.js:14
+msgid "Your ADR account does not have access to any Country HIV Estimates Datasets. Please make sure you are logged into the correct account and you are added as an editor member of the country organisation or a dataset collaborator."
+msgstr ""
+
+#: pages/tasks.js:137
+msgid "Your Task List"
+msgstr ""
+
+#: pages/contact_us.js:22
+#~ msgid "contact_us_line_1"
+#~ msgstr ""
+
+#: pages/contact_us.js:23
+#~ msgid "contact_us_line_2"
+#~ msgstr ""
+
+#: pages/contact_us.js:24
+#~ msgid "contact_us_line_3"
+#~ msgstr ""
+
+#: pages/contact_us.js:25
+#~ msgid "contact_us_line_4"
+#~ msgstr ""
+
+#: pages/login.js:83
+msgid "password"
+msgstr ""
+
+#: pages/login.js:75
+msgid "username"
+msgstr ""
