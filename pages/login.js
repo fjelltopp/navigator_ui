@@ -5,6 +5,7 @@ import { makeUseAxios } from 'axios-hooks'
 import { Row, Col, Image, Form, Button, Alert } from 'react-bootstrap';
 import { LogInLayout } from '../components/Layout';
 import Logo from '../components/Logo';
+import LocaleSelector from '../components/LocaleSelector';
 import { baseAxiosConfig, loginApiRequest } from '../lib/api';
 
 const logos = [
@@ -114,6 +115,8 @@ export default function Login() {
             <Row className="text-center">
                 {logos.map((src, index) => <Col key={index}><Image src={src} fluid /></Col>)}
             </Row>
+            <hr />
+            <LocaleSelector />
         </LogInLayout>
     )
 
