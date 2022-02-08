@@ -52,13 +52,15 @@ export default function Login() {
         loginRequest({ data: { username, password } })
             .catch(error => console.error(error))
     }
-    const linkToCkanSite = (
-        <a
-            href={process.env.NEXT_PUBLIC_CKAN_SITE_URL}
-            target="_blank"
-            rel="noreferrer"
-            className="link-danger">{process.env.NEXT_PUBLIC_CKAN_SITE_URL}</a>
-    );
+    function LinkToCkanSite() {
+        return (
+            <a
+                href={process.env.NEXT_PUBLIC_CKAN_SITE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="link-danger">{process.env.NEXT_PUBLIC_CKAN_SITE_URL}</a>
+        )
+    }
 
     return (
         <LogInLayout>
@@ -70,11 +72,11 @@ export default function Login() {
             <ErrorBanner />
             <form id="LoginForm" onSubmit={handleSubmit}>
                 <p>
-                    <Trans id="Please login using your <0>linkToCkanSite</0> login details:" components={[linkToCkanSite]} />
+                    <Trans id="Please login using your <0>LinkToCkanSite</0> login details:" components={[<LinkToCkanSite />]} />
                 </p>
                 <Form.Group className="mb-3">
                     <Form.Control
-                        name={<Trans id="username" />}
+                        name="username"
                         type="text"
                         placeholder={<Trans id="Username or Email" />}
                         required
@@ -82,7 +84,7 @@ export default function Login() {
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Control
-                        name={<Trans id="password" />}
+                        name="password"
                         type="password"
                         placeholder={<Trans id="Password" />}
                         required
