@@ -13,7 +13,7 @@ export default function LocaleSelector() {
     )[0]
 
     const updateLocale = locale => {
-        setCookie('NEXT_LOCALE', locale);
+        setCookie('NEXT_LOCALE', locale, { path: '/' });
         router.push({ pathname, query }, asPath, { locale })
     }
 
@@ -24,7 +24,7 @@ export default function LocaleSelector() {
             </Dropdown.Toggle>
             <Dropdown.Menu>
                 {supportedLocales.map(x =>
-                    <Dropdown.Item onClick={() => updateLocale(x.id)}>
+                    <Dropdown.Item key={x.id} onClick={() => updateLocale(x.id)}>
                         <LanguageLabel language={x} />
                     </Dropdown.Item>
                 )}

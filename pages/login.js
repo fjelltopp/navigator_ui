@@ -1,5 +1,6 @@
 import React from 'react';
 import { Trans } from '@lingui/react';
+import { t } from "@lingui/macro"
 import { useCookies } from 'react-cookie';
 import { makeUseAxios } from 'axios-hooks'
 import { Row, Col, Image, Form, Button, Alert } from 'react-bootstrap';
@@ -79,7 +80,7 @@ export default function Login() {
                     <Form.Control
                         name="username"
                         type="text"
-                        placeholder={<Trans id="Username or Email" />}
+                        placeholder={t`Username or Email`}
                         required
                     />
                 </Form.Group>
@@ -87,7 +88,7 @@ export default function Login() {
                     <Form.Control
                         name="password"
                         type="password"
-                        placeholder={<Trans id="Password" />}
+                        placeholder={t`Password`}
                         required
                     />
                 </Form.Group>
