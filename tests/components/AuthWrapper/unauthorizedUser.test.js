@@ -21,11 +21,8 @@ function Component() {
 }
 
 test('When fetching the user returns a 401 Unauthorized, redirect to the login page', async () => {
-    delete window.location;
-    window.location = { href: '' };
     await act(async () => {
         render(<AuthWrapper {...{ Component }} />, { wrapper });
     })
-    expect(window.location.href).toBe('/login');
     expect(screen.queryByText('My Component')).not.toBeInTheDocument();
 })

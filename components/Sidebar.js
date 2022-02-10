@@ -1,9 +1,11 @@
 import Link from 'next/link';
+import { useRouter } from "next/router";
 import { Trans } from '@lingui/react';
 import { ListGroup } from 'react-bootstrap';
 import LocaleSelector from './LocaleSelector';
 
 export default function Sidebar() {
+    const router = useRouter();
 
     const sidebarLinks = [
         { label: <Trans id="What's Next?" />, href: '/' },
@@ -15,19 +17,14 @@ export default function Sidebar() {
     ];
 
     const listItem = (link, key) => {
-        // TODO: figure out why we need this strange work around to get
-        // the logout page to open without calling AuthWrapper.js
-        const isLogoutLink = link.href === '/logout';
-        if (link.href.includes('http') || isLogoutLink) {
-            const handleClick = () =>
-                window.open(link.href, isLogoutLink ? '_self' : '_blank');
+        if (link.href.includes('http')) {
             return (
                 <ListGroup.Item
                     key={key}
                     action
-                    onClick={handleClick}>
+                    onClick={() => window.open(link.href, '_blank')}>
                     <span>{link.label}</span>
-                </ListGroup.Item>
+                </ListGroup.Item >
             )
         } else {
             return (

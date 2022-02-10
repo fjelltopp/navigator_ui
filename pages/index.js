@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Trans } from '@lingui/react';
 import { useCookies } from 'react-cookie';
 import { useRouter } from "next/router";
 import Skeleton from 'react-loading-skeleton'
@@ -291,11 +292,9 @@ export default function IndexPage(props) {
             <Row>
               <Col>
                 <div id="WorkflowAndTaskIds">
-                  <div>Workflow {workflow.id}</div>
-                  <div>Task {workflow.currentTask.id}</div>
-                  <div>
-                    <a onClick={() => setshowDebugData(!showDebugData)}>Debug Mode</a>
-                  </div>
+                  <div><Trans id="Workflow {workflowId}" values={{ workflowId: workflow.id }} /></div>
+                  <div><Trans id="Task {taskId}" values={{ taskId: workflow.currentTask.id }} /></div>
+                  <div><a onClick={() => setshowDebugData(!showDebugData)}><Trans id="Debug Mode" /></a></div>
                 </div>
               </Col>
               <Col>

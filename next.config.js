@@ -1,14 +1,24 @@
+
+const enLocale = {
+  id: 'en',
+  name: 'English',
+  emoji: '🇬🇧'
+}
+
+const frLocale = {
+  id: 'fr',
+  name: 'Français',
+  emoji: '🇫🇷'
+}
+
+const ptLocale = {
+  id: 'pt',
+  name: 'Portuguese',
+  emoji: '🇵🇹'
+}
+
 const supportedLocales = [
-  {
-    id: 'en',
-    name: 'English',
-    emoji: '🇬🇧'
-  },
-  {
-    id: 'fr',
-    name: 'Français',
-    emoji: '🇫🇷'
-  }
+  enLocale, frLocale, ptLocale
 ]
 
 module.exports = {
@@ -16,6 +26,6 @@ module.exports = {
   supportedLocales,
   i18n: {
     locales: supportedLocales.map(locale => locale.id),
-    defaultLocale: supportedLocales[0].id
+    defaultLocale: enLocale.id
   }
 }

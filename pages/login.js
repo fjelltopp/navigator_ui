@@ -1,4 +1,5 @@
 import React from 'react';
+import { useRouter } from "next/router";
 import { Trans } from '@lingui/react';
 import { t } from "@lingui/macro"
 import { useCookies } from 'react-cookie';
@@ -18,6 +19,7 @@ const logos = [
 ];
 
 export default function Login() {
+    const router = useRouter();
     const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
     const useAxios = makeUseAxios(baseAxiosConfig(cookies.NEXT_LOCALE));
 
@@ -44,7 +46,7 @@ export default function Login() {
     }
 
     if (loginState) {
-        window.location.href = '/';
+        router.push('/', undefined, { locale: cookies.NEXT_LOCALE });
         return null;
     }
     const handleSubmit = event => {

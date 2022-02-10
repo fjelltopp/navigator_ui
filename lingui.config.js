@@ -5,7 +5,7 @@ module.exports = {
     catalogs: [
         {
             path: 'locales/{locale}/messages',
-            include: ['pages', 'components']
+            include: ['pages', 'components', 'lib']
         }
     ],
     format: 'po'

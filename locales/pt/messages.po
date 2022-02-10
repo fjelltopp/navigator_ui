@@ -1,289 +1,283 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2022-02-10 11:43+0000\n"
+"POT-Creation-Date: 2022-02-10 14:20+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
-"Language: fr\n"
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Plural-Forms: \n"
+"Language: pt\n"
 
 #: components/ErrorComponents.js:121
 msgid "An unexpected error occurred when trying to laod this task list"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:43
 msgid "An unexpected error occurred when trying to load this dataset"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:69
 msgid "An unexpected error occurred when trying to load this milestone"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:56
 msgid "An unexpected error occurred when trying to load this task"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:82
 msgid "An unexpected error occurred when trying to mark this task as complete"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:95
 msgid "An unexpected error occurred when trying to mark this task as incomplete"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:108
 msgid "An unexpected error occurred when trying to skip this task"
-msgstr "FR"
+msgstr "PT"
 
 #: lib/actionButtons.js:87
 msgid "Click “What's Next?” once task is complete."
-msgstr "FR"
+msgstr "PT"
 
 #: lib/actionButtons.js:187
 msgid "Click “What's Next?” to proceed."
-msgstr "FR"
+msgstr "PT"
 
 #: lib/actionButtons.js:17
 msgid "Click “What's Next?” to see your latest actionable task."
-msgstr "FR"
+msgstr "PT"
 
 #: components/Sidebar.js:13
 #: pages/contact_us.js:20
 msgid "Contact Us"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/index.js:297
 msgid "Debug Mode"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:77
 msgid "Failed to complete task {taskId}"
-msgstr "FR {taskId}"
+msgstr "PT"
 
 #: components/ErrorComponents.js:64
 msgid "Failed to load milestone {milestoneId}"
-msgstr "FR {milestoneId}"
+msgstr "PT"
 
 #: components/ErrorComponents.js:116
 msgid "Failed to load task list for dataset {datasetId}"
-msgstr "FR {datasetId}"
+msgstr "PT"
 
 #: components/ErrorComponents.js:51
 msgid "Failed to load task {taskId}"
-msgstr "FR {taskId}"
+msgstr "PT"
 
 #: components/ErrorComponents.js:38
 msgid "Failed to load {CurrentDatasetName}"
-msgstr "FR {CurrentDatasetName}"
+msgstr "PT"
 
 #: components/ErrorComponents.js:90
 msgid "Failed to mark task {taskId} as incomplete"
-msgstr "FR {taskId}"
+msgstr "PT"
 
 #: components/ErrorComponents.js:103
 msgid "Failed to skip task {taskId}"
-msgstr "FR {taskId}"
+msgstr "PT"
 
 #: pages/contact_us.js:23
 msgid "For questions about the estimates process or to provide feedback to UNAIDS about task descriptions found in the Navigator, please contact <0>GeneralSupportEmailAddress</0>. If you are commenting on a specific task, be sure to capture a screenshot or copy and paste the text in question."
-msgstr "FR <0>GeneralSupportEmailAddress</0>"
+msgstr "PT"
 
 #: components/ErrorComponents.js:16
 msgid "For technical support, contact"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/login.js:113
 msgid "Forgot password?"
-msgstr "FR"
+msgstr "PT"
 
 #: components/Logo.js:9
 #: pages/_app.js:25
 msgid "HIV Estimates Navigator"
-msgstr "FR"
+msgstr "PT"
 
 #: components/Sidebar.js:12
 msgid "HIV Tools"
-msgstr "FR"
+msgstr "PT"
 
 #: components/Sidebar.js:11
 msgid "How to use Navigator"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/contact_us.js:25
 msgid "If you need help materials and guides or training materials for the HIV epidemiological estimates process, you can visit our library of HIV estimates training materials."
-msgstr "FR"
+msgstr "PT"
 
 #: components/Sidebar.js:14
 #: pages/no_datasets.js:23
 msgid "Log Out"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/login.js:99
 msgid "Logging in..."
-msgstr "FR"
+msgstr "PT"
 
 #: pages/logout.js:13
 msgid "Logging out..."
-msgstr "FR"
+msgstr "PT"
 
 #: pages/login.js:99
 msgid "Login"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/login.js:39
 msgid "Login failed. Bad username or password."
-msgstr "FR"
+msgstr "PT"
 
 #: components/MilestonesSidebar.js:49
 msgid "More milestones may be added"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/tasks.js:127
 msgid "More tasks may be added"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ActionButtons.js:112
 msgid "Next Task"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/no_datasets.js:12
 msgid "No Country HIV Estimates Datasets found."
-msgstr "FR"
+msgstr "PT"
 
 #: lib/actionButtons.js:74
 msgid "No further action is required."
-msgstr "FR"
+msgstr "PT"
 
 #: pages/login.js:91
 msgid "Password"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/login.js:77
 msgid "Please login using your <0>LinkToCkanSite</0> login details:"
-msgstr "FR <0>LinkToCkanSite</0>"
+msgstr "PT"
 
 #: components/ErrorComponents.js:83
 #: components/ErrorComponents.js:96
 #: components/ErrorComponents.js:109
 msgid "Please try completing the action again or refreshing this page."
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:44
 #: components/ErrorComponents.js:57
 #: components/ErrorComponents.js:70
 #: components/ErrorComponents.js:122
 msgid "Please try refreshing this page or switching to another dataset."
-msgstr "FR"
+msgstr "PT"
 
 #: components/LoadingComponent.js:9
 msgid "Please wait..."
-msgstr "FR"
+msgstr "PT"
 
 #: components/ActionButtons.js:106
 msgid "Prior Task"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/tasks.js:146
 msgid "Refresh"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:20
 #: components/ErrorPagePopup.js:35
 #: pages/no_datasets.js:19
 msgid "Refresh Page"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/login.js:106
 msgid "Register"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorPagePopup.js:26
 msgid "Something went wrong, please refresh this page"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ActionButtons.js:52
 #: components/ActionButtons.js:74
 msgid "Task Complete"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ActionButtons.js:56
 #: components/ActionButtons.js:79
 msgid "Task Complete?"
-msgstr "FR"
+msgstr "PT"
 
 #: components/Sidebar.js:10
 msgid "Task List"
-msgstr "FR"
+msgstr "PT"
 
 #: lib/actionButtons.js:86
 msgid "Task status is automatically checked by system."
-msgstr "FR"
+msgstr "PT"
 
 #: pages/index.js:296
 msgid "Task {taskId}"
-msgstr "FR {taskId}"
+msgstr "PT"
 
 #: pages/login.js:72
 msgid "The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done."
-msgstr "FR"
+msgstr "PT"
 
 #: lib/actionButtons.js:186
 msgid "This is your current task."
-msgstr "FR"
+msgstr "PT"
 
 #: lib/actionButtons.js:144
 msgid "This is your first task."
-msgstr "FR"
+msgstr "PT"
 
 #: lib/actionButtons.js:73
 #: lib/actionButtons.js:180
 msgid "This workflow is now complete."
-msgstr "FR"
+msgstr "PT"
 
 #: pages/contact_us.js:24
 msgid "To report bugs or problems or to provide feedback about the Navigator software, please contact <0>TechnicalSupportEmailAddress</0>. If relevant capture a screenshot of the error you are receiving or the task in question."
-msgstr "FR <0>TechnicalSupportEmailAddress</0>"
+msgstr "PT"
 
 #: pages/contact_us.js:22
 msgid "UNAIDS and its partners are committed to providing the highest level of support to country teams using its platforms and models during the estimates process. You can contact us in one of two ways:"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/login.js:83
 msgid "Username or Email"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ErrorComponents.js:23
 #: components/ErrorPagePopup.js:40
 msgid "View Error Logs"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/login.js:71
 msgid "Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!"
-msgstr "FR"
+msgstr "PT"
 
 #: components/ActionButtons.js:118
 #: components/Sidebar.js:9
 msgid "What's Next?"
-msgstr "FR"
+msgstr "PT"
 
 #: pages/index.js:295
 msgid "Workflow {workflowId}"
-msgstr "FR {workflowId}"
+msgstr "PT"
 
 #: lib/actionButtons.js:16
 msgid "You are currently previewing a future task."
-msgstr "FR"
+msgstr "PT"
 
 #: pages/no_datasets.js:14
 msgid "Your ADR account does not have access to any Country HIV Estimates Datasets. Please make sure you are logged into the correct account and you are added as an editor member of the country organisation or a dataset collaborator."
-msgstr "FR"
+msgstr "PT"
 
 #: pages/tasks.js:138
 msgid "Your Task List"
-msgstr "FR"
+msgstr "PT"

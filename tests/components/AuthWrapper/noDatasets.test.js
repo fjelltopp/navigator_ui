@@ -21,11 +21,8 @@ function Component() {
 }
 
 test('When fetching the datasets no datasets, redirect to the no_datasets page', async () => {
-    delete window.location;
-    window.location = { href: '' };
     await act(async () => {
         render(<AuthWrapper {...{ Component }} />, { wrapper });
     })
-    expect(window.location.href).toBe('/no_datasets');
     expect(screen.queryByText('My Component')).not.toBeInTheDocument();
 })
