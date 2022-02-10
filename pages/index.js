@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Trans } from '@lingui/react';
-import { useCookies } from 'react-cookie';
 import { useRouter } from "next/router";
 import Skeleton from 'react-loading-skeleton'
 import {
@@ -30,9 +29,9 @@ import { getWorkflowStats } from '../lib/actionButtons';
 import { actions } from '../lib/actionButtons';
 
 export default function IndexPage(props) {
-  const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
-  const useAxios = makeUseAxios(baseAxiosConfig(cookies.NEXT_LOCALE));
   const router = useRouter();
+  const { locale } = router;
+  const useAxios = makeUseAxios(baseAxiosConfig(locale));
   const { redirectToTaskId } = router.query;
 
   const [showDebugData, setshowDebugData] = useState(false);

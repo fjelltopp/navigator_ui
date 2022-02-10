@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Trans } from '@lingui/react';
-import { useCookies } from 'react-cookie';
 import { useRouter } from "next/router";
 import { Layout } from '../components/Layout';
 import { Accordion, ListGroup, ProgressBar, Button } from 'react-bootstrap';
@@ -14,9 +13,9 @@ import { makeUseAxios } from 'axios-hooks';
 import { baseAxiosConfig, getWorkflow, getWorkflowTasks } from '../lib/api';
 
 export default function TasksPage(props) {
-    const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
-    const useAxios = makeUseAxios(baseAxiosConfig(cookies.NEXT_LOCALE));
     const router = useRouter();
+    const { locale } = router;
+    const useAxios = makeUseAxios(baseAxiosConfig(locale));
 
     const [_loading, setLoading] = useState(true);
     const [{

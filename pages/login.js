@@ -20,8 +20,8 @@ const logos = [
 
 export default function Login() {
     const router = useRouter();
-    const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
-    const useAxios = makeUseAxios(baseAxiosConfig(cookies.NEXT_LOCALE));
+    const { locale } = router;
+    const useAxios = makeUseAxios(baseAxiosConfig(locale));
 
     const [
         {
@@ -46,7 +46,7 @@ export default function Login() {
     }
 
     if (loginState) {
-        router.push('/', undefined, { locale: cookies.NEXT_LOCALE });
+        router.push('/', undefined, { locale });
         return null;
     }
     const handleSubmit = event => {

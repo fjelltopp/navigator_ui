@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { Trans } from '@lingui/react';
 import { useRouter } from "next/router";
+import { Trans } from '@lingui/react';
 import { useCookies } from 'react-cookie';
 import { makeUseAxios } from 'axios-hooks'
 import {
@@ -12,8 +12,9 @@ const cookieExpiry = new Date(new Date().setFullYear(new Date().getFullYear() + 
 
 export default function AuthWrapper({ Component, pageProps }) {
     const router = useRouter();
-    const [cookies, setCookie] = useCookies(['NEXT_LOCALE', 'currentDatasetId']);
-    const useAxios = makeUseAxios(baseAxiosConfig(cookies.NEXT_LOCALE));
+    const { locale } = router;
+    const [cookies, setCookie] = useCookies(['currentDatasetId']);
+    const useAxios = makeUseAxios(baseAxiosConfig(locale));
     const [currentDatasetId, _setCurrentDatasetId] = useState(cookies.currentDatasetId);
     const setCurrentDatasetId = datasetId => {
         setCookie(
@@ -41,7 +42,7 @@ export default function AuthWrapper({ Component, pageProps }) {
             userDetailsError && userDetailsError.message.includes('401')
             || datasetsError && datasetsError.message.includes('401')
         if (invalidAuthError) {
-            router.push('/login', undefined, { locale: cookies.NEXT_LOCALE });
+            router.push('/login', undefined, { locale });
             return null;
         } else {
             return <ErrorPagePopup apiError={userDetailsError || datasetsError} />
@@ -63,7 +64,7 @@ export default function AuthWrapper({ Component, pageProps }) {
                 setCurrentDatasetId,
             }} />
         } else {
-            router.push('/no_datasets', undefined, { locale: cookies.NEXT_LOCALE });
+            router.push('/no_datasets', undefined, { locale });
             return null;
         }
     }
