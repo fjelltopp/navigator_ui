@@ -53,7 +53,7 @@ msgstr ""
 msgid "Click “What's Next?” to see your latest actionable task."
 msgstr ""
 
-#: components/Sidebar.js:13
+#: components/Sidebar.js:15
 #: pages/contact_us.js:20
 msgid "Contact Us"
 msgstr ""
@@ -98,7 +98,7 @@ msgstr ""
 msgid "For technical support, contact"
 msgstr ""
 
-#: pages/login.js:113
+#: pages/login.js:115
 msgid "Forgot password?"
 msgstr ""
 
@@ -107,11 +107,11 @@ msgstr ""
 msgid "HIV Estimates Navigator"
 msgstr ""
 
-#: components/Sidebar.js:12
+#: components/Sidebar.js:14
 msgid "HIV Tools"
 msgstr ""
 
-#: components/Sidebar.js:11
+#: components/Sidebar.js:13
 msgid "How to use Navigator"
 msgstr ""
 
@@ -119,24 +119,28 @@ msgstr ""
 msgid "If you need help materials and guides or training materials for the HIV epidemiological estimates process, you can visit our library of HIV estimates training materials."
 msgstr ""
 
-#: components/Sidebar.js:14
+#: components/AuthWrapper.js:38
+msgid "Loading..."
+msgstr ""
+
+#: components/Sidebar.js:16
 #: pages/no_datasets.js:23
 msgid "Log Out"
 msgstr ""
 
-#: pages/login.js:99
+#: pages/login.js:101
 msgid "Logging in..."
 msgstr ""
 
-#: pages/logout.js:13
+#: pages/logout.js:15
 msgid "Logging out..."
 msgstr ""
 
-#: pages/login.js:99
+#: pages/login.js:101
 msgid "Login"
 msgstr ""
 
-#: pages/login.js:39
+#: pages/login.js:41
 msgid "Login failed. Bad username or password."
 msgstr ""
 
@@ -160,11 +164,11 @@ msgstr ""
 msgid "No further action is required."
 msgstr ""
 
-#: pages/login.js:91
+#: pages/login.js:93
 msgid "Password"
 msgstr ""
 
-#: pages/login.js:77
+#: pages/login.js:79
 msgid "Please login using your <0>LinkToCkanSite</0> login details:"
 msgstr ""
 
@@ -199,7 +203,7 @@ msgstr ""
 msgid "Refresh Page"
 msgstr ""
 
-#: pages/login.js:106
+#: pages/login.js:108
 msgid "Register"
 msgstr ""
 
@@ -217,7 +221,7 @@ msgstr ""
 msgid "Task Complete?"
 msgstr ""
 
-#: components/Sidebar.js:10
+#: components/Sidebar.js:12
 msgid "Task List"
 msgstr ""
 
@@ -229,7 +233,7 @@ msgstr ""
 msgid "Task {taskId}"
 msgstr ""
 
-#: pages/login.js:72
+#: pages/login.js:74
 msgid "The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done."
 msgstr ""
 
@@ -254,7 +258,7 @@ msgstr ""
 msgid "UNAIDS and its partners are committed to providing the highest level of support to country teams using its platforms and models during the estimates process. You can contact us in one of two ways:"
 msgstr ""
 
-#: pages/login.js:83
+#: pages/login.js:85
 msgid "Username or Email"
 msgstr ""
 
@@ -263,12 +267,12 @@ msgstr ""
 msgid "View Error Logs"
 msgstr ""
 
-#: pages/login.js:71
+#: pages/login.js:73
 msgid "Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!"
 msgstr ""
 
 #: components/ActionButtons.js:118
-#: components/Sidebar.js:9
+#: components/Sidebar.js:11
 msgid "What's Next?"
 msgstr ""
 
