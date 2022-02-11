@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { useRouter } from "next/router";
 import { Layout } from '../components/Layout';
 import { Accordion, ListGroup, ProgressBar, Button } from 'react-bootstrap';
@@ -123,7 +123,7 @@ export default function TasksPage(props) {
                         {!workflowTasks.fullyResolved &&
                             <ListGroup>
                                 <ListGroup.Item className="text-muted">
-                                    <Trans id="More tasks may be added" />
+                                    {t`More tasks may be added`}
                                 </ListGroup.Item>
                             </ListGroup>
                         }
@@ -134,7 +134,7 @@ export default function TasksPage(props) {
         return (
             <>
                 <h2 className="mt-5">
-                    <Trans id="Your Task List" />
+                    <span>{t`Your Task List`}</span>
                     <Button
                         variant="outline-danger"
                         onClick={fetchWorkflowTasks}
@@ -142,7 +142,7 @@ export default function TasksPage(props) {
                         disabled={loading}
                     >
                         <FontAwesomeIcon icon={faRefresh} className="me-2" />
-                        <Trans id="Refresh" />
+                        <span>{t`Refresh`}</span>
                     </Button>
                 </h2>
                 <hr className="mb-4" />

@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { Col, Alert, ButtonGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
@@ -13,14 +14,19 @@ function BaseErrorAlert({ title, lines, error }) {
             <Alert.Heading>{title}</Alert.Heading>
             <hr />
             {lines.map((line, index) => <div key={index}>{line}</div>)}
-            <div><Trans id="For technical support, contact" /> <TechnicalSupportEmailAddress /></div>
+            <div>
+                <Trans
+                    id="For technical support, contact <0>TechnicalSupportEmailAddress</0>"
+                    components={[<TechnicalSupportEmailAddress />]}
+                />
+            </div>
             <ButtonGroup size="sm" className="mt-3">
                 <Button variant="danger" onClick={() => location.reload(true)}>
                     <FontAwesomeIcon icon={faArrowsRotate} className="me-2" />
-                    <Trans id="Refresh Page" />
+                    <span>{t`Refresh Page`}</span>
                 </Button>
                 <Button variant="light" onClick={() => setshowJsonDump(!showJsonDump)}>
-                    <Trans id="View Error Logs" />
+                    <span>{t`View Error Logs`}</span>
                 </Button>
             </ButtonGroup>
             {showJsonDump && (
@@ -40,8 +46,8 @@ export function FetchWorkflowError({ error, currentDatasetId, datasets }) {
         values={{ CurrentDatasetName }}
     />;
     const lines = [
-        <Trans id="An unexpected error occurred when trying to load this dataset" />,
-        <Trans id="Please try refreshing this page or switching to another dataset." />
+        t`An unexpected error occurred when trying to load this dataset`,
+        t`Please try refreshing this page or switching to another dataset.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
@@ -53,8 +59,8 @@ export function FetchWorkflowTaskError({ error }) {
         values={{ taskId }}
     />;
     const lines = [
-        <Trans id="An unexpected error occurred when trying to load this task" />,
-        <Trans id="Please try refreshing this page or switching to another dataset." />
+        t`An unexpected error occurred when trying to load this task`,
+        t`Please try refreshing this page or switching to another dataset.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
@@ -66,8 +72,8 @@ export function FetchMilestoneError({ error }) {
         values={{ milestoneId }}
     />;
     const lines = [
-        <Trans id="An unexpected error occurred when trying to load this milestone" />,
-        <Trans id="Please try refreshing this page or switching to another dataset." />
+        t`An unexpected error occurred when trying to load this milestone`,
+        t`Please try refreshing this page or switching to another dataset.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
@@ -79,8 +85,8 @@ export function MarkTaskAsCompleteError({ error }) {
         values={{ taskId }}
     />;
     const lines = [
-        <Trans id="An unexpected error occurred when trying to mark this task as complete" />,
-        <Trans id="Please try completing the action again or refreshing this page." />
+        t`An unexpected error occurred when trying to mark this task as complete`,
+        t`Please try completing the action again or refreshing this page.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
@@ -92,8 +98,8 @@ export function MarkTaskAsIncompleteError({ error }) {
         values={{ taskId }}
     />;
     const lines = [
-        <Trans id="An unexpected error occurred when trying to mark this task as incomplete" />,
-        <Trans id="Please try completing the action again or refreshing this page." />
+        t`An unexpected error occurred when trying to mark this task as incomplete`,
+        t`Please try completing the action again or refreshing this page.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
@@ -105,8 +111,8 @@ export function SkipTaskError({ error }) {
         values={{ taskId }}
     />;
     const lines = [
-        <Trans id="An unexpected error occurred when trying to skip this task" />,
-        <Trans id="Please try completing the action again or refreshing this page." />
+        t`An unexpected error occurred when trying to skip this task`,
+        t`Please try completing the action again or refreshing this page.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
@@ -118,8 +124,8 @@ export function FetchWorkflowTasksError({ error }) {
         values={{ datasetId }}
     />;
     const lines = [
-        <Trans id="An unexpected error occurred when trying to laod this task list" />,
-        <Trans id="Please try refreshing this page or switching to another dataset." />
+        t`An unexpected error occurred when trying to laod this task list`,
+        t`Please try refreshing this page or switching to another dataset.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }

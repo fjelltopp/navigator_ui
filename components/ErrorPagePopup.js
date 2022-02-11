@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { Col, ButtonGroup, Button, Offcanvas } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -23,7 +23,7 @@ export default function ErrorPagePopup({ apiError, workflow, props }) {
                     <h4 className="text-danger">
                         <FontAwesomeIcon icon={faExclamationCircle} className="me-2" />
                         <span data-testid="ErrorMessage">
-                            <Trans id="Something went wrong, please refresh this page" />
+                            {t`Something went wrong, please refresh this page`}
                         </span>
                     </h4>
                     <ButtonGroup size="sm" className="mt-2">
@@ -32,12 +32,12 @@ export default function ErrorPagePopup({ apiError, workflow, props }) {
                             onClick={() => location.reload(true)}
                         >
                             <FontAwesomeIcon icon={faArrowsRotate} className="me-2" />
-                            <Trans id="Refresh Page" />
+                            <span>{t`Refresh Page`}</span>
                         </Button>
                         <Button
                             variant="light"
                             onClick={() => setshowJsonDump(!showJsonDump)}
-                        ><Trans id="View Error Logs" /></Button>
+                        >{t`View Error Logs`}</Button>
                     </ButtonGroup>
                 </div>
                 {showJsonDump && (

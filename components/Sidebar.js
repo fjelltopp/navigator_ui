@@ -1,6 +1,6 @@
+import { t } from '@lingui/macro';
 import Link from 'next/link';
 import { useRouter } from "next/router";
-import { Trans } from '@lingui/react';
 import { ListGroup } from 'react-bootstrap';
 import LocaleSelector from './LocaleSelector';
 
@@ -8,12 +8,12 @@ export default function Sidebar() {
     const router = useRouter();
 
     const sidebarLinks = [
-        { label: <Trans id="What's Next?" />, href: '/' },
-        { label: <Trans id="Task List" />, href: '/tasks' },
-        { label: <Trans id="How to use Navigator" />, href: 'https://hivtools.unaids.org/wp-content/uploads/G.13-How-to-use-the-ADR-Navigator.mp4' },
-        { label: <Trans id="HIV Tools" />, href: 'https://hivtools.unaids.org' },
-        { label: <Trans id="Contact Us" />, href: '/contact_us' },
-        { label: <Trans id="Log Out" />, href: '/logout' }
+        { label: t`What's Next?`, href: '/' },
+        { label: t`Task List`, href: '/tasks' },
+        { label: t`How to use Navigator`, href: 'https://hivtools.unaids.org/wp-content/uploads/G.13-How-to-use-the-ADR-Navigator.mp4' },
+        { label: t`HIV Tools`, href: 'https://hivtools.unaids.org' },
+        { label: t`Contact Us`, href: '/contact_us' },
+        { label: t`Log Out`, href: '/logout' }
     ];
 
     const listItem = (link, key) => {

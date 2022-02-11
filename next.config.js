@@ -13,7 +13,7 @@ const frLocale = {
 
 const ptLocale = {
   id: 'pt',
-  name: 'Portuguese',
+  name: 'Português',
   emoji: '🇵🇹'
 }
 

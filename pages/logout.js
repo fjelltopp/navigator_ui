@@ -1,4 +1,4 @@
-import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { useRouter } from "next/router";
 import { makeUseAxios } from 'axios-hooks';
 import { baseAxiosConfig, logoutApiRequest } from '../lib/api';
@@ -11,7 +11,7 @@ export default function LogoutPage() {
     const [{ loading, error }] = useAxios(logoutApiRequest);
 
     if (loading) {
-        return <Trans id="Logging out..." />
+        return t`Logging out...`
     } else if (error) {
         return <ErrorPagePopup apiError={error} />
     } else {

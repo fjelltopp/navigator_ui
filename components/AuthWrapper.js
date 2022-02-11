@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from "next/router";
-import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { useCookies } from 'react-cookie';
 import { makeUseAxios } from 'axios-hooks'
 import {
@@ -36,7 +36,7 @@ export default function AuthWrapper({ Component, pageProps }) {
     }] = useAxios(getDatasets);
 
     if (userDetailsLoading || datasetsLoading) {
-        return <Trans id="Loading..." />
+        return t`Loading...`;
     } else if (userDetailsError || datasetsError) {
         const invalidAuthError =
             userDetailsError && userDetailsError.message.includes('401')

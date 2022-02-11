@@ -1,4 +1,5 @@
 import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro'
 import { ButtonGroup, Button, OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
@@ -29,7 +30,7 @@ function ButtonWithTooltip({ button, buttonComponent }) {
     if (button.tooltip) {
         const tooltip = (
             <Tooltip>
-                {button.tooltip.map(line => <div>{line}</div>)}
+                {button.tooltip.map((line, index) => <div key={index}>{line}</div>)}
             </Tooltip>
         )
         return (
@@ -49,11 +50,11 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, mar
         const button = (
             markTaskAsCompleteLoading
                 ? {
-                    label: <Trans id="Task Complete" />,
+                    label: t`Task Complete`,
                     variant: 'outline-success',
                 }
                 : {
-                    label: <Trans id="Task Complete?" />,
+                    label: t`Task Complete?`,
                     variant: 'outline-danger',
                 }
         )
@@ -71,12 +72,12 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, mar
         const buttonAppearance = (
             completed
                 ? {
-                    label: <Trans id="Task Complete" />,
+                    label: t`Task Complete`,
                     variant: 'outline-success',
                     icon: faCheckSquare
                 }
                 : {
-                    label: <Trans id="Task Complete?" />,
+                    label: t`Task Complete?`,
                     variant: 'outline-danger',
                     icon: faSquare
                 }
@@ -103,19 +104,19 @@ export function TaskCompleteCheckbox({ workflow, handleClick, showDebugData, mar
 export function MainThreeActionButtons({ workflow, handleClick, showDebugData }) {
     const buttons = [
         {
-            label: <Trans id="Prior Task" />,
+            label: t`Prior Task`,
             icon: faAngleLeft,
             style: { borderRadius: '.25rem 0 0 .25rem' },
             ...priorTaskButton(workflow),
         },
         {
-            label: <Trans id="Next Task" />,
+            label: t`Next Task`,
             icon: faAngleRight,
             style: { borderRadius: 0 },
             ...nextTaskButton(workflow),
         },
         {
-            label: <Trans id="What's Next?" />,
+            label: t`What's Next?`,
             icon: faAngleDoubleRight,
             style: { borderRadius: '0 .25rem .25rem 0' },
             ...whatsNextButton(workflow),
@@ -126,7 +127,6 @@ export function MainThreeActionButtons({ workflow, handleClick, showDebugData })
             {buttons.map(button => {
                 const buttonComponent = (
                     <Button
-                        key={button.label}
                         style={button.style}
                         variant="danger"
                         onClick={() => handleClick(button.onClickAction)}
@@ -137,7 +137,11 @@ export function MainThreeActionButtons({ workflow, handleClick, showDebugData })
                         {button.onClickAction && displayStatsData(showDebugData, button.onClickAction)}
                     </Button>
                 )
-                return <ButtonWithTooltip {...{ button, buttonComponent }} />
+                return (
+                    <div key={button.label}>
+                        <ButtonWithTooltip {...{ button, buttonComponent }} />
+                    </div>
+                )
             })}
         </ButtonGroup>
     )
