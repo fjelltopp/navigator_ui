@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
+import { t } from '@lingui/macro';
+import { Trans } from '@lingui/react';
 import { useRouter } from "next/router";
-import Skeleton from 'react-loading-skeleton'
+import Skeleton from 'react-loading-skeleton';
 import {
   Row, Col, ButtonToolbar, ListGroup, ProgressBar, Alert
 } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
-import { Layout } from '../components/Layout'
+import { Layout } from '../components/Layout';
 import DatasetSelector from '../components/DatasetSelector';
 import LogsComponent from '../components/LogsComponent';
 import LoadingComponent from '../components/LoadingComponent';
@@ -27,10 +29,10 @@ import {
 import { getWorkflowStats } from '../lib/actionButtons';
 import { actions } from '../lib/actionButtons';
 
-const useAxios = makeUseAxios(baseAxiosConfig)
-
 export default function IndexPage(props) {
   const router = useRouter();
+  const { locale } = router;
+  const useAxios = makeUseAxios(baseAxiosConfig(locale));
   const { redirectToTaskId } = router.query;
 
   const [showDebugData, setshowDebugData] = useState(false);
@@ -292,11 +294,9 @@ export default function IndexPage(props) {
             <Row>
               <Col>
                 <div id="WorkflowAndTaskIds">
-                  <div>Workflow {workflow.id}</div>
-                  <div>Task {workflow.currentTask.id}</div>
-                  <div>
-                    <a onClick={() => setshowDebugData(!showDebugData)}>Debug Mode</a>
-                  </div>
+                  <div><Trans id="Workflow {workflowId}" values={{ workflowId: workflow.id }} /></div>
+                  <div><Trans id="Task {taskId}" values={{ taskId: workflow.currentTask.id }} /></div>
+                  <div><a onClick={() => setshowDebugData(!showDebugData)}>{t`Debug Mode`}</a></div>
                 </div>
               </Col>
               <Col>

@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
 import { Col, Alert, ButtonGroup, Button } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowsRotate } from '@fortawesome/free-solid-svg-icons';
@@ -12,14 +14,19 @@ function BaseErrorAlert({ title, lines, error }) {
             <Alert.Heading>{title}</Alert.Heading>
             <hr />
             {lines.map((line, index) => <div key={index}>{line}</div>)}
-            <div>For technical support, contact <TechnicalSupportEmailAddress /></div>
+            <div>
+                <Trans
+                    id="For technical support, contact <0>TechnicalSupportEmailAddress</0>"
+                    components={[<TechnicalSupportEmailAddress />]}
+                />
+            </div>
             <ButtonGroup size="sm" className="mt-3">
                 <Button variant="danger" onClick={() => location.reload(true)}>
                     <FontAwesomeIcon icon={faArrowsRotate} className="me-2" />
-                    <span>Refresh Page</span>
+                    <span>{t`Refresh Page`}</span>
                 </Button>
                 <Button variant="light" onClick={() => setshowJsonDump(!showJsonDump)}>
-                    <span>View Error Logs</span>
+                    <span>{t`View Error Logs`}</span>
                 </Button>
             </ButtonGroup>
             {showJsonDump && (
@@ -34,70 +41,91 @@ function BaseErrorAlert({ title, lines, error }) {
 export function FetchWorkflowError({ error, currentDatasetId, datasets }) {
     const CurrentDatasetName = datasets
         .filter(x => x.id === currentDatasetId)[0].name;
-    const title = `Failed to load ${CurrentDatasetName}`;
+    const title = <Trans
+        id="Failed to load {CurrentDatasetName}"
+        values={{ CurrentDatasetName }}
+    />;
     const lines = [
-        'An unexpected error occurred when trying to load this dataset,',
-        'Please try refreshing this page or switching to another dataset.'
+        t`An unexpected error occurred when trying to load this dataset`,
+        t`Please try refreshing this page or switching to another dataset.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
 
 export function FetchWorkflowTaskError({ error }) {
     const taskId = error.data.config.url.split('/').slice(-1);
-    const title = `Failed to load task ${taskId}`;
+    const title = <Trans
+        id="Failed to load task {taskId}"
+        values={{ taskId }}
+    />;
     const lines = [
-        'An unexpected error occurred when trying to load this task,',
-        'Please try refreshing this page or switching to another dataset.'
+        t`An unexpected error occurred when trying to load this task`,
+        t`Please try refreshing this page or switching to another dataset.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
 
 export function FetchMilestoneError({ error }) {
     const milestoneId = error.data.config.url.split('/').slice(-1);
-    const title = `Failed to load milestone ${milestoneId}`;
+    const title = <Trans
+        id="Failed to load milestone {milestoneId}"
+        values={{ milestoneId }}
+    />;
     const lines = [
-        'An unexpected error occurred when trying to load this milestone,',
-        'Please try refreshing this page or switching to another dataset.'
+        t`An unexpected error occurred when trying to load this milestone`,
+        t`Please try refreshing this page or switching to another dataset.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
 
 export function MarkTaskAsCompleteError({ error }) {
     const taskId = error.data.config.url.split('/').slice(-2)[0];
-    const title = `Failed to complete task ${taskId}`;
+    const title = <Trans
+        id="Failed to complete task {taskId}"
+        values={{ taskId }}
+    />;
     const lines = [
-        'An unexpected error occurred when trying to mark this task as complete,',
-        'Please try completing the action again or refreshing this page.'
+        t`An unexpected error occurred when trying to mark this task as complete`,
+        t`Please try completing the action again or refreshing this page.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
 
 export function MarkTaskAsIncompleteError({ error }) {
     const taskId = error.data.config.url.split('/').slice(-2)[0];
-    const title = `Failed to mark task ${taskId} as incomplete`;
+    const title = <Trans
+        id="Failed to mark task {taskId} as incomplete"
+        values={{ taskId }}
+    />;
     const lines = [
-        'An unexpected error occurred when trying to mark this task as incomplete,',
-        'Please try completing the action again or refreshing this page.'
+        t`An unexpected error occurred when trying to mark this task as incomplete`,
+        t`Please try completing the action again or refreshing this page.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
 
 export function SkipTaskError({ error }) {
     const taskId = error.data.config.url.split('/').slice(-2)[0];
-    const title = `Failed to skip task ${taskId}`;
+    const title = <Trans
+        id="Failed to skip task {taskId}"
+        values={{ taskId }}
+    />;
     const lines = [
-        'An unexpected error occurred when trying to skip this task,',
-        'Please try completing the action again or refreshing this page.'
+        t`An unexpected error occurred when trying to skip this task`,
+        t`Please try completing the action again or refreshing this page.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }
 
 export function FetchWorkflowTasksError({ error }) {
     const datasetId = error.data.config.url.split('/').slice(-2)[0];
-    const title = `Failed to load task list for dataset ${datasetId}`;
+    const title = <Trans
+        id="Failed to load task list for dataset {datasetId}"
+        values={{ datasetId }}
+    />;
     const lines = [
-        'An unexpected error occurred when trying to laod this task list,',
-        'Please try refreshing this page or switching to another dataset.'
+        t`An unexpected error occurred when trying to laod this task list`,
+        t`Please try refreshing this page or switching to another dataset.`,
     ];
     return <BaseErrorAlert {...{ title, lines, error }} />
 }

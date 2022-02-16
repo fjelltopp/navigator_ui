@@ -3,6 +3,7 @@ import AuthWrapper from '../../../components/AuthWrapper';
 import {
     validMockedUser, erroredMockedDatasets
 } from '../../../jest/mocks';
+import wrapper from '../../i18nProvider';
 
 const mockedApiResponses = {
     '/user': validMockedUser,
@@ -21,7 +22,7 @@ function Component() {
 
 test('When fetching datasets returns an Internal Server Error, display an error page', async () => {
     await act(async () => {
-        render(<AuthWrapper {...{ Component }} />);
+        render(<AuthWrapper {...{ Component }} />, { wrapper });
     })
     expect(screen.getByTestId('ErrorMessage')).toBeInTheDocument();
     expect(screen.queryByText('My Component')).not.toBeInTheDocument();

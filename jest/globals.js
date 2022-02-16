@@ -2,10 +2,6 @@ import React from "react";
 
 global.React = React;
 
-// global.window = {
-//     location: { href: null }
-// };
-
 jest.mock('@fortawesome/react-fontawesome', () => ({
     FontAwesomeIcon: () => null
 }))
@@ -15,4 +11,10 @@ jest.mock('react-cookie', () => ({
         { currentDatasetId: 'test-dataset-id' },
         () => null
     ]
+}))
+
+jest.mock('next/dist/client/router', () => ({
+    useRouter: () => ({
+        push: jest.fn()
+    })
 }))

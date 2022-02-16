@@ -3,6 +3,7 @@ import AuthWrapper from '../../../components/AuthWrapper';
 import {
     validMockedUser, loadingMockedDatasets
 } from '../../../jest/mocks';
+import wrapper from '../../i18nProvider';
 
 const mockedApiResponses = {
     '/user': validMockedUser,
@@ -20,7 +21,7 @@ function Component() {
 
 test('When datasets are being fetched, the main page content should be hidden and a loading message should be shown', async () => {
     await act(async () => {
-        render(<AuthWrapper {...{ Component }} />);
+        render(<AuthWrapper {...{ Component }} />, { wrapper });
     })
     expect(screen.queryByText('Loading...')).toBeInTheDocument();
     expect(screen.queryByText('My Component')).not.toBeInTheDocument();

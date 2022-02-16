@@ -1,8 +1,12 @@
 import React from 'react';
-import { makeUseAxios } from 'axios-hooks'
+import { useRouter } from "next/router";
+import { Trans } from '@lingui/react';
+import { t } from '@lingui/macro';
+import { makeUseAxios } from 'axios-hooks';
 import { Row, Col, Image, Form, Button, Alert } from 'react-bootstrap';
 import { LogInLayout } from '../components/Layout';
 import Logo from '../components/Logo';
+import LocaleSelector from '../components/LocaleSelector';
 import { baseAxiosConfig, loginApiRequest } from '../lib/api';
 
 const logos = [
@@ -12,9 +16,11 @@ const logos = [
     '/images/avenir_health.png',
     '/images/strategy4ward.png',
 ];
-const useAxios = makeUseAxios(baseAxiosConfig)
 
-export default function Login({ }) {
+export default function Login() {
+    const router = useRouter();
+    const { locale } = router;
+    const useAxios = makeUseAxios(baseAxiosConfig(locale));
 
     const [
         {
@@ -31,7 +37,7 @@ export default function Login({ }) {
             <Alert variant={'danger'} className="mt-2">
                 {(
                     loginStateError.message.includes('401')
-                        ? 'Login failed. Bad username or password.'
+                        ? t`Login failed. Bad username or password.`
                         : loginStateError.message
                 )}
             </Alert>
@@ -39,7 +45,7 @@ export default function Login({ }) {
     }
 
     if (loginState) {
-        window.location.href = '/';
+        router.push('/', undefined, { locale });
         return null;
     }
     const handleSubmit = event => {
@@ -49,30 +55,39 @@ export default function Login({ }) {
         loginRequest({ data: { username, password } })
             .catch(error => console.error(error))
     }
+    function LinkToCkanSite() {
+        return (
+            <a
+                href={process.env.NEXT_PUBLIC_CKAN_SITE_URL}
+                target="_blank"
+                rel="noreferrer"
+                className="link-danger">{process.env.NEXT_PUBLIC_CKAN_SITE_URL}</a>
+        )
+    }
 
     return (
         <LogInLayout>
-            <h3 className="text-center"><Logo /></h3>
+            <div className="text-end">
+                <LocaleSelector drop="down" />
+            </div>
+            <h3 className="text-center mb-4"><Logo /></h3>
             <hr />
-            <p>Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!</p>
-            <p>The HIV Estimates Navigator (“Navigator”) is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done.</p>
+            <p>{t`Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!`}</p>
+            <p>{t`The HIV Estimates Navigator ("Navigator") is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done.`}</p>
             <hr />
             <ErrorBanner />
             <form id="LoginForm" onSubmit={handleSubmit}>
                 <p>
-                    <span>Please login using your </span>
-                    <a
-                        href={process.env.NEXT_PUBLIC_CKAN_SITE_URL}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="link-danger">{process.env.NEXT_PUBLIC_CKAN_SITE_URL}</a>
-                    <span> login details:</span>
+                    <Trans
+                        id="Please login using your <0>LinkToCkanSite</0> login details:"
+                        components={[<LinkToCkanSite />]}
+                    />
                 </p>
                 <Form.Group className="mb-3">
                     <Form.Control
                         name="username"
                         type="text"
-                        placeholder="Username or Email"
+                        placeholder={t`Username or Email`}
                         required
                     />
                 </Form.Group>
@@ -80,7 +95,7 @@ export default function Login({ }) {
                     <Form.Control
                         name="password"
                         type="password"
-                        placeholder="Password"
+                        placeholder={t`Password`}
                         required
                     />
                 </Form.Group>
@@ -88,21 +103,21 @@ export default function Login({ }) {
                     variant="danger"
                     disabled={loginStateLoading}
                     type="submit"
-                >{loginStateLoading ? 'Logging in...' : 'Login'}</Button>
+                >{loginStateLoading ? t`Logging in...` : t`Login`}</Button>
                 <Button
                     as={'a'}
                     variant="link"
                     href={`${process.env.NEXT_PUBLIC_CKAN_SITE_URL}/user/register`}
                     target="_blank"
                     className="text-secondary"
-                >Register</Button>
+                >{t`Register`}</Button>
                 <Button
                     as={'a'}
                     variant="link"
                     href={`${process.env.NEXT_PUBLIC_CKAN_SITE_URL}/user/reset`}
                     target="_blank"
                     className="text-secondary float-end"
-                >Forgot password?</Button>
+                >{t`Forgot password?`}</Button>
             </form>
             <hr />
             <Row className="text-center">

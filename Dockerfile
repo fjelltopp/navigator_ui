@@ -8,8 +8,7 @@ ARG NEXT_TELEMETRY_DISABLED=1
 COPY . .
 
 RUN yarn install --frozen-lockfile
+RUN yarn compile
 RUN yarn build
 
 CMD ["yarn", "start"]
-
-
