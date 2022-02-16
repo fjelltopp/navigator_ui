@@ -3,7 +3,7 @@ import { Row, Col, ListGroup, Button, Collapse } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretDown, faFile } from '@fortawesome/free-solid-svg-icons';
 import { makeUseAxios } from 'axios-hooks'
-import { baseAxiosConfig, getDatasets } from '../lib/api';
+import { baseAxiosConfig } from '../lib/api';
 
 const useAxios = makeUseAxios(baseAxiosConfig)
 
@@ -60,4 +60,5 @@ export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId,
             </Collapse>
         </>
     )
+
 }

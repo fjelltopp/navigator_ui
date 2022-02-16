@@ -1,31 +1,30 @@
-import Link from 'next/link'
+import { t } from '@lingui/macro';
+import Link from 'next/link';
+import { useRouter } from "next/router";
 import { ListGroup } from 'react-bootstrap';
+import LocaleSelector from './LocaleSelector';
 
 export default function Sidebar() {
+    const router = useRouter();
 
     const sidebarLinks = [
-        { label: "What's Next?", href: '/' },
-        { label: 'Task List', href: '/tasks' },
-        { label: 'How to use Navigator', href: 'https://hivtools.unaids.org/wp-content/uploads/G.13-How-to-use-the-ADR-Navigator.mp4' },
-        { label: 'HIV Tools', href: 'https://hivtools.unaids.org' },
-        { label: 'Contact Us', href: '/contact_us' },
-        { label: 'Log Out', href: '/logout' }
+        { label: t`What's Next?`, href: '/' },
+        { label: t`Task List`, href: '/tasks' },
+        { label: t`How to use Navigator`, href: 'https://hivtools.unaids.org/wp-content/uploads/G.13-How-to-use-the-ADR-Navigator.mp4' },
+        { label: t`HIV Tools`, href: 'https://hivtools.unaids.org' },
+        { label: t`Contact Us`, href: '/contact_us' },
+        { label: t`Log Out`, href: '/logout' }
     ];
 
     const listItem = (link, key) => {
-        // TODO: figure out why we need this strange work around to get
-        // the logout page to open without calling AuthWrapper.js
-        const isLogoutLink = link.href === '/logout';
-        if (link.href.includes('http') || isLogoutLink) {
-            const handleClick = () =>
-                window.open(link.href, isLogoutLink ? '_self' : '_blank');
+        if (link.href.includes('http')) {
             return (
                 <ListGroup.Item
                     key={key}
                     action
-                    onClick={handleClick}>
+                    onClick={() => window.open(link.href, '_blank')}>
                     <span>{link.label}</span>
-                </ListGroup.Item>
+                </ListGroup.Item >
             )
         } else {
             return (
@@ -37,9 +36,14 @@ export default function Sidebar() {
     }
 
     return (
-        <ListGroup variant="flush">
-            {sidebarLinks.map((link, index) => listItem(link, index))}
-        </ListGroup>
+        <>
+            <ListGroup variant="flush" className="mb-auto">
+                {sidebarLinks.map((link, index) => listItem(link, index))}
+            </ListGroup>
+            <ListGroup variant="flush">
+                <LocaleSelector drop="up" />
+            </ListGroup>
+        </>
     )
 
 }

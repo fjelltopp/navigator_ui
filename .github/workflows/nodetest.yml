@@ -12,5 +12,6 @@ jobs:
       - name: Run tests
         run: |
           yarn install --frozen-lockfile
+          yarn compile
           yarn test --silent
 
