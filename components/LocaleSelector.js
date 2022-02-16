@@ -3,7 +3,7 @@ import { useCookies } from 'react-cookie';
 import { Dropdown } from 'react-bootstrap';
 import { supportedLocales } from '../next.config';
 
-export default function LocaleSelector() {
+export default function LocaleSelector({ drop }) {
     const router = useRouter();
     const { pathname, asPath, query, locale } = router;
     const [cookies, setCookie] = useCookies(['NEXT_LOCALE']);
@@ -18,7 +18,7 @@ export default function LocaleSelector() {
     }
 
     return (
-        <Dropdown drop="up">
+        <Dropdown {...{ drop }}>
             <Dropdown.Toggle variant="outline-danger">
                 <LanguageLabel language={currentLocale} />
             </Dropdown.Toggle>

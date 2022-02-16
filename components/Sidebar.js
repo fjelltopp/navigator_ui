@@ -41,7 +41,7 @@ export default function Sidebar() {
                 {sidebarLinks.map((link, index) => listItem(link, index))}
             </ListGroup>
             <ListGroup variant="flush">
-                <LocaleSelector />
+                <LocaleSelector drop="up" />
             </ListGroup>
         </>
     )
