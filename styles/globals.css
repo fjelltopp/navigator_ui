@@ -88,3 +88,9 @@ select {
 #WorkflowComponent.loading{
   cursor: progress;
 }
+
+#PeviewingTaskAlert{
+  margin: 0;
+  margin-top: -6px;
+  padding: 10px;
+}

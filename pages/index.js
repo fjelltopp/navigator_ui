@@ -397,13 +397,35 @@ export default function IndexPage(props) {
     }
   }
 
+  const reached = (() => {
+    if (workflow) {
+      return getWorkflowStats(workflow).reached;
+    } else {
+      return false;
+    }
+  })();
+
   return (
     <Layout>
-      <DatasetSelector
-        currentDatasetId={props.currentDatasetId}
-        setCurrentDatasetId={props.setCurrentDatasetId}
-        datasets={props.user.datasets}
-      />
+      <Row>
+        <Col xs={9}>
+          <DatasetSelector
+            currentDatasetId={props.currentDatasetId}
+            setCurrentDatasetId={props.setCurrentDatasetId}
+            datasets={props.user.datasets}
+          />
+        </Col>
+        <Col xs={3}>
+          <Alert
+            variant="warning"
+            id="PeviewingTaskAlert"
+            className="text-center"
+            show={!reached && !loading}
+          >
+            <span>You are previewing a future task</span>
+          </Alert>
+        </Col>
+      </Row>
       <MainPageContentOrError />
       {showDebugData && (
         <LogsComponent objects={[
