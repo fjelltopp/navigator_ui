@@ -1,18 +1,21 @@
-import { makeUseAxios } from 'axios-hooks'
+import { t } from '@lingui/macro';
+import { useRouter } from "next/router";
+import { makeUseAxios } from 'axios-hooks';
 import { baseAxiosConfig, logoutApiRequest } from '../lib/api';
 import ErrorPagePopup from '../components/ErrorPagePopup';
 
-const useAxios = makeUseAxios(baseAxiosConfig)
-
 export default function LogoutPage() {
+    const router = useRouter();
+    const { locale } = router;
+    const useAxios = makeUseAxios(baseAxiosConfig(locale));
     const [{ loading, error }] = useAxios(logoutApiRequest);
 
     if (loading) {
-        return 'Logging out...'
+        return t`Logging out...`
     } else if (error) {
         return <ErrorPagePopup apiError={error} />
     } else {
-        window.location.href = '/';
+        router.push('/login', undefined, { locale });
         return null;
     }
 
