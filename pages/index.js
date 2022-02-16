@@ -37,6 +37,7 @@ export default function IndexPage(props) {
   const [workflow, setWorkflow] = useState();
   const [_loading, setLoading] = useState(false);
   const [actionError, _setActionError] = useState(null);
+  const [initialPageLoad, setInitalPageLoad] = useState(true);
   function setActionError(name, error) {
     _setActionError({ name, error });
   }
@@ -132,6 +133,7 @@ export default function IndexPage(props) {
   }, [workflow]);
 
   function carryOutActions(actionToCarryOut) {
+    setInitalPageLoad(false);
     setActionError(null);
     const updateWorkflowComplete = (complete, postToApi) => {
       function updateLocalState() {
@@ -261,7 +263,7 @@ export default function IndexPage(props) {
           </Col>
           <Col className="border-start">
             {!loading && <TaskDetailsError />}
-            {!loading && workflow.message && isLatestTask && (
+            {!loading && workflow.message && isLatestTask && !initialPageLoad && (
               <Alert variant={workflow.message.level}>{workflow.message.text}</Alert>
             )}
             <h4>{loading ? <Skeleton width="75%" /> : workflow.currentTask.details.title}</h4>
