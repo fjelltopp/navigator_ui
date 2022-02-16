@@ -21,11 +21,26 @@ const supportedLocales = [
   enLocale, frLocale, ptLocale
 ]
 
-module.exports = {
-  reactStrictMode: true,
-  supportedLocales,
-  i18n: {
-    locales: supportedLocales.map(locale => locale.id),
-    defaultLocale: enLocale.id
+// TODO: remove if statement once all locales are supported
+const enableAllLocales = false;
+
+if (enableAllLocales) {
+  module.exports = {
+    reactStrictMode: true,
+    supportedLocales,
+    i18n: {
+      locales: supportedLocales.map(locale => locale.id),
+      defaultLocale: enLocale.id
+    }
+  }
+} else {
+  module.exports = {
+    reactStrictMode: true,
+    supportedLocales: [enLocale],
+    i18n: {
+      locales: supportedLocales.map(locale => locale.id),
+      defaultLocale: enLocale.id,
+      localeDetection: false
+    }
   }
 }
