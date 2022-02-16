@@ -30,7 +30,9 @@ function ButtonWithTooltip({ button, buttonComponent }) {
     if (button.tooltip) {
         const tooltip = (
             <Tooltip>
-                {button.tooltip.map((line, index) => <div key={index}>{line}</div>)}
+                {button.tooltip.map((line, index) =>
+                    <div key={index}>{line}</div>
+                )}
             </Tooltip>
         )
         return (
