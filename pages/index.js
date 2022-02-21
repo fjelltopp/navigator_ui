@@ -315,9 +315,9 @@ export default function IndexPage(props) {
                 </ButtonToolbar>
               </Col>
             </Row>
-          </Col >
-        </Row >
-      </div >
+          </Col>
+        </Row>
+      </div>
     )
 
   }
