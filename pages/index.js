@@ -405,14 +405,6 @@ export default function IndexPage(props) {
     }
   }
 
-  const reached = (() => {
-    if (workflow) {
-      return getWorkflowStats(workflow).reached;
-    } else {
-      return false;
-    }
-  })();
-
   return (
     <Layout>
       <DatasetSelector
