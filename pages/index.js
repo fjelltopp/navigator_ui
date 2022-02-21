@@ -265,6 +265,12 @@ export default function IndexPage(props) {
           </Col>
           <Col className="border-start">
             {!loading && <TaskDetailsError />}
+            <Alert
+              variant="warning"
+              show={!loading && !workflow.currentTask.reached}
+            >
+              <span>You are previewing a future task</span>
+            </Alert>
             {!loading && workflow.message && isLatestTask && !initialPageLoad && (
               <Alert variant={workflow.message.level}>{workflow.message.text}</Alert>
             )}
@@ -409,25 +415,11 @@ export default function IndexPage(props) {
 
   return (
     <Layout>
-      <Row>
-        <Col xs={9}>
-          <DatasetSelector
-            currentDatasetId={props.currentDatasetId}
-            setCurrentDatasetId={props.setCurrentDatasetId}
-            datasets={props.user.datasets}
-          />
-        </Col>
-        <Col xs={3}>
-          <Alert
-            variant="warning"
-            id="PeviewingTaskAlert"
-            className="text-center"
-            show={!reached && !loading}
-          >
-            <span>You are previewing a future task</span>
-          </Alert>
-        </Col>
-      </Row>
+      <DatasetSelector
+        currentDatasetId={props.currentDatasetId}
+        setCurrentDatasetId={props.setCurrentDatasetId}
+        datasets={props.user.datasets}
+      />
       <MainPageContentOrError />
       {showDebugData && (
         <LogsComponent objects={[
