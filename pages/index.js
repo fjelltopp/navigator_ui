@@ -269,7 +269,7 @@ export default function IndexPage(props) {
               variant="warning"
               show={!loading && !workflow.currentTask.reached}
             >
-              <span>You are previewing a future task</span>
+              <span>{t`You are previewing a future task`}</span>
             </Alert>
             {!loading && workflow.message && isLatestTask && !initialPageLoad && (
               <Alert variant={workflow.message.level}>{workflow.message.text}</Alert>
@@ -315,9 +315,9 @@ export default function IndexPage(props) {
                 </ButtonToolbar>
               </Col>
             </Row>
-          </Col>
-        </Row>
-      </div>
+          </Col >
+        </Row >
+      </div >
     )
 
   }
