@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import { useCookies } from 'react-cookie';
 import { Dropdown } from 'react-bootstrap';
-import { supportedLocales } from '../next.config';
+import { supportedLocales } from '../locales/config';
 
 export default function LocaleSelector({ drop }) {
     const router = useRouter();

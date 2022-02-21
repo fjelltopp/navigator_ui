@@ -35,3 +35,6 @@ yarn-error.log*
 
 # i18n
 locales/*/messages.js
+
+# Sentry
+.sentryclirc
