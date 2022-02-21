@@ -58,14 +58,6 @@ export default function DatasetSelector({ currentDatasetId, setCurrentDatasetId,
                     <DatasetsListView />
                 </div>
             </Collapse>
-            <button
-                type="button"
-                onClick={() => {
-                    throw new Error("Sentry Frontend Error");
-                }}
-            >
-                Throw error
-            </button>
         </>
     )
 
