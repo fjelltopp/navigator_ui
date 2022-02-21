@@ -11,7 +11,7 @@ def build_docker_image(name, tag) {
     def revision = "ui-${tag}"
     def repository = "https://${env.NAVIGATOR_ECR_REGISTRY}"
     docker.withRegistry(repository) {
-      def image = docker.build("${name}:${revision}", "-f Dockerfile --progress=plain .", "--build-arg SENTRY_AUTH_TOKEN=${env.SENTRY_AUTH_TOKEN}")
+      def image = docker.build("${name}:${revision}", "--build-arg SENTRY_AUTH_TOKEN=${env.SENTRY_AUTH_TOKEN} -f Dockerfile --progress=plain .")
       image.push()
     }
   }
