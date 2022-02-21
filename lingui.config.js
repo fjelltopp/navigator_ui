@@ -1,4 +1,4 @@
-const { i18n } = require('./next.config');
+const { i18n } = require('./locales/config');
 
 module.exports = {
     locales: i18n.locales,
