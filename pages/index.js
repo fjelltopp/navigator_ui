@@ -265,6 +265,12 @@ export default function IndexPage(props) {
           </Col>
           <Col className="border-start">
             {!loading && <TaskDetailsError />}
+            <Alert
+              variant="warning"
+              show={!loading && !workflow.currentTask.reached}
+            >
+              <span>{t`You are previewing a future task`}</span>
+            </Alert>
             {!loading && workflow.message && isLatestTask && !initialPageLoad && (
               <Alert variant={workflow.message.level}>{workflow.message.text}</Alert>
             )}
