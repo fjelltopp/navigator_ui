@@ -43,13 +43,17 @@ export default function TasksPage(props) {
     }, [props.currentDatasetId]);
 
     function TaskListInAccordion({ milestone, expanded }) {
+        const redirectToTask = taskId => {
+            const query = { datasetId: props.currentDatasetId, taskId };
+            router.push({ pathname: '/', query }, undefined, { locale });
+        };
         const taskList = (
             <ListGroup>
                 {milestone.tasks.map(task => (
                     <ListGroup.Item
                         action
                         key={task.id}
-                        onClick={() => router.push(`/?redirectToTaskId=${task.id}`)}
+                        onClick={() => redirectToTask(task.id)}
                     >
                         <CheckboxWithLabel
                             checked={task.completed}
@@ -66,12 +70,10 @@ export default function TasksPage(props) {
                         <Accordion.Header>
                             <div style={{ width: '100%' }}>
                                 <h4 className="m-0">
-                                    <h4 className="m-0">
-                                        <CheckboxWithLabel
-                                            checked={milestone.progress === 100}
-                                            label={milestone.title}
-                                        />
-                                    </h4>
+                                    <CheckboxWithLabel
+                                        checked={milestone.progress === 100}
+                                        label={milestone.title}
+                                    />
                                 </h4>
                                 <ProgressBar className="mt-2" style={{ height: 5 }}>
                                     <ProgressBar variant="danger" now={milestone.progress || 1} />
