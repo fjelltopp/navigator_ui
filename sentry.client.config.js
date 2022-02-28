@@ -17,5 +17,6 @@ Sentry.init({
   allowUrls: [
     /https:\/\/.*?.fjelltopp\.org/,
     /https:\/\/.*?.unaids\.org/
-  ]
+  ],
+  environment: process.env.NEXT_PUBLIC_ENV_TYPE
 });
