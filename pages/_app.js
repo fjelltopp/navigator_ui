@@ -13,7 +13,7 @@ import '../styles/globals.css';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function MyApp({ Component, pageProps }) {
-  const { asPath, locale } = useRouter();
+  const { pathname, locale } = useRouter();
   const insecurePages = ['/login', '/logout', '/no_datasets'];
 
   useEffect(async () => {
@@ -28,7 +28,7 @@ export default function MyApp({ Component, pageProps }) {
       >
         <title>{t`HIV Estimates Navigator`}</title>
         <GoogleAnalyticsComponent />
-        {insecurePages.includes(asPath)
+        {insecurePages.includes(pathname)
           ? <Component {...pageProps} />
           : <AuthWrapper {...{ Component, pageProps }} />
         }

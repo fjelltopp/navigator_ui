@@ -20,6 +20,7 @@ const logos = [
 export default function Login() {
     const router = useRouter();
     const { locale } = router;
+    const { redirectPath } = router.query;
     const useAxios = makeUseAxios(baseAxiosConfig(locale));
 
     const [
@@ -45,7 +46,7 @@ export default function Login() {
     }
 
     if (loginState) {
-        router.push('/', undefined, { locale });
+        router.push(redirectPath || '/', undefined, { locale });
         return null;
     }
     const handleSubmit = event => {

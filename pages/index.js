@@ -32,17 +32,25 @@ import { actions } from '../lib/actionButtons';
 export default function IndexPage(props) {
   const router = useRouter();
   const { locale } = router;
+  const { datasetId, taskId } = router.query;
   const useAxios = makeUseAxios(baseAxiosConfig(locale));
-  const { redirectToTaskId } = router.query;
 
   const [showDebugData, setshowDebugData] = useState(false);
   const [workflow, setWorkflow] = useState();
   const [_loading, setLoading] = useState(false);
   const [actionError, _setActionError] = useState(null);
-  const [initialPageLoad, setInitalPageLoad] = useState(true);
+  const [initialPageLoad, setInitialPageLoad] = useState(true);
+
   function setActionError(name, error) {
     _setActionError({ name, error });
   }
+  const setTaskIdQueryParam = taskId => {
+    const url = {
+      pathname: router.pathname,
+      query: { datasetId: props.currentDatasetId, taskId }
+    };
+    router.push(url, undefined, { shallow: true, locale });
+  };
 
   const [
     {
@@ -127,15 +135,31 @@ export default function IndexPage(props) {
   }, [props.currentDatasetId]);
 
   useEffect(() => {
-    if (workflow && redirectToTaskId) {
-      updateWorkflowTask(redirectToTaskId);
-      setActionError(null);
-      router.push('/', undefined, { shallow: true });
+    if (workflow) {
+      const redirectToDatasetId = initialPageLoad
+        && datasetId && props.currentDatasetId != datasetId;
+      const redirectToTaskId = initialPageLoad
+        && taskId && workflow.currentTask.id != taskId;
+      if (redirectToDatasetId) {
+        console.log('redirecting to datasetId', datasetId)
+        props.setCurrentDatasetId(datasetId);
+      } else if (redirectToTaskId) {
+        console.log('redirecting to taskId', taskId);
+        updateWorkflowTask(taskId);
+      } else {
+        setTaskIdQueryParam(workflow.currentTask.id);
+      }
     }
-  }, [workflow]);
+  }, [workflow, datasetId, taskId]);
+
+  useEffect(() => {
+    if (workflow) {
+      setTaskIdQueryParam(taskId || workflow.currentTask.id);
+    }
+  }, [props.currentDatasetId]);
 
   function carryOutActions(actionToCarryOut) {
-    setInitalPageLoad(false);
+    setInitialPageLoad(false);
     setActionError(null);
     const updateWorkflowComplete = (complete, postToApi) => {
       function updateLocalState() {
@@ -300,8 +324,12 @@ export default function IndexPage(props) {
             <Row>
               <Col>
                 <div id="WorkflowAndTaskIds">
-                  <div><Trans id="Workflow {workflowId}" values={{ workflowId: workflow.id }} /></div>
-                  <div><Trans id="Task {taskId}" values={{ taskId: workflow.currentTask.id }} /></div>
+                  <div><Trans id="Dataset: {datasetId}" values={{ datasetId: props.currentDatasetId }} /></div>
+                  <div>
+                    <Trans id="Workflow: {workflowId}" values={{ workflowId: workflow.id }} />
+                    <span> | </span>
+                    <Trans id="Task: {taskId}" values={{ taskId: workflow.currentTask.id }} />
+                  </div>
                   <div><a onClick={() => setshowDebugData(!showDebugData)}>{t`Debug Mode`}</a></div>
                 </div>
               </Col>

@@ -42,7 +42,11 @@ export default function AuthWrapper({ Component, pageProps }) {
             userDetailsError && userDetailsError.message.includes('401')
             || datasetsError && datasetsError.message.includes('401')
         if (invalidAuthError) {
-            router.push('/login', undefined, { locale });
+            const url = {
+                pathname: '/login',
+                query: { redirectPath: router.asPath }
+            };
+            router.push(url, undefined, { locale });
             return null;
         } else {
             return <ErrorPagePopup apiError={userDetailsError || datasetsError} />
