@@ -1,17 +1,11 @@
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2022-02-16 15:15+0000\n"
+"POT-Creation-Date: 2022-03-08 09:39+0000\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: @lingui/cli\n"
 "Language: fr\n"
-"Project-Id-Version: \n"
-"Report-Msgid-Bugs-To: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Plural-Forms: \n"
 
 #: components/ErrorComponents.js:127
 msgid "An unexpected error occurred when trying to laod this task list"
@@ -58,7 +52,11 @@ msgstr ""
 msgid "Contact Us"
 msgstr ""
 
-#: pages/index.js:305
+#: pages/index.js:327
+msgid "Dataset: {datasetId}"
+msgstr ""
+
+#: pages/index.js:333
 msgid "Debug Mode"
 msgstr ""
 
@@ -98,7 +96,7 @@ msgstr ""
 msgid "For technical support, contact <0>TechnicalSupportEmailAddress</0>"
 msgstr ""
 
-#: pages/login.js:120
+#: pages/login.js:121
 msgid "Forgot password?"
 msgstr ""
 
@@ -128,7 +126,7 @@ msgstr ""
 msgid "Log Out"
 msgstr ""
 
-#: pages/login.js:106
+#: pages/login.js:107
 msgid "Logging in..."
 msgstr ""
 
@@ -136,11 +134,11 @@ msgstr ""
 msgid "Logging out..."
 msgstr ""
 
-#: pages/login.js:106
+#: pages/login.js:107
 msgid "Login"
 msgstr ""
 
-#: pages/login.js:40
+#: pages/login.js:41
 msgid "Login failed. Bad username or password."
 msgstr ""
 
@@ -148,7 +146,7 @@ msgstr ""
 msgid "More milestones may be added"
 msgstr ""
 
-#: pages/tasks.js:126
+#: pages/tasks.js:128
 msgid "More tasks may be added"
 msgstr ""
 
@@ -164,11 +162,11 @@ msgstr ""
 msgid "No further action is required."
 msgstr ""
 
-#: pages/login.js:98
+#: pages/login.js:99
 msgid "Password"
 msgstr ""
 
-#: pages/login.js:81
+#: pages/login.js:82
 msgid "Please login using your <0>LinkToCkanSite</0> login details:"
 msgstr ""
 
@@ -193,7 +191,7 @@ msgstr ""
 msgid "Prior Task"
 msgstr ""
 
-#: pages/tasks.js:145
+#: pages/tasks.js:147
 msgid "Refresh"
 msgstr ""
 
@@ -203,7 +201,7 @@ msgstr ""
 msgid "Refresh Page"
 msgstr ""
 
-#: pages/login.js:113
+#: pages/login.js:114
 msgid "Register"
 msgstr ""
 
@@ -229,11 +227,11 @@ msgstr ""
 msgid "Task status is automatically checked by system."
 msgstr ""
 
-#: pages/index.js:304
-msgid "Task {taskId}"
+#: pages/index.js:331
+msgid "Task: {taskId}"
 msgstr ""
 
-#: pages/login.js:76
+#: pages/login.js:77
 msgid "The HIV Estimates Navigator (\"Navigator\") is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done."
 msgstr ""
 
@@ -258,7 +256,7 @@ msgstr ""
 msgid "UNAIDS and its partners are committed to providing the highest level of support to country teams using its platforms and models during the estimates process. You can contact us in one of two ways:"
 msgstr ""
 
-#: pages/login.js:90
+#: pages/login.js:91
 msgid "Username or Email"
 msgstr ""
 
@@ -267,7 +265,7 @@ msgstr ""
 msgid "View Error Logs"
 msgstr ""
 
-#: pages/login.js:75
+#: pages/login.js:76
 msgid "Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!"
 msgstr ""
 
@@ -276,15 +274,15 @@ msgstr ""
 msgid "What's Next?"
 msgstr ""
 
-#: pages/index.js:303
-msgid "Workflow {workflowId}"
+#: pages/index.js:329
+msgid "Workflow: {workflowId}"
 msgstr ""
 
 #: lib/actionButtons.js:16
 msgid "You are currently previewing a future task."
 msgstr ""
 
-#: pages/index.js:272
+#: pages/index.js:296
 msgid "You are previewing a future task"
 msgstr ""
 
@@ -292,6 +290,6 @@ msgstr ""
 msgid "Your ADR account does not have access to any Country HIV Estimates Datasets. Please make sure you are logged into the correct account and you are added as an editor member of the country organisation or a dataset collaborator."
 msgstr ""
 
-#: pages/tasks.js:137
+#: pages/tasks.js:139
 msgid "Your Task List"
 msgstr ""
