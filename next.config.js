@@ -11,10 +11,11 @@ const moduleExports = {
   reactStrictMode: true,
   ...localesConfig,
   async redirects() {
-    return localesConfig.unsupportedLocales.map(locale => (
+    const { unsupportedLocales, defaultLocale } = localesConfig;
+    return unsupportedLocales.map(locale => (
       {
         source: `/${locale.id}/:path*`,
-        destination: `/${localesConfig.defaultLocale}/:path*`,
+        destination: `/${defaultLocale.id}/:path*`,
         permanent: false
       }
     ))

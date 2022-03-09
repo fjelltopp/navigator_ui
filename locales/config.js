@@ -18,7 +18,7 @@ const ptLocale = {
 
 const supportedLocales = [enLocale];
 const unsupportedLocales = [frLocale, ptLocale];
-const defaultLocale = supportedLocales[0].id;
+const defaultLocale = supportedLocales[0];
 
 module.exports = {
     supportedLocales,
@@ -26,6 +26,6 @@ module.exports = {
     defaultLocale,
     i18n: {
         locales: supportedLocales.map(locale => locale.id),
-        defaultLocale
+        defaultLocale: defaultLocale.id
     }
 }
