@@ -44,6 +44,13 @@ export default function IndexPage(props) {
   function setActionError(name, error) {
     _setActionError({ name, error });
   }
+  const setDatasetIdQueryParam = datasetId => {
+    const url = {
+      pathname: router.pathname,
+      query: { datasetId }
+    };
+    router.push(url, undefined, { shallow: true, locale });
+  };
   const setTaskIdQueryParam = taskId => {
     const url = {
       pathname: router.pathname,
@@ -151,12 +158,6 @@ export default function IndexPage(props) {
       }
     }
   }, [workflow, datasetId, taskId]);
-
-  useEffect(() => {
-    if (workflow) {
-      setTaskIdQueryParam(taskId || workflow.currentTask.id);
-    }
-  }, [props.currentDatasetId]);
 
   function carryOutActions(actionToCarryOut) {
     setInitialPageLoad(false);
@@ -437,7 +438,7 @@ export default function IndexPage(props) {
     <Layout>
       <DatasetSelector
         currentDatasetId={props.currentDatasetId}
-        setCurrentDatasetId={props.setCurrentDatasetId}
+        setCurrentDatasetId={setDatasetIdQueryParam}
         datasets={props.user.datasets}
       />
       <MainPageContentOrError />
