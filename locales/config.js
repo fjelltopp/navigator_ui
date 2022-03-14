@@ -16,28 +16,16 @@ const ptLocale = {
     emoji: '🇵🇹'
 }
 
-const supportedLocales = [
-    enLocale, frLocale, ptLocale
-]
+const supportedLocales = [enLocale];
+const unsupportedLocales = [frLocale, ptLocale];
+const defaultLocale = supportedLocales[0];
 
-// TODO: remove if statement once all locales are supported
-const enableAllLocales = false;
-
-if (enableAllLocales) {
-    module.exports = {
-        supportedLocales,
-        i18n: {
-            locales: supportedLocales.map(locale => locale.id),
-            defaultLocale: enLocale.id
-        }
-    }
-} else {
-    module.exports = {
-        supportedLocales: [enLocale],
-        i18n: {
-            locales: supportedLocales.map(locale => locale.id),
-            defaultLocale: enLocale.id,
-            localeDetection: false
-        }
+module.exports = {
+    supportedLocales,
+    unsupportedLocales,
+    defaultLocale,
+    i18n: {
+        locales: supportedLocales.map(locale => locale.id),
+        defaultLocale: defaultLocale.id
     }
 }

@@ -8,9 +8,18 @@ const localesConfig = require('./locales/config');
 const { withSentryConfig } = require('@sentry/nextjs');
 
 const moduleExports = {
-  // Your existing module.exports
   reactStrictMode: true,
   ...localesConfig,
+  async redirects() {
+    const { unsupportedLocales, defaultLocale } = localesConfig;
+    return unsupportedLocales.map(locale => (
+      {
+        source: `/${locale.id}/:path*`,
+        destination: `/${defaultLocale.id}/:path*`,
+        permanent: false
+      }
+    ))
+  },
 };
 
 const sentryWebpackPluginOptions = {
