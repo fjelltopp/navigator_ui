@@ -16,8 +16,8 @@ const ptLocale = {
     emoji: '🇵🇹'
 }
 
-const supportedLocales = [enLocale];
-const unsupportedLocales = [frLocale, ptLocale];
+const supportedLocales = [enLocale, frLocale, ptLocale];
+const unsupportedLocales = [];
 const defaultLocale = supportedLocales[0];
 
 module.exports = {
