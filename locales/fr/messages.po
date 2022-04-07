@@ -1,295 +1,364 @@
+# This file was generated from locales\fr\messages.xlsx
 msgid ""
 msgstr ""
-"POT-Creation-Date: 2022-03-08 09:39+0000\n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"X-Generator: @lingui/cli\n"
+"PO-Revision-Date: 2022-04-07 14:36+0300\n"
 "Language: fr\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: xls2po 1.1.1\n"
 
-#: components/ErrorComponents.js:127
+#. None
 msgid "An unexpected error occurred when trying to laod this task list"
 msgstr ""
+"Une erreur inattendue s'est produite lors de la tentative de la liste de "
+"tâches"
 
-#: components/ErrorComponents.js:49
+#. None
 msgid "An unexpected error occurred when trying to load this dataset"
 msgstr ""
+"Une erreur inattendue s'est produite lors de la tentative de charger ce jeu "
+"de données"
 
-#: components/ErrorComponents.js:75
+#. None
 msgid "An unexpected error occurred when trying to load this milestone"
 msgstr ""
+"Une erreur inattendue s'est produite lors de la tentative de chargement de "
+"cette étape."
 
-#: components/ErrorComponents.js:62
+#. None
 msgid "An unexpected error occurred when trying to load this task"
 msgstr ""
+"Une erreur inattendue s'est produite lors de la tentative de charger cette "
+"tâche"
 
-#: components/ErrorComponents.js:88
+#. None
 msgid "An unexpected error occurred when trying to mark this task as complete"
 msgstr ""
+"Une erreur inattendue s'est produite lors de la tentative de marquage de "
+"cette tâche comme complète"
 
-#: components/ErrorComponents.js:101
-msgid "An unexpected error occurred when trying to mark this task as incomplete"
+#. None
+msgid ""
+"An unexpected error occurred when trying to mark this task as incomplete"
 msgstr ""
+"Une erreur inattendue s'est produite lors de la tentative de marquer cette "
+"tâche comme incomplète"
 
-#: components/ErrorComponents.js:114
+#. None
 msgid "An unexpected error occurred when trying to skip this task"
 msgstr ""
+"Une erreur inattendue s'est produite lors de la tentative de sauter cette "
+"tâche"
 
-#: lib/actionButtons.js:87
+#. None
 msgid "Click \"What's Next?\" once task is complete."
-msgstr ""
+msgstr "Cliquez sur \"Quoi de neuf?\" une fois que la tâche est terminée."
 
-#: lib/actionButtons.js:187
+#. None
 msgid "Click \"What's Next?\" to proceed."
-msgstr ""
+msgstr "Cliquez sur \"Quoi de neuf?\" procéder."
 
-#: lib/actionButtons.js:17
+#. None
 msgid "Click \"What's Next?\" to see your latest actionable task."
 msgstr ""
+"Cliquez sur \"Quoi de neuf?\" pour voir votre dernière tâche opérationnelle."
 
-#: components/Sidebar.js:15
-#: pages/contact_us.js:21
+#. None
 msgid "Contact Us"
-msgstr ""
+msgstr "Nous contacter"
 
-#: pages/index.js:327
+#. None
 msgid "Dataset: {datasetId}"
-msgstr ""
+msgstr "DataSet: {datasetId}"
 
-#: pages/index.js:333
+#. None
 msgid "Debug Mode"
-msgstr ""
+msgstr "Mode débogage"
 
-#: components/ErrorComponents.js:83
+#. None
 msgid "Failed to complete task {taskId}"
-msgstr ""
+msgstr "Échec de la tâche complète {taskId}"
 
-#: components/ErrorComponents.js:70
+#. None
 msgid "Failed to load milestone {milestoneId}"
-msgstr ""
+msgstr "Impossible de charger le jalon {milestoneId}"
 
-#: components/ErrorComponents.js:122
+#. None
 msgid "Failed to load task list for dataset {datasetId}"
-msgstr ""
+msgstr "Impossible de charger la liste des tâches pour DataSet {datasetId}"
 
-#: components/ErrorComponents.js:57
+#. None
 msgid "Failed to load task {taskId}"
-msgstr ""
+msgstr "Impossible de charger la tâche {taskId}"
 
-#: components/ErrorComponents.js:44
+#. None
 msgid "Failed to load {CurrentDatasetName}"
-msgstr ""
+msgstr "Impossible de charger {currentDatasetName}"
 
-#: components/ErrorComponents.js:96
+#. None
 msgid "Failed to mark task {taskId} as incomplete"
-msgstr ""
+msgstr "Impossible de marquer la tâche {taskId} comme incomplète"
 
-#: components/ErrorComponents.js:109
+#. None
 msgid "Failed to skip task {taskId}"
-msgstr ""
+msgstr "Impossible de sauter la tâche {taskId}"
 
-#: pages/contact_us.js:24
-msgid "For questions about the estimates process or to provide feedback to UNAIDS about task descriptions found in the Navigator, please contact <0>GeneralSupportEmailAddress</0>. If you are commenting on a specific task, be sure to capture a screenshot or copy and paste the text in question."
+#. None
+msgid ""
+"For questions about the estimates process or to provide feedback to UNAIDS "
+"about task descriptions found in the Navigator, please contact "
+"<0>GeneralSupportEmailAddress</0>. If you are commenting on a specific task,"
+" be sure to capture a screenshot or copy and paste the text in question."
 msgstr ""
+"Pour des questions sur le processus d'estimation ou pour fournir des "
+"commentaires à l'ONUSIDA sur les descriptions de tâches trouvées dans le "
+"navigateur, veuillez contacter <0> GeneralSupportemailAddress </ 0>. Si vous"
+" commencez à une tâche spécifique, assurez-vous de capturer une capture "
+"d'écran ou de copier et collez le texte en question."
 
-#: components/ErrorComponents.js:18
+#. None
 msgid "For technical support, contact <0>TechnicalSupportEmailAddress</0>"
 msgstr ""
+"Pour le support technique, contactez <0> TechnicalSupportemailAddress </ 0>"
 
-#: pages/login.js:121
+#. None
 msgid "Forgot password?"
-msgstr ""
+msgstr "Mot de passe oublié?"
 
-#: components/Logo.js:9
-#: pages/_app.js:29
+#. None
 msgid "HIV Estimates Navigator"
-msgstr ""
+msgstr "Le VIH estime navigateur"
 
-#: components/Sidebar.js:14
+#. None
 msgid "HIV Tools"
-msgstr ""
+msgstr "Outils VIH"
 
-#: components/Sidebar.js:13
+#. None
 msgid "How to use Navigator"
-msgstr ""
+msgstr "Comment utiliser Navigator"
 
-#: pages/contact_us.js:26
-msgid "If you need help materials and guides or training materials for the HIV epidemiological estimates process, you can visit our library of HIV estimates training materials."
+#. None
+msgid ""
+"If you need help materials and guides or training materials for the HIV "
+"epidemiological estimates process, you can visit our library of HIV "
+"estimates training materials."
 msgstr ""
+"Si vous avez besoin d'aide du matériel et des guides ou des supports de "
+"formation pour le processus d'estimations épidémiologiques du VIH, vous "
+"pouvez visiter notre bibliothèque de matériel de formation estimé au VIH."
 
-#: components/AuthWrapper.js:39
+#. None
 msgid "Loading..."
-msgstr ""
+msgstr "Chargement..."
 
-#: components/Sidebar.js:16
-#: pages/no_datasets.js:23
+#. None
 msgid "Log Out"
-msgstr ""
+msgstr "Se déconnecter"
 
-#: pages/login.js:107
+#. None
 msgid "Logging in..."
-msgstr ""
+msgstr "Se connecter..."
 
-#: pages/logout.js:14
+#. None
 msgid "Logging out..."
-msgstr ""
+msgstr "Déconnecter..."
 
-#: pages/login.js:107
+#. None
 msgid "Login"
-msgstr ""
+msgstr "Connexion"
 
-#: pages/login.js:41
+#. None
 msgid "Login failed. Bad username or password."
-msgstr ""
+msgstr "Échec de la connexion. Mauvais nom d'utilisateur ou mot de passe."
 
-#: components/MilestonesSidebar.js:49
+#. None
 msgid "More milestones may be added"
-msgstr ""
+msgstr "Plus de jalons peuvent être ajoutés"
 
-#: pages/tasks.js:128
+#. None
 msgid "More tasks may be added"
-msgstr ""
+msgstr "Plus de tâches peuvent être ajoutées"
 
-#: components/ActionButtons.js:115
+#. None
 msgid "Next Task"
-msgstr ""
+msgstr "Tâche suivante"
 
-#: pages/no_datasets.js:12
+#. None
 msgid "No Country HIV Estimates Datasets found."
-msgstr ""
+msgstr "Aucun pays au VIH estime les ensembles de données trouvés."
 
-#: lib/actionButtons.js:74
+#. None
 msgid "No further action is required."
-msgstr ""
+msgstr "Aucune autre action est nécessaire."
 
-#: pages/login.js:99
+#. None
 msgid "Password"
-msgstr ""
+msgstr "Mot de passe"
 
-#: pages/login.js:82
+#. None
 msgid "Please login using your <0>LinkToCkanSite</0> login details:"
 msgstr ""
+"Veuillez vous connecter en utilisant vos informations de connexion <0> "
+"LinkToCkanSite </ 0>"
 
-#: components/ErrorComponents.js:89
-#: components/ErrorComponents.js:102
-#: components/ErrorComponents.js:115
+#. None
 msgid "Please try completing the action again or refreshing this page."
 msgstr ""
+"Veuillez essayer de compléter l'action à nouveau ou rafraîchir cette page."
 
-#: components/ErrorComponents.js:50
-#: components/ErrorComponents.js:63
-#: components/ErrorComponents.js:76
-#: components/ErrorComponents.js:128
+#. None
 msgid "Please try refreshing this page or switching to another dataset."
 msgstr ""
+"Veuillez essayer de rafraîchir cette page ou de passer à un autre jeu de "
+"données."
 
-#: components/LoadingComponent.js:9
+#. None
 msgid "Please wait..."
-msgstr ""
+msgstr "S'il vous plaît, attendez..."
 
-#: components/ActionButtons.js:109
+#. None
 msgid "Prior Task"
-msgstr ""
+msgstr "Tâche préalable"
 
-#: pages/tasks.js:147
+#. None
 msgid "Refresh"
-msgstr ""
+msgstr "Rafraîchir"
 
-#: components/ErrorComponents.js:26
-#: components/ErrorPagePopup.js:35
-#: pages/no_datasets.js:19
+#. None
 msgid "Refresh Page"
-msgstr ""
+msgstr "Rafraîchir la page"
 
-#: pages/login.js:114
+#. None
 msgid "Register"
-msgstr ""
+msgstr "S'inscrire"
 
-#: components/ErrorPagePopup.js:26
+#. None
 msgid "Something went wrong, please refresh this page"
-msgstr ""
+msgstr "Quelque chose a mal tourné, veuillez actualiser cette page"
 
-#: components/ActionButtons.js:55
-#: components/ActionButtons.js:77
+#. None
 msgid "Task Complete"
-msgstr ""
+msgstr "Tâche complète"
 
-#: components/ActionButtons.js:59
-#: components/ActionButtons.js:82
+#. None
 msgid "Task Complete?"
-msgstr ""
+msgstr "Tâche complète?"
 
-#: components/Sidebar.js:12
+#. None
 msgid "Task List"
-msgstr ""
+msgstr "Liste de tâches"
 
-#: lib/actionButtons.js:86
+#. None
 msgid "Task status is automatically checked by system."
-msgstr ""
+msgstr "L'état de la tâche est automatiquement vérifié par le système."
 
-#: pages/index.js:331
+#. None
 msgid "Task: {taskId}"
-msgstr ""
+msgstr "Tâche: {taskId}"
 
-#: pages/login.js:77
-msgid "The HIV Estimates Navigator (\"Navigator\") is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done."
+#. None
+msgid ""
+"The HIV Estimates Navigator (\"Navigator\") is the latest tool provided by "
+"UNAIDS to assist country teams to produce their annual HIV estimates. The "
+"Navigator is an automated, step-by-step assistant for estimates teams. "
+"Whether you have participated in the estimates for many years or it’s your "
+"first time, the Navigator will guide you through the process across all "
+"estimates tools and models. From generating your input data to selecting "
+"advanced options and fitting your models, Navigator provides detailed, step-"
+"by-step instructions and resources to assist you along the way. Need to step"
+" away for a bit? No problem, Navigator will help you pick up where you left "
+"off, telling you what's next and what tasks remain to be done."
 msgstr ""
+"Le Navigateur (\"Navigator\") est le dernier outil fourni par l'ONUSIDA pour"
+" aider les équipes de pays à produire leurs estimations annuelles sur le "
+"VIH. Le navigateur est un assistant automatisé et pas à pas pour les équipes"
+" d'estimations. Que vous ayez participé aux estimations pendant de "
+"nombreuses années ou si vous êtes votre première fois, le navigateur vous "
+"guidera à travers le processus de tous les outils et modèles d'estimations. "
+"Après avoir généré vos données d'entrée pour sélectionner des options "
+"avancées et adapter vos modèles, Navigator fournit des instructions "
+"détaillées, pas à pas et des ressources pour vous aider tout au long du "
+"processus. Besoin de prendre un peu un peu? Pas de problème, Navigator vous "
+"aidera à reprendre là où vous l'avez laissé, vous indiquant ce qui est "
+"ensuite et quelles tâches restent à faire."
 
-#: lib/actionButtons.js:186
+#. None
 msgid "This is your current task."
-msgstr ""
+msgstr "Ceci est votre tâche actuelle."
 
-#: lib/actionButtons.js:144
+#. None
 msgid "This is your first task."
-msgstr ""
+msgstr "Ceci est votre première tâche."
 
-#: lib/actionButtons.js:73
-#: lib/actionButtons.js:180
+#. None
 msgid "This workflow is now complete."
-msgstr ""
+msgstr "Ce flux de travail est maintenant complet."
 
-#: pages/contact_us.js:25
-msgid "To report bugs or problems or to provide feedback about the Navigator software, please contact <0>TechnicalSupportEmailAddress</0>. If relevant capture a screenshot of the error you are receiving or the task in question."
+#. None
+msgid ""
+"To report bugs or problems or to provide feedback about the Navigator "
+"software, please contact <0>TechnicalSupportEmailAddress</0>. If relevant "
+"capture a screenshot of the error you are receiving or the task in question."
 msgstr ""
+"Pour signaler des bugs ou des problèmes ou de fournir des commentaires sur "
+"le logiciel Navigator, veuillez contacter <0> TechnicalSupporTemailAddress "
+"</ 0>. Si vous perquisez de capturer une capture d'écran de l'erreur que "
+"vous recevez ou de la tâche en question."
 
-#: pages/contact_us.js:23
-msgid "UNAIDS and its partners are committed to providing the highest level of support to country teams using its platforms and models during the estimates process. You can contact us in one of two ways:"
+#. None
+msgid ""
+"UNAIDS and its partners are committed to providing the highest level of "
+"support to country teams using its platforms and models during the estimates"
+" process. You can contact us in one of two ways:"
 msgstr ""
+"L'ONUSIDA et ses partenaires se sont engagés à fournir le plus haut niveau "
+"de soutien aux équipes de pays à l'aide de ses plates-formes et de modèles "
+"au cours du processus d'estimation. Vous pouvez nous contacter de deux "
+"manières:"
 
-#: pages/login.js:91
+#. None
 msgid "Username or Email"
-msgstr ""
+msgstr "Nom d'utilisateur ou email"
 
-#: components/ErrorComponents.js:29
-#: components/ErrorPagePopup.js:40
+#. None
 msgid "View Error Logs"
-msgstr ""
+msgstr "Afficher les journaux d'erreur"
 
-#: pages/login.js:76
-msgid "Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!"
+#. None
+msgid ""
+"Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey "
+"begins here!"
 msgstr ""
+"Bienvenue dans le navigateur des estimations du VIH de l'ONUSIDA. Votre "
+"voyage d'estimation du VIH commence ici!"
 
-#: components/ActionButtons.js:121
-#: components/Sidebar.js:11
+#. None
 msgid "What's Next?"
-msgstr ""
+msgstr "Et après?"
 
-#: pages/index.js:329
+#. None
 msgid "Workflow: {workflowId}"
-msgstr ""
+msgstr "Flux de travail: {workflowId}"
 
-#: lib/actionButtons.js:16
+#. None
 msgid "You are currently previewing a future task."
-msgstr ""
+msgstr "Vous prévisuez actuellement une tâche future."
 
-#: pages/index.js:296
+#. None
 msgid "You are previewing a future task"
-msgstr ""
+msgstr "Vous prévisuez une tâche future"
 
-#: pages/no_datasets.js:14
-msgid "Your ADR account does not have access to any Country HIV Estimates Datasets. Please make sure you are logged into the correct account and you are added as an editor member of the country organisation or a dataset collaborator."
+#. None
+msgid ""
+"Your ADR account does not have access to any Country HIV Estimates Datasets."
+" Please make sure you are logged into the correct account and you are added "
+"as an editor member of the country organisation or a dataset collaborator."
 msgstr ""
+"Votre compte ADR n'a pas accès aux jeux de données estimation du VIH par "
+"pays. Veuillez vous assurer que vous êtes connecté au bon compte et vous "
+"êtes ajouté en tant que membre de l'éditeur de l'organisation de pays ou "
+"d'un collaborateur de données de données."
 
-#: pages/tasks.js:139
+#. None
 msgid "Your Task List"
-msgstr ""
+msgstr "Votre liste de tâches"
