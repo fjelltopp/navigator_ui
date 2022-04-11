@@ -98,15 +98,14 @@ msgid ""
 msgstr ""
 "Para questões sobre o processo de estimativas ou para fornecer feedback para"
 " a UNAIDS sobre descrições de tarefas encontradas no Navegador, entre em "
-"contato com <0> generalSupportemailAddress </ 0>. Se você está comentando em"
+"contato com <0>GeneralSupportEmailAddress</0>. Se você está comentando em"
 " uma tarefa específica, certifique-se de capturar uma captura de tela ou "
 "copiar e colar o texto em questão."
 
 #. None
 msgid "For technical support, contact <0>TechnicalSupportEmailAddress</0>"
 msgstr ""
-"Para suporte técnico, entre em contato com <0> TechnicalSupportEmailAddress "
-"</ 0>"
+"Para suporte técnico, entre em contato com <0>TechnicalSupportEmailAddress</0>"
 
 #. None
 msgid "Forgot password?"
@@ -185,7 +184,7 @@ msgstr "Senha"
 #. None
 msgid "Please login using your <0>LinkToCkanSite</0> login details:"
 msgstr ""
-"Por favor, faça o login usando o seu <0> linktockansite </ 0> detalhes de "
+"Por favor, faça o login usando o seu <0>LinkToCkanSite</0> detalhes de "
 "login:"
 
 #. None
@@ -287,7 +286,7 @@ msgid ""
 "capture a screenshot of the error you are receiving or the task in question."
 msgstr ""
 "Para relatar bugs ou problemas ou fornecer feedback sobre o software "
-"Navegator, entre em contato com <0> TechnicalSupportEmailAddress </ 0>. Se "
+"Navegator, entre em contato com <0>TechnicalSupportEmailAddress</0>. Se "
 "relevante capturar uma captura de tela do erro que você recebe ou a tarefa "
 "em questão."
 

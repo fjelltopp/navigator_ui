@@ -112,14 +112,14 @@ msgid ""
 msgstr ""
 "Pour des questions sur le processus d'estimation ou pour fournir des "
 "commentaires à l'ONUSIDA sur les descriptions de tâches trouvées dans le "
-"navigateur, veuillez contacter <0> GeneralSupportemailAddress </ 0>. Si vous"
+"navigateur, veuillez contacter <0>GeneralSupportEmailAddress</0>. Si vous"
 " commencez à une tâche spécifique, assurez-vous de capturer une capture "
 "d'écran ou de copier et collez le texte en question."
 
 #. None
 msgid "For technical support, contact <0>TechnicalSupportEmailAddress</0>"
 msgstr ""
-"Pour le support technique, contactez <0> TechnicalSupportemailAddress </ 0>"
+"Pour le support technique, contactez <0>TechnicalSupportEmailAddress</0>"
 
 #. None
 msgid "Forgot password?"
@@ -198,8 +198,7 @@ msgstr "Mot de passe"
 #. None
 msgid "Please login using your <0>LinkToCkanSite</0> login details:"
 msgstr ""
-"Veuillez vous connecter en utilisant vos informations de connexion <0> "
-"LinkToCkanSite </ 0>"
+"Veuillez vous connecter en utilisant vos informations de connexion <0>LinkToCkanSite</0>"
 
 #. None
 msgid "Please try completing the action again or refreshing this page."
@@ -301,8 +300,8 @@ msgid ""
 "capture a screenshot of the error you are receiving or the task in question."
 msgstr ""
 "Pour signaler des bugs ou des problèmes ou de fournir des commentaires sur "
-"le logiciel Navigator, veuillez contacter <0> TechnicalSupporTemailAddress "
-"</ 0>. Si vous perquisez de capturer une capture d'écran de l'erreur que "
+"le logiciel Navigator, veuillez contacter <0>TechnicalSupportEmailAddress</0>. "
+"Si vous perquisez de capturer une capture d'écran de l'erreur que "
 "vous recevez ou de la tâche en question."
 
 #. None
