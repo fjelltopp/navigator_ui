@@ -88,3 +88,9 @@ select {
 #WorkflowComponent.loading{
   cursor: progress;
 }
+
+iframe{
+  width: 100%;
+  min-height: 600px;
+  border-radius: 3px;
+}

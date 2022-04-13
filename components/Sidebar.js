@@ -10,7 +10,7 @@ export default function Sidebar() {
     const sidebarLinks = [
         { label: t`What's Next?`, href: '/' },
         { label: t`Task List`, href: '/tasks' },
-        { label: t`How to use Navigator`, href: 'https://hivtools.unaids.org/wp-content/uploads/G.13-How-to-use-the-ADR-Navigator.mp4' },
+        { label: t`How to use Navigator`, href: '/instructions' },
         { label: t`HIV Tools`, href: 'https://hivtools.unaids.org' },
         { label: t`Contact Us`, href: '/contact_us' },
         { label: t`Log Out`, href: '/logout' }

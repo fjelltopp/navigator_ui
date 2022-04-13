@@ -14,7 +14,10 @@ import 'react-loading-skeleton/dist/skeleton.css';
 
 export default function MyApp({ Component, pageProps }) {
   const { pathname, locale } = useRouter();
-  const insecurePages = ['/login', '/logout', '/no_datasets'];
+  const insecurePages = [
+    '/login', '/logout',
+    '/no_datasets', '/instructions'
+  ];
 
   useEffect(async () => {
     activateLocale(locale);
