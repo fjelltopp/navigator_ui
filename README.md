@@ -1,15 +1,11 @@
-# Navigator UI
+# UNAIDS Navigator UI
+Video demo: https://youtu.be/l0Ohm1KCYEc
 
-| /login                                                                                                         | /                                                                                                              |
-|----------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------|
-| ![image](https://user-images.githubusercontent.com/2634482/142882247-ecc446d8-60fa-49e1-b77d-abd876489764.png) | ![image](https://user-images.githubusercontent.com/2634482/142882104-00ca33e4-27e5-4f37-98d0-737e9074bbb7.png) |
+![image](https://user-images.githubusercontent.com/2634482/142882247-ecc446d8-60fa-49e1-b77d-abd876489764.png)
 
-# Running
+# Commands
 ```
+$ yarn
 $ yarn start
-```
-
-# Tests
-```
 $ yarn test
 ```
