@@ -100,6 +100,20 @@ export default function Login() {
                         required
                     />
                 </Form.Group>
+                <div>
+                    <Button
+                        as={'a'}
+                        variant="link"
+                        href={`/api/auth/login`}
+                        className="text-secondary"
+                    >{t`Sign in with Auth0 SSO`}</Button>
+                    <Button
+                        as={'a'}
+                        variant="link"
+                        href={`/api/auth/logout`}
+                        className="text-secondary"
+                    >{t`Log out of Auth0 SSO`}</Button>
+                </div>
                 <Button
                     variant="danger"
                     disabled={loginStateLoading}
