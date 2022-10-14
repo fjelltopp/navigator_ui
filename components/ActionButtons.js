@@ -13,7 +13,7 @@ import {
     priorTaskButton,
     nextTaskButton,
     whatsNextButton
-} from '../lib/actionButtons';
+} from '@/lib/actionButtons';
 
 const displayStatsData = (showDebugData, onClickAction) => (
     <>

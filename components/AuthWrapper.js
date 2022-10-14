@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from "next/router";
 import { t } from '@lingui/macro';
 import { useCookies } from 'react-cookie';
@@ -16,6 +16,7 @@ export default function AuthWrapper({ Component, pageProps }) {
     const [cookies, setCookie] = useCookies(['currentDatasetId']);
     const useAxios = makeUseAxios(baseAxiosConfig(locale));
     const [currentDatasetId, _setCurrentDatasetId] = useState(cookies.currentDatasetId);
+    const [isLoading, setLoading] = useState(true);
     const setCurrentDatasetId = datasetId => {
         setCookie(
             'currentDatasetId', datasetId,
@@ -35,7 +36,11 @@ export default function AuthWrapper({ Component, pageProps }) {
         error: datasetsError
     }] = useAxios(getDatasets);
 
-    if (userDetailsLoading || datasetsLoading) {
+    useEffect(async () => {
+        setLoading(userDetailsLoading || datasetsLoading);
+    }, [userDetailsLoading, datasetsLoading]);
+
+    if (isLoading) {
         return t`Loading...`;
     } else if (userDetailsError || datasetsError) {
         const invalidAuthError =

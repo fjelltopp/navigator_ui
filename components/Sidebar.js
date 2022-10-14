@@ -13,7 +13,7 @@ export default function Sidebar() {
         { label: t`How to use Navigator`, href: '/instructions' },
         { label: t`HIV Tools`, href: 'https://hivtools.unaids.org' },
         { label: t`Contact Us`, href: '/contact_us' },
-        { label: t`Log Out`, href: '/logout' }
+        { label: t`Log Out`, href: '/api/auth/logout' }
     ];
 
     const listItem = (link, key) => {
