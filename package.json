@@ -60,9 +60,10 @@
     "setupFilesAfterEnv": [
       "./jest/setupTests.js"
     ],
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "moduleNameMapper": {
+      "@/(.*)": "<rootDir>/$1"
+    }
   },
-  "prettier": {
-
-  }
+  "prettier": {}
 }
