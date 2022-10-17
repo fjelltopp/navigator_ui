@@ -2,7 +2,7 @@
 FROM node:lts-buster-slim as builder
 WORKDIR /app
 ARG NEXT_PUBLIC_CKAN_SITE_URL=https://adr.unaids.org
-ARG NEXT_PUBLIC_API_BASE_URL=https://navigator.fjelltopp.org/api/oldapi
+ARG NEXT_PUBLIC_API_BASE_URL=http://navigator.fjelltopp.org/middleware/api
 ARG AUTH0_SECRET='3dea95744927fd8b1a6e7a60cac85e06341d57da23a94bd2fef45493c4dcbdae'
 ARG AUTH0_BASE_URL='http://navigator.minikube'
 ARG AUTH0_ISSUER_BASE_URL='https://hivtools.eu.auth0.com'
