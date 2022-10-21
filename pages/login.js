@@ -47,36 +47,12 @@ export default function Login() {
             <hr />
             <form id="LoginForm" onSubmit={() => { }}>
                 <div>
-                    <p>
-                        <Trans
-                            id="Please login using your <0>LinkToCkanSite</0> login details:"
-                            components={[<LinkToCkanSite />]}
-                        />
-                    </p>
-                    <div>
-                        <Button
-                            as={"a"}
-                            variant="danger"
-                            href={`/api/auth/login`}
-                            className="login-button"
-                        >{t`Sign in with Auth0 SSO`}</Button>
-                    </div>
-                    <div>
-                        <Button
-                            as={"a"}
-                            variant="link"
-                            href={`${process.env.NEXT_PUBLIC_CKAN_SITE_URL}/user/register`}
-                            target="_blank"
-                            className="text-secondary"
-                        >{t`Register`}</Button>
-                        <Button
-                            as={"a"}
-                            variant="link"
-                            href={`${process.env.NEXT_PUBLIC_CKAN_SITE_URL}/user/reset`}
-                            target="_blank"
-                            className="text-secondary float-end"
-                        >{t`Forgot password?`}</Button>
-                    </div>
+                    <Button
+                        as={"a"}
+                        variant="danger"
+                        href={`/api/auth/login`}
+                        className="login-button"
+                    >{t`Sign in with your HIV Tools account`}</Button>
                 </div>
             </form>
             <hr />
