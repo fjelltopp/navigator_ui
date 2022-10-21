@@ -55,6 +55,10 @@ select {
   margin-bottom: 40px;
 }
 
+#LoginPage #LoginForm div{
+  text-align:  center;
+}
+
 #LoginPage img{
   max-height: 55px;
 }
