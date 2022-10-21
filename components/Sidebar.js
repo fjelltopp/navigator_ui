@@ -1,19 +1,16 @@
 import { t } from '@lingui/macro';
 import Link from 'next/link';
-import { useRouter } from "next/router";
 import { ListGroup } from 'react-bootstrap';
 import LocaleSelector from './LocaleSelector';
 
 export default function Sidebar() {
-    const router = useRouter();
-
     const sidebarLinks = [
         { label: t`What's Next?`, href: '/' },
         { label: t`Task List`, href: '/tasks' },
         { label: t`How to use Navigator`, href: '/instructions' },
         { label: t`HIV Tools`, href: 'https://hivtools.unaids.org' },
         { label: t`Contact Us`, href: '/contact_us' },
-        { label: t`Log Out`, href: '/api/auth/logout' }
+        { label: t`Log Out`, href: `/api/auth/logout?returnTo=${process.env.navigator_auth0_base_url}` }
     ];
 
     const listItem = (link, key) => {
