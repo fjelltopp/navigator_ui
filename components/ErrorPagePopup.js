@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { t } from '@lingui/macro';
 import { Col, ButtonGroup, Button, Offcanvas } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
     faExclamationCircle, faArrowsRotate
 } from '@fortawesome/free-solid-svg-icons';
-import LogsComponent from '../components/LogsComponent';
+import LogsComponent from '@/components/LogsComponent';
 
 export default function ErrorPagePopup({ apiError, workflow, props }) {
     const [showJsonDump, setshowJsonDump] = useState(false);

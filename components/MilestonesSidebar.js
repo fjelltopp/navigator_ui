@@ -1,6 +1,6 @@
 import { t } from '@lingui/macro';
 import { ListGroup, ProgressBar } from 'react-bootstrap';
-import CheckboxWithLabel from '../components/CheckboxWithLabel';
+import CheckboxWithLabel from '@/components/CheckboxWithLabel';
 
 export default function MilestonesSidebar(props) {
 
