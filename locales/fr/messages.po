@@ -158,6 +158,18 @@ msgstr ""
 msgid "No Country HIV Estimates Datasets found."
 msgstr ""
 
+#: pages/user_not_found_in_adr.js:11
+msgid "Current user has not been found in ADR."
+msgstr ""
+
+#: pages/user_not_found_in_adr.js:13
+msgid "Your ADR account has not yet been used to log into ADR. Please log into ADR and come back here."
+msgstr ""
+
+#: pages/user_not_found_in_adr.js:15
+msgid "Log into ADR"
+msgstr ""
+
 #: lib/actionButtons.js:74
 msgid "No further action is required."
 msgstr ""
