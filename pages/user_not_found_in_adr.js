@@ -14,7 +14,7 @@ export default function UserNotFoundInAdrPage() {
       visit ADR and get your account created.
        Then come back here and click "Refresh Page".`}</p>
       <ButtonGroup size="sm">
-        <a href={process.env.NEXT_PUBLIC_CKAN_SITE_URL + "/user/saml2login"} target="_blank">
+        <a href={`${process.env.NEXT_PUBLIC_CKAN_SITE_URL}/user/saml2login`} target="_blank">
           <Button variant="danger">{t`Go to ADR`}</Button>
         </a>
       </ButtonGroup>
@@ -27,7 +27,7 @@ export default function UserNotFoundInAdrPage() {
             <span>{t`Refresh Page`}</span>
           </Button>
         </Link>
-        <Link href={"/logout"}>
+        <Link href="/api/auth/logout">
           <Button variant="outline-danger">{t`Log Out`}</Button>
         </Link>
       </ButtonGroup>
