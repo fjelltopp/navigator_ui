@@ -18,7 +18,7 @@ export default function NoDatasetsPage() {
             <span>{t`Refresh Page`}</span>
           </Button>
         </Link>
-        <Link href={"/logout"}>
+        <Link href="/api/auth/logout">
           <Button variant="outline-danger">{t`Log Out`}</Button>
         </Link>
       </ButtonGroup>
