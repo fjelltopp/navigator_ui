@@ -42,10 +42,12 @@ export default function AuthWrapper({ Component, pageProps }) {
 
     if (isLoading) {
         return t`Loading...`;
-    } else if ((userDetailsError || datasetsError) && userDetails != 'user_not_found_in_adr') {
+    } else if ((userDetailsError || datasetsError)) {
+        console.log(userDetailsError)
         const invalidAuthError =
             userDetailsError && userDetailsError.message.includes('401')
             || datasetsError && datasetsError.message.includes('401')
+        const adrUserNotFound = userDetailsError.message.includes('404')
         if (invalidAuthError) {
             const url = {
                 pathname: '/login',
@@ -53,15 +55,14 @@ export default function AuthWrapper({ Component, pageProps }) {
             };
             router.push(url, undefined, { locale });
             return null;
-        } else {
-            return <ErrorPagePopup apiError={userDetailsError || datasetsError} />
-        }
-    } else {
-        if (userDetails == 'user_not_found_in_adr') {
+        } else if (adrUserNotFound) {
             router.push('/user_not_found_in_adr', undefined, { locale });
             return null;
         }
-
+        else {
+            return <ErrorPagePopup apiError={userDetailsError || datasetsError} />
+        }
+    } else {
         if (datasets.datasets.length > 0) {
             const currentDatasetIdIsValid = datasets.datasets
                 .map(dataset => dataset.id).includes(currentDatasetId);
