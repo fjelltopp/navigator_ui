@@ -47,7 +47,7 @@ export default function AuthWrapper({ Component, pageProps }) {
         const invalidAuthError =
             userDetailsError && userDetailsError.message.includes('401')
             || datasetsError && datasetsError.message.includes('401')
-        const adrUserNotFound = userDetailsError.message.includes('404')
+        const adrUserNotFound = userDetailsError && userDetailsError.message.includes('404')
         if (invalidAuthError) {
             const url = {
                 pathname: '/login',
