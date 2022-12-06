@@ -18,7 +18,7 @@ const ptLocale = {
 
 const supportedLocales = [enLocale];
 const unsupportedLocales = [frLocale, ptLocale];
-const defaultLocale = supportedLocales[0];
+const defaultLocale = enLocale;
 
 module.exports = {
     supportedLocales,
