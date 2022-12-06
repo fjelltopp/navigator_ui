@@ -43,20 +43,20 @@ msgstr "Une erreur inattendue s'est produite en tentant d'ignorer cette tâche"
 
 #: lib/actionButtons.js:87
 msgid "Click \"What's Next?\" once task is complete."
-msgstr "Cliquez sur \"Quelle est la prochaine étape ?\" une fois que la tâche est terminée"
+msgstr "Cliquez sur \"Quelle est la Prochaine Étape?\" une fois que la tâche est terminée."
 
 #: lib/actionButtons.js:187
 msgid "Click \"What's Next?\" to proceed."
-msgstr "Cliquez sur \"Quelle est la prochaine étape?\" pour continuer"
+msgstr "Cliquez sur \"Quelle est la Prochaine Étape?\" pour continuer."
 
 #: lib/actionButtons.js:17
 msgid "Click \"What's Next?\" to see your latest actionable task."
-msgstr "Cliquez sur \"Quelle est la prochaine étape?\" pour voir votre dernière réalisable."
+msgstr "Cliquez sur \"Quelle est la Prochaine Étape?\" pour voir votre plus récente tâche réalisable."
 
 #: components/Sidebar.js:12
 #: pages/contact_us.js:25
 msgid "Contact Us"
-msgstr "Contactez nous"
+msgstr "Contactez Nous"
 
 #: pages/user_not_found_in_adr.js:11
 msgid "Current user has not been found in ADR."
@@ -68,7 +68,7 @@ msgstr "Ensemble de données: {datasetId}"
 
 #: pages/index.js:368
 msgid "Debug Mode"
-msgstr "Mode débogage"
+msgstr "Mode Débogage"
 
 #: components/ErrorComponents.js:83
 msgid "Failed to complete task {taskId}"
@@ -100,7 +100,7 @@ msgstr "Impossible d'ignorer la tâche {taskId}"
 
 #: pages/contact_us.js:29
 msgid "For questions about the estimates process or to provide feedback to UNAIDS about task descriptions found in the Navigator, please contact <0>GeneralSupportEmailAddress</0>. If you are commenting on a specific task, be sure to capture a screenshot or copy and paste the text in question."
-msgstr "Pour les questions sur le processus des estimations ou pour envoyer des commentaires à l'ONUSIDA à propos des descriptions de tâches trouvées dans le Navigateur, veuillez contacter <0>GeneralSupportEmailAddress</0>. Si vous commentez une tâche spécifique, assurez-vous de faire une capture d'écran ou de copier et coller le texte en question."
+msgstr "Pour les questions sur le processus des estimations ou pour envoyer des commentaires à l'ONUSIDA à propos des descriptions de tâches trouvées dans le Navigateur, veuillez contacter <0>GeneralSupportEmailAddress</0>. Si vous commentez sur une tâche spécifique, assurez-vous de faire une capture d'écran ou de copier et coller le texte en question."
 
 #: components/ErrorComponents.js:18
 msgid "For technical support, contact <0>TechnicalSupportEmailAddress</0>"
@@ -113,7 +113,7 @@ msgstr "Aller à ADR"
 #: components/Logo.js:9
 #: pages/_app.js:31
 msgid "HIV Estimates Navigator"
-msgstr "Navigateur des estimations VIH"
+msgstr "Navigateur des Estimations VIH"
 
 #: components/Sidebar.js:11
 msgid "HIV Tools"
@@ -125,7 +125,7 @@ msgstr "Comment utiliser le Navigateur"
 
 #: pages/contact_us.js:40
 msgid "If you need help materials and guides or training materials for the HIV epidemiological estimates process, you can visit our library of HIV estimates training materials."
-msgstr "Si vous avez besoin d'outils d'aide et de guides ou des outils de formation sur le processus des estimations épidémiologiques VIH, vous pouvez visiter notre bibliothèque d'outils de formation sur les estimations VIH."
+msgstr "Si vous avez besoin d'outils d'aide et de guides ou des documents de formations sur le processus des estimations épidémiologiques VIH, vous pouvez visiter notre bibliothèque d'outils de formations sur les estimations VIH."
 
 #: components/AuthWrapper.js:44
 msgid "Loading..."
@@ -135,7 +135,7 @@ msgstr "Chargement..."
 #: pages/no_datasets.js:22
 #: pages/user_not_found_in_adr.js:31
 msgid "Log Out"
-msgstr "Se déconnecter"
+msgstr "Se Déconnecter"
 
 #: components/MilestonesSidebar.js:49
 msgid "More milestones may be added"
@@ -147,11 +147,11 @@ msgstr "Plus de tâches peuvent être ajoutées"
 
 #: components/ActionButtons.js:115
 msgid "Next Task"
-msgstr "Tâche suivante"
+msgstr "Tâche Suivante"
 
 #: pages/no_datasets.js:11
 msgid "No Country HIV Estimates Datasets found."
-msgstr "Aucun ensemble de données d'estimations VIH national n'a été trouvé."
+msgstr "Aucun Ensemble de données d'Estimations VIH National n'a été trouvé."
 
 #: lib/actionButtons.js:74
 msgid "No further action is required."
@@ -161,7 +161,7 @@ msgstr "Aucune action supplémentaire n'est requise."
 #: components/ErrorComponents.js:102
 #: components/ErrorComponents.js:115
 msgid "Please try completing the action again or refreshing this page."
-msgstr "S'il vous plaît essayer de compléter l'action à nouveau ou de rafraîchir cette page."
+msgstr "S'il vous plaît essayer de terminer l'action à nouveau ou de rafraîchir cette page."
 
 #: components/ErrorComponents.js:50
 #: components/ErrorComponents.js:63
@@ -176,7 +176,7 @@ msgstr "Veuillez patienter..."
 
 #: components/ActionButtons.js:109
 msgid "Prior Task"
-msgstr "Tâche antérieure"
+msgstr "Tâche Antérieure"
 
 #: pages/tasks.js:150
 msgid "Refresh"
@@ -187,29 +187,29 @@ msgstr "Rafrachir"
 #: pages/no_datasets.js:18
 #: pages/user_not_found_in_adr.js:27
 msgid "Refresh Page"
-msgstr "Rafrachir la page"
+msgstr "Rafrachir la Page"
 
 #: pages/login.js:55
 msgid "Sign in with your HIV Tools account"
-msgstr "Connectez-vous avec votre compte enregistré dans le HIV Tools"
+msgstr "Connectez-vous avec votre compte enregistré dans les Outils VIH"
 
 #: components/ErrorPagePopup.js:26
 msgid "Something went wrong, please refresh this page"
-msgstr "Une erreur s'est produite, veuillez rafraîchir cette page"
+msgstr "Une erreur s'est produite, veuillez rafraîchir la page"
 
 #: components/ActionButtons.js:55
 #: components/ActionButtons.js:77
 msgid "Task Complete"
-msgstr "Tâche terminée"
+msgstr "Tâche Terminée"
 
 #: components/ActionButtons.js:59
 #: components/ActionButtons.js:82
 msgid "Task Complete?"
-msgstr "Tâche terminée?"
+msgstr "Tâche Terminée?"
 
 #: components/Sidebar.js:9
 msgid "Task List"
-msgstr "Liste des tâches"
+msgstr "Liste des Tâches"
 
 #: lib/actionButtons.js:86
 msgid "Task status is automatically checked by system."
@@ -221,7 +221,7 @@ msgstr "Tâche: {taskId}"
 
 #: pages/login.js:46
 msgid "The HIV Estimates Navigator (\"Navigator\") is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done."
-msgstr "Le Navigateur des Estimations VIH (\"Navigator\") est l'outil le plus récent fourni par l'ONUSIDA pour appuyer les équipes nationales à produire leurs estimations annuelles VIH. Le Navigateur est un assistant automatisé, à étape-par-étape pour les équipes d'estimations. Que vous ayez participé aux estimations durant de nombreuses années ou que ce soit votre première fois, le Navigateur vous guidera dans le processus à travers tous les outils et les modèles d'estimations. De la génération de vos données d'entrée à la sélection des options avancées et à l'ajustement de vos modèles, le Navigateur fournit des instructions détaillées, étape par étape et des ressources pour vous aider tout au long du processus. Vous avez besoin de prendre une pause ? Aucun problème, le Navigateur vous aidera à reprendre là où vous vous êtes arrêté et vous indiquera les prochaines étapes et les tâches restantes à faire."
+msgstr "Le Navigateur des Estimations VIH (\"Navigator\") est l'outil le plus récent fourni par l'ONUSIDA pour appuyer les équipes nationales à produire leurs estimations annuelles VIH. Le Navigateur est un assistant automatisé, structuré en étape-par-étape pour les équipes d'estimations. Que vous ayez participé aux estimations durant de nombreuses années ou que ce soit votre première fois, le Navigateur vous guidera dans le processus à travers tous les outils et les modèles d'estimations. De la génération de vos données d'entrée à la sélection des options avancées et à l'ajustement de vos modèles, le Navigateur fournit des instructions détaillées, étape par étape et des ressources pour vous aider tout au long du processus. Vous avez besoin de prendre une pause ? Aucun problème, le Navigateur vous aidera à reprendre là où vous vous êtes arrêté et vous indiquera les prochaines étapes et les tâches restantes à faire."
 
 #: lib/actionButtons.js:186
 msgid "This is your current task."
@@ -247,7 +247,7 @@ msgstr "L'ONUSIDA et ses partenaires s'engagent à fournir le plus haut niveau d
 #: components/ErrorComponents.js:29
 #: components/ErrorPagePopup.js:40
 msgid "View Error Logs"
-msgstr "Consulter les journaux d'erreurs"
+msgstr "Consulter les Journaux d'Erreurs"
 
 #: pages/login.js:45
 msgid "Welcome to the UNAIDS HIV Estimates Navigator. Your HIV estimates journey begins here!"
@@ -256,7 +256,7 @@ msgstr "Bienvenue dans le Navigateur des Estimations VIH de l'ONUSIDA. Votre voy
 #: components/ActionButtons.js:121
 #: components/Sidebar.js:8
 msgid "What's Next?"
-msgstr "Quelle est la prochaine étape ?"
+msgstr "Quelle est la Prochaine Étape?"
 
 #: pages/index.js:355
 msgid "Workflow: {workflowId}"
@@ -286,4 +286,4 @@ msgstr ""
 
 #: pages/tasks.js:142
 msgid "Your Task List"
-msgstr "Votre liste de tâches"
+msgstr "Votre Liste de Tâches"
