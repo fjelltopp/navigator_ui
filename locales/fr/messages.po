@@ -51,7 +51,7 @@ msgstr "Cliquez sur \"Quelle est la Prochaine Étape?\" pour continuer."
 
 #: lib/actionButtons.js:17
 msgid "Click \"What's Next?\" to see your latest actionable task."
-msgstr "Cliquez sur \"Quelle est la Prochaine Étape?\" pour voir votre plus récente tâche réalisable."
+msgstr "Cliquez sur \"Quelle est la Prochaine Étape?\" pour voir votre tâche réalisable la plus récente."
 
 #: components/Sidebar.js:12
 #: pages/contact_us.js:25
@@ -180,14 +180,14 @@ msgstr "Tâche Antérieure"
 
 #: pages/tasks.js:150
 msgid "Refresh"
-msgstr "Rafrachir"
+msgstr "Rafraîchir"
 
 #: components/ErrorComponents.js:26
 #: components/ErrorPagePopup.js:35
 #: pages/no_datasets.js:18
 #: pages/user_not_found_in_adr.js:27
 msgid "Refresh Page"
-msgstr "Rafrachir la Page"
+msgstr "Rafraîchir la Page"
 
 #: pages/login.js:55
 msgid "Sign in with your HIV Tools account"
@@ -213,7 +213,7 @@ msgstr "Liste des Tâches"
 
 #: lib/actionButtons.js:86
 msgid "Task status is automatically checked by system."
-msgstr "Le statut de la tâche est automatiquement vérifié par le système."
+msgstr "L'état de la tâche est automatiquement vérifié par le système."
 
 #: pages/index.js:360
 msgid "Task: {taskId}"
@@ -221,7 +221,7 @@ msgstr "Tâche: {taskId}"
 
 #: pages/login.js:46
 msgid "The HIV Estimates Navigator (\"Navigator\") is the latest tool provided by UNAIDS to assist country teams to produce their annual HIV estimates. The Navigator is an automated, step-by-step assistant for estimates teams. Whether you have participated in the estimates for many years or it’s your first time, the Navigator will guide you through the process across all estimates tools and models. From generating your input data to selecting advanced options and fitting your models, Navigator provides detailed, step-by-step instructions and resources to assist you along the way. Need to step away for a bit? No problem, Navigator will help you pick up where you left off, telling you what's next and what tasks remain to be done."
-msgstr "Le Navigateur des Estimations VIH (\"Navigator\") est l'outil le plus récent fourni par l'ONUSIDA pour appuyer les équipes nationales à produire leurs estimations annuelles VIH. Le Navigateur est un assistant automatisé, structuré en étape-par-étape pour les équipes d'estimations. Que vous ayez participé aux estimations durant de nombreuses années ou que ce soit votre première fois, le Navigateur vous guidera dans le processus à travers tous les outils et les modèles d'estimations. De la génération de vos données d'entrée à la sélection des options avancées et à l'ajustement de vos modèles, le Navigateur fournit des instructions détaillées, étape par étape et des ressources pour vous aider tout au long du processus. Vous avez besoin de prendre une pause ? Aucun problème, le Navigateur vous aidera à reprendre là où vous vous êtes arrêté et vous indiquera les prochaines étapes et les tâches restantes à faire."
+msgstr "Le Navigateur des Estimations VIH (\"Navigator\") est le dernier outil fourni par l'ONUSIDA pour appuyer les équipes nationales à produire leurs estimations annuelles VIH. Le Navigateur est un assistant automatisé, structuré en étape-par-étape pour les équipes d'estimations. Que vous ayez participé aux estimations durant de nombreuses années ou que ce soit votre première fois, le Navigateur vous guidera tout au long du processus à travers les outils et les modèles d'estimations. De la génération de vos données d'entrée à la sélection des options avancées et à l'ajustement de vos modèles, le Navigateur fournit des instructions détaillées, étape par étape et des ressources pour vous aider. Vous avez besoin de prendre une pause? Aucun problème, le Navigateur vous aidera à reprendre là où vous vous êtes arrêté et vous indiquera les prochaines étapes et les tâches encore à faire."
 
 #: lib/actionButtons.js:186
 msgid "This is your current task."
@@ -238,7 +238,7 @@ msgstr "Ce flux de travail est maintenant terminé."
 
 #: pages/contact_us.js:35
 msgid "To report bugs or problems or to provide feedback about the Navigator software, please contact <0>TechnicalSupportEmailAddress</0>. If relevant capture a screenshot of the error you are receiving or the task in question."
-msgstr "Pour signaler des bogues ou des problèmes ou fournir des commentaires sur le l'application Navigateur, veuillez contacter <0>TechnicalSupportEmailAddress</0>. Si pertinent, faites une capture d'écran de l'erreur que vous recevez ou de la tâche en question."
+msgstr "Pour signaler des bogues ou des problèmes ou fournir des commentaires sur le logiciel Navigateur, veuillez contacter <0>TechnicalSupportEmailAddress</0>. Si pertinent, effectuez une capture d'écran de l'erreur que vous recevez ou de la tâche en question."
 
 #: pages/contact_us.js:27
 msgid "UNAIDS and its partners are committed to providing the highest level of support to country teams using its platforms and models during the estimates process. You can contact us in one of two ways:"
@@ -272,7 +272,7 @@ msgstr "Vous êtes en train de prévisualiser une tâche future"
 
 #: pages/no_datasets.js:13
 msgid "Your ADR account does not have access to any Country HIV Estimates Datasets. Please make sure you are logged into the correct account and you are added as an editor member of the country organisation or a dataset collaborator."
-msgstr "Votre compte ADR n'a accès à aucun Ensemble de données d'Estimations VIH Pays. S'il vous plaît assurez-vous que vous êtes connecté avec le bon compte et que vous avez êtes ajouté comme membre éditeur de l'organisation pays ou comme collaborateur d'un ensemble de données."
+msgstr "Votre compte ADR n'a accès à aucun Ensemble de données d'Estimations VIH Pays. S'il vous plaît assurez-vous que vous êtes connecté avec le bon compte et que vous avez êtes ajouté|e comme membre éditeur de l'organisation pays ou comme collaborateur|trice d'un ensemble de données."
 
 #: pages/user_not_found_in_adr.js:13
 msgid ""
