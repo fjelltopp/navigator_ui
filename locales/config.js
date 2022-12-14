@@ -1,23 +1,23 @@
 const enLocale = {
     id: 'en',
     name: 'English',
-    emoji: '🇬🇧'
-}
+    emoji: '🇬🇧',
+};
 
 const frLocale = {
     id: 'fr',
     name: 'Français',
-    emoji: '🇫🇷'
-}
+    emoji: '🇫🇷',
+};
 
 const ptLocale = {
     id: 'pt',
     name: 'Português',
-    emoji: '🇵🇹'
-}
+    emoji: '🇵🇹',
+};
 
-const supportedLocales = [enLocale];
-const unsupportedLocales = [frLocale, ptLocale];
+const supportedLocales = [enLocale, frLocale];
+const unsupportedLocales = [ptLocale];
 const defaultLocale = enLocale;
 
 module.exports = {
@@ -25,7 +25,7 @@ module.exports = {
     unsupportedLocales,
     defaultLocale,
     i18n: {
-        locales: supportedLocales.map(locale => locale.id),
-        defaultLocale: defaultLocale.id
-    }
-}
+        locales: supportedLocales.map((locale) => locale.id),
+        defaultLocale: defaultLocale.id,
+    },
+};
