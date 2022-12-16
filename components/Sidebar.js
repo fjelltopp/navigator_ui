@@ -10,27 +10,24 @@ export default function Sidebar() {
         { label: t`How to use Navigator`, href: '/instructions' },
         { label: t`HIV Tools`, href: 'https://hivtools.unaids.org' },
         { label: t`Contact Us`, href: '/contact_us' },
-        { label: t`Log Out`, href: `/api/auth/logout?returnTo=${process.env.navigator_auth0_base_url}` }
+        { label: t`Log Out`, href: `/api/auth/logout?returnTo=${process.env.navigator_ui_auth0_base_url}` },
     ];
 
     const listItem = (link, key) => {
         if (link.href.includes('http')) {
             return (
-                <ListGroup.Item
-                    key={key}
-                    action
-                    onClick={() => window.open(link.href, '_blank')}>
+                <ListGroup.Item key={key} action onClick={() => window.open(link.href, '_blank')}>
                     <span>{link.label}</span>
-                </ListGroup.Item >
-            )
+                </ListGroup.Item>
+            );
         } else {
             return (
                 <Link key={key} href={link.href}>
                     <ListGroup.Item action>{link.label}</ListGroup.Item>
                 </Link>
-            )
+            );
         }
-    }
+    };
 
     return (
         <>
@@ -41,6 +38,5 @@ export default function Sidebar() {
                 <LocaleSelector drop="up" />
             </ListGroup>
         </>
-    )
-
+    );
 }
